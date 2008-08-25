@@ -1,0 +1,26 @@
+name:           syb
+version:        0.1
+license:        BSD3
+license-file:   LICENSE
+maintainer:     libraries@haskell.org
+synopsis:       Scrap Your Boilerplate
+description:
+    This package contains the Scrap Your Boilerplate (SYB) generics system.
+cabal-version:  >=1.2
+build-type: Simple
+
+Library {
+    build-depends: base
+    Extensions: CPP, Rank2Types, PatternSignatures, ScopedTypeVariables
+    exposed-modules:
+            Data.Generics
+            Data.Generics.Aliases
+            Data.Generics.Basics
+            Data.Generics.Instances
+            Data.Generics.Schemes
+            Data.Generics.Text
+            Data.Generics.Twins
+    -- We need to set the package name to syb (without a version number)
+    -- as it's magic.
+    ghc-options: -package-name syb
+}
