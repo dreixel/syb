@@ -5,7 +5,11 @@ license-file:   LICENSE
 maintainer:     libraries@haskell.org
 synopsis:       Scrap Your Boilerplate
 description:
-    This package contains the Scrap Your Boilerplate (SYB) generics system.
+    This package contains the generics system described in the
+    /Scrap Your Boilerplate/ papers (see <http://www.cs.vu.nl/boilerplate/>).
+    It defines the @Data@ class of types permitting folding and unfolding
+    of constructor applications, instances of this class for primitive
+    types, and a variety of traversals.
 cabal-version:  >=1.2
 build-type: Simple
 
