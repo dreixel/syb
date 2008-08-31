@@ -31,6 +31,7 @@ import Data.Typeable
 import Data.Int              -- So we can give Data instance for Int8, ...
 import Data.Word             -- So we can give Data instance for Word8, ...
 import Data.Complex
+#ifdef __GLASGOW_HASKELL__
 import GHC.Real( Ratio(..) ) -- So we can give Data instance for Ratio
 import GHC.IOBase            -- So we can give Data instance for IO, Handle
 import GHC.Ptr               -- So we can give Data instance for Ptr
@@ -39,6 +40,19 @@ import GHC.Stable            -- So we can give Data instance for StablePtr
 import GHC.ST                -- So we can give Data instance for ST
 import GHC.Conc              -- So we can give Data instance for MVar & Co.
 import GHC.Arr               -- So we can give Data instance for Array
+#else
+# ifdef __HUGS__
+import Hugs.Prelude( Ratio(..) )
+# endif
+import System.IO
+import Foreign.Ptr
+import Foreign.ForeignPtr
+import Foreign.StablePtr
+import Control.Monad.ST
+import Control.Concurrent
+import Data.Array
+import Data.IORef
+#endif
 
 #include "Typeable.h"
 
@@ -618,21 +632,21 @@ instance (Typeable s, Typeable a) => Data (ST s a) where
 
 ------------------------------------------------------------------------------
 
-
+#ifdef __GLASGOW_HASKELL__
 instance Data ThreadId where
   toConstr _   = error "toConstr"
   gunfold _ _  = error "gunfold"
   dataTypeOf _ = mkNorepType "GHC.Conc.ThreadId"
-
+#endif
 
 ------------------------------------------------------------------------------
 
-
+#ifdef __GLASGOW_HASKELL__
 instance Typeable a => Data (TVar a) where
   toConstr _   = error "toConstr"
   gunfold _ _  = error "gunfold"
   dataTypeOf _ = mkNorepType "GHC.Conc.TVar"
-
+#endif
 
 ------------------------------------------------------------------------------
 
@@ -645,12 +659,12 @@ instance Typeable a => Data (MVar a) where
 
 ------------------------------------------------------------------------------
 
-
+#ifdef __GLASGOW_HASKELL__
 instance Typeable a => Data (STM a) where
   toConstr _   = error "toConstr"
   gunfold _ _  = error "gunfold"
   dataTypeOf _ = mkNorepType "GHC.Conc.STM"
-
+#endif
 
 ------------------------------------------------------------------------------
 -- The Data instance for Array preserves data abstraction at the cost of inefficiency.
