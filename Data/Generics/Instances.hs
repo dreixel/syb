@@ -20,10 +20,7 @@
 -----------------------------------------------------------------------------
 
 {-# OPTIONS_GHC -fno-warn-orphans #-}
-module Data.Generics.Instances where
-
-import Data.Data
-
+module Data.Generics.Instances () where
 
 ------------------------------------------------------------------------------
 
@@ -32,8 +29,8 @@ import Prelude
 #endif
 
 import Data.Data
-
 import Data.Typeable
+
 #ifdef __GLASGOW_HASKELL__
 import GHC.IOBase            -- So we can give Data instance for IO, Handle
 import GHC.Stable            -- So we can give Data instance for StablePtr
