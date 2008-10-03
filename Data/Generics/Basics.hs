@@ -10,7 +10,9 @@
 --
 -- \"Scrap your boilerplate\" --- Generic programming in Haskell.
 -- See <http://www.cs.vu.nl/boilerplate/>. This module provides
--- the 'Data' class with its primitives for generic programming.
+-- the 'Data' class with its primitives for generic programming,
+-- which is now defined in "Data.Data". Therefore this module simply
+-- re-exports "Data.Data".
 --
 -----------------------------------------------------------------------------
 
