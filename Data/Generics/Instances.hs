@@ -6,11 +6,15 @@
 -- 
 -- Maintainer  :  libraries@haskell.org
 -- Stability   :  experimental
--- Portability :  non-portable (uses Data.Generics.Basics)
+-- Portability :  non-portable (uses Data.Data)
 --
 -- \"Scrap your boilerplate\" --- Generic programming in Haskell 
 -- See <http://www.cs.vu.nl/boilerplate/>. The present module
--- instantiates the class Data for Prelude-like datatypes.
+-- contains thirteen 'Data' instances which are considered dubious (either
+-- because the types are abstract or just not meant to be traversed).
+-- Instances in this module might change or disappear in future releases
+-- of this package. 
+--
 -- (This module does not export anything. It really just defines instances.)
 --
 -----------------------------------------------------------------------------
