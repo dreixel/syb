@@ -167,3 +167,15 @@ instance Typeable a => Data (IO a) where
   gunfold _ _  = error "gunfold"
   dataTypeOf _ = mkNorepType "GHC.IOBase.IO"
 
+------------------------------------------------------------------------------
+
+--
+-- A last resort for functions
+--
+
+instance (Data a, Data b) => Data (a -> b) where
+  toConstr _   = error "toConstr"
+  gunfold _ _  = error "gunfold"
+  dataTypeOf _ = mkNorepType "Prelude.(->)"
+  dataCast2 f  = gcast2 f
+
