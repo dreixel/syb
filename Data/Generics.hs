@@ -45,8 +45,8 @@ import GHC.Base ( (:*:)(..), (:+:)(..), Unit(..) )
 #endif
 #endif
 
-import Data.Generics.Basics
-import Data.Generics.Instances
+import Data.Data
+import Data.Generics.Instances ()
 import Data.Generics.Aliases
 import Data.Generics.Schemes
 import Data.Generics.Text
