@@ -54,7 +54,7 @@ module Data.Generics.Aliases (
 import Prelude
 #endif
 import Control.Monad
-import Data.Generics.Basics
+import Data.Data
 
 ------------------------------------------------------------------------------
 --

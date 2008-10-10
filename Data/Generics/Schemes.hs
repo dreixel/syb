@@ -40,7 +40,7 @@ module Data.Generics.Schemes (
 #ifdef __HADDOCK__
 import Prelude
 #endif
-import Data.Generics.Basics
+import Data.Data
 import Data.Generics.Aliases
 import Control.Monad
 

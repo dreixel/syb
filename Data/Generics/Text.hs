@@ -28,7 +28,7 @@ import Prelude
 #endif
 import Control.Monad
 import Data.Maybe
-import Data.Generics.Basics
+import Data.Data
 import Data.Generics.Aliases
 import Text.ParserCombinators.ReadP
 
