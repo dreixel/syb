@@ -18,8 +18,7 @@
 module Data.Generics (
 
   -- * All Data.Generics modules
-  module Data.Generics.Basics,
-  module Data.Generics.Instances, -- 
+  module Data.Data,               -- primitives and instances of the Data class
   module Data.Generics.Aliases,   -- aliases for type case, generic types
   module Data.Generics.Schemes,   -- traversal schemes (everywhere etc.)
   module Data.Generics.Text,      -- generic read and show

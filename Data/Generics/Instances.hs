@@ -20,7 +20,7 @@
 -----------------------------------------------------------------------------
 
 {-# OPTIONS_GHC -fno-warn-orphans #-}
-module Data.Generics.Instances where
+module Data.Generics.Instances () where
 
 ------------------------------------------------------------------------------
 
