@@ -15,6 +15,9 @@
 -- Instances in this module might change or disappear in future releases
 -- of this package. 
 --
+-- For more information, please visit the new
+-- SYB wiki: <http://www.cs.uu.nl/wiki/bin/view/GenericProgramming/SYB>.
+--
 -- (This module does not export anything. It really just defines instances.)
 --
 -----------------------------------------------------------------------------

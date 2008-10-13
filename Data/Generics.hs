@@ -13,6 +13,9 @@
 -- is sufficient to import the present module, which simply re-exports all
 -- themes of the Data.Generics library.
 --
+-- For more information, please visit the new
+-- SYB wiki: <http://www.cs.uu.nl/wiki/bin/view/GenericProgramming/SYB>.
+--
 -----------------------------------------------------------------------------
 
 module Data.Generics (
