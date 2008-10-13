@@ -4,7 +4,7 @@
 -- Copyright   :  (c) The University of Glasgow, CWI 2001--2004
 -- License     :  BSD-style (see the file libraries/base/LICENSE)
 -- 
--- Maintainer  :  libraries@haskell.org
+-- Maintainer  :  generics@haskell.org
 -- Stability   :  experimental
 -- Portability :  non-portable (local universal quantification)
 --
