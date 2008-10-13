@@ -14,6 +14,9 @@
 -- which is now defined in @Data.Data@. Therefore this module simply
 -- re-exports @Data.Data@.
 --
+-- For more information, please visit the new
+-- SYB wiki: <http://www.cs.uu.nl/wiki/bin/view/GenericProgramming/SYB>.
+--
 -----------------------------------------------------------------------------
 
 module Data.Generics.Basics (
