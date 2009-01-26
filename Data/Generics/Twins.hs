@@ -2,7 +2,7 @@
 -- |
 -- Module      :  Data.Generics.Twins
 -- Copyright   :  (c) The University of Glasgow, CWI 2001--2004
--- License     :  BSD-style (see the file libraries/base/LICENSE)
+-- License     :  BSD-style (see the LICENSE file)
 -- 
 -- Maintainer  :  generics@haskell.org
 -- Stability   :  experimental
