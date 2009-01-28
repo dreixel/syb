@@ -254,9 +254,9 @@ data Generic' c = Generic' { unGeneric' :: Generic c }
 
 
 -- | Other first-class polymorphic wrappers
-newtype GenericT'   = GT { unGT :: Data a => a -> a }
+newtype GenericT'   = GT { unGT :: forall a. Data a => a -> a }
 newtype GenericQ' r = GQ { unGQ :: GenericQ r }
-newtype GenericM' m = GM { unGM :: Data a => a -> m a }
+newtype GenericM' m = GM { unGM :: forall a. Data a => a -> m a }
 
 
 -- | Left-biased choice on maybies
