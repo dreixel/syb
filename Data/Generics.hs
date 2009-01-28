@@ -27,10 +27,12 @@ module Data.Generics (
   module Data.Generics.Text,      -- generic read and show
   module Data.Generics.Twins,     -- twin traversal, e.g., generic eq
 
+#ifdef __GLASGOW_HASKELL__
 #ifndef __HADDOCK__
         -- Data types for the sum-of-products type encoding;
         -- included for backwards compatibility; maybe obsolete.
         (:*:)(..), (:+:)(..), Unit(..)
+#endif
 #endif
 
  ) where
