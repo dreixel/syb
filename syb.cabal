@@ -24,9 +24,6 @@ Library {
             Data.Generics.Schemes
             Data.Generics.Text
             Data.Generics.Twins
-    -- We need to set the package name to syb (without a version number)
-    -- as it's magic.
-    ghc-options: -package-name syb
 
     if impl(ghc < 6.10) 
        -- PatternSignatures was deprecated in 6.10
