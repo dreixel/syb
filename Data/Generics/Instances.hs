@@ -27,23 +27,13 @@ module Data.Generics.Instances () where
 
 ------------------------------------------------------------------------------
 
-#ifdef __HADDOCK__
-import Prelude
-#endif
-
 import Data.Data
-import Data.Typeable
 
 #ifdef __GLASGOW_HASKELL__
 #if __GLASGOW_HASKELL__ >= 611
-import GHC.IO                -- So we can give Data instance for IO
 import GHC.IO.Handle         -- So we can give Data instance for Handle
-import GHC.MVar              -- So we can give Data instance for MVar
-import GHC.Conc              -- So we can give Data instance for TVar
-import GHC.IORef
 #else
 import GHC.IOBase            -- So we can give Data instance for IO, Handle
-import GHC.Conc              -- So we can give Data instance for MVar & Co.
 #endif
 import GHC.Stable            -- So we can give Data instance for StablePtr
 import GHC.ST                -- So we can give Data instance for ST

@@ -37,8 +37,6 @@ module Data.Generics (
 
 ------------------------------------------------------------------------------
 
-import Prelude  -- So that 'make depend' works
-
 #ifdef __GLASGOW_HASKELL__
 #ifndef __HADDOCK__
         -- Data types for the sum-of-products type encoding;

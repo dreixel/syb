@@ -27,7 +27,6 @@ module Data.Generics.Text (
 import Prelude
 #endif
 import Control.Monad
-import Data.Maybe
 import Data.Data
 import Data.Generics.Aliases
 import Text.ParserCombinators.ReadP
