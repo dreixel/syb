@@ -87,7 +87,7 @@ gread = readP_to_S gread'
       do
                 -- Drop "  (  "
          skipSpaces                     -- Discard leading space
-         char '('                       -- Parse '('
+         _ <- char '('                  -- Parse '('
          skipSpaces                     -- Discard following space
 
                 -- Do the real work
@@ -97,7 +97,7 @@ gread = readP_to_S gread'
 
                 -- Drop "  )  "
          skipSpaces                     -- Discard leading space
-         char ')'                       -- Parse ')'
+         _ <- char ')'                  -- Parse ')'
          skipSpaces                     -- Discard following space
 
          return x
