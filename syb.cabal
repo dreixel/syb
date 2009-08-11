@@ -10,7 +10,7 @@ description:
     It defines the @Data@ class of types permitting folding and unfolding
     of constructor applications, instances of this class for primitive
     types, and a variety of traversals.
-cabal-version:  >=1.2
+cabal-version:  >=1.2.3
 build-type: Simple
 
 Library {
