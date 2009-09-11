@@ -14,7 +14,7 @@ cabal-version:  >=1.2.3
 build-type: Simple
 
 Library {
-    build-depends: base >= 4.1 && < 4.2
+    build-depends: base >= 4.1 && < 4.3
     Extensions: CPP, Rank2Types, ScopedTypeVariables
     exposed-modules:
             Data.Generics
