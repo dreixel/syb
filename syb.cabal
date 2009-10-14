@@ -29,6 +29,7 @@ Library {
                           Data.Generics.Schemes,
                           Data.Generics.Text,
                           Data.Generics.Twins,
+                          Data.Generics.Builders,
                           
                           Generics.SYB,
                           Generics.SYB.Basics,
@@ -36,7 +37,8 @@ Library {
                           Generics.SYB.Aliases,
                           Generics.SYB.Schemes,
                           Generics.SYB.Text,
-                          Generics.SYB.Twins
+                          Generics.SYB.Twins,
+                          Generics.SYB.Builders
 
   extensions:             CPP, Rank2Types, ScopedTypeVariables
 
