@@ -1,31 +1,52 @@
-name:           syb
-version:        0.1.0.2
-license:        BSD3
-license-file:   LICENSE
-maintainer:     libraries@haskell.org
-synopsis:       Scrap Your Boilerplate
+name:                   syb
+version:                0.2
+license:                BSD3
+license-file:           LICENSE
+author:                 Ralf Lammel, Simon Peyton Jones
+maintainer:             generics@haskell.org
+homepage:               http://www.cs.uu.nl/wiki/GenericProgramming/SYB
+bug-reports:            http://code.google.com/p/scrapyourboilerplate/issues/list
+synopsis:               Scrap Your Boilerplate
 description:
     This package contains the generics system described in the
     /Scrap Your Boilerplate/ papers (see <http://www.cs.vu.nl/boilerplate/>).
     It defines the @Data@ class of types permitting folding and unfolding
     of constructor applications, instances of this class for primitive
     types, and a variety of traversals.
-cabal-version:  >=1.2.3
-build-type: Simple
+
+category:               Generics
+stability:              provisional
+build-type:             Simple
+cabal-version:          >= 1.2.1
+tested-with:            GHC == 6.10.4
 
 Library {
-    build-depends: base >= 4.1 && < 4.3
-    Extensions: CPP, Rank2Types, ScopedTypeVariables
-    exposed-modules:
-            Data.Generics
-            Data.Generics.Aliases
-            Data.Generics.Basics
-            Data.Generics.Instances
-            Data.Generics.Schemes
-            Data.Generics.Text
-            Data.Generics.Twins
+  build-depends:          base >= 4.0 && < 4.3
+  exposed-modules:        Data.Generics,
+                          Data.Generics.Basics,
+                          Data.Generics.Instances,
+                          Data.Generics.Aliases,
+                          Data.Generics.Schemes,
+                          Data.Generics.Text,
+                          Data.Generics.Twins,
+                          
+                          Generics.SYB,
+                          Generics.SYB.Basics,
+                          Generics.SYB.Instances,
+                          Generics.SYB.Aliases,
+                          Generics.SYB.Schemes,
+                          Generics.SYB.Text,
+                          Generics.SYB.Twins
 
-    if impl(ghc < 6.10) 
-       -- PatternSignatures was deprecated in 6.10
-       extensions: PatternSignatures
+  extensions:             CPP, Rank2Types, ScopedTypeVariables,
+                            DeriveDataTypeable, ExistentialQuantification,
+                            PatternGuards, FlexibleContexts
+  if impl(ghc < 6.10)
+    -- PatternSignatures was deprecated in 6.10
+    extensions: PatternSignatures
+
+  if impl(ghc < 6.14) 
+    ghc-options:          -package-name syb
+  
+  ghc-options:            -Wall
 }
