@@ -53,6 +53,14 @@ import Data.IORef
 
 #include "Typeable.h"
 
+-- Version compatibility issues caused by #2760
+myMkNoRepType :: String -> DataType
+#if __GLASGOW_HASKELL__ >= 611
+myMkNoRepType = mkNoRepType
+#else
+myMkNoRepType = mkNorepType
+#endif
+
 
 ------------------------------------------------------------------------------
 --
@@ -69,7 +77,7 @@ import Data.IORef
 instance Data TypeRep where
   toConstr _   = error "toConstr"
   gunfold _ _  = error "gunfold"
-  dataTypeOf _ = mkNoRepType "Data.Typeable.TypeRep"
+  dataTypeOf _ = myMkNoRepType "Data.Typeable.TypeRep"
 
 
 ------------------------------------------------------------------------------
@@ -77,7 +85,7 @@ instance Data TypeRep where
 instance Data TyCon where
   toConstr _   = error "toConstr"
   gunfold _ _  = error "gunfold"
-  dataTypeOf _ = mkNoRepType "Data.Typeable.TyCon"
+  dataTypeOf _ = myMkNoRepType "Data.Typeable.TyCon"
 
 
 ------------------------------------------------------------------------------
@@ -87,7 +95,7 @@ INSTANCE_TYPEABLE0(DataType,dataTypeTc,"DataType")
 instance Data DataType where
   toConstr _   = error "toConstr"
   gunfold _ _  = error "gunfold"
-  dataTypeOf _ = mkNoRepType "Data.Generics.Basics.DataType"
+  dataTypeOf _ = myMkNoRepType "Data.Generics.Basics.DataType"
 
 
 ------------------------------------------------------------------------------
@@ -95,7 +103,7 @@ instance Data DataType where
 instance Data Handle where
   toConstr _   = error "toConstr"
   gunfold _ _  = error "gunfold"
-  dataTypeOf _ = mkNoRepType "GHC.IOBase.Handle"
+  dataTypeOf _ = myMkNoRepType "GHC.IOBase.Handle"
 
 
 ------------------------------------------------------------------------------
@@ -103,7 +111,7 @@ instance Data Handle where
 instance Typeable a => Data (StablePtr a) where
   toConstr _   = error "toConstr"
   gunfold _ _  = error "gunfold"
-  dataTypeOf _ = mkNoRepType "GHC.Stable.StablePtr"
+  dataTypeOf _ = myMkNoRepType "GHC.Stable.StablePtr"
 
 
 ------------------------------------------------------------------------------
@@ -112,7 +120,7 @@ instance Typeable a => Data (StablePtr a) where
 instance Data ThreadId where
   toConstr _   = error "toConstr"
   gunfold _ _  = error "gunfold"
-  dataTypeOf _ = mkNoRepType "GHC.Conc.ThreadId"
+  dataTypeOf _ = myMkNoRepType "GHC.Conc.ThreadId"
 #endif
 
 
@@ -124,7 +132,7 @@ instance Data ThreadId where
 instance Typeable a => Data (TVar a) where
   toConstr _   = error "toConstr"
   gunfold _ _  = error "gunfold"
-  dataTypeOf _ = mkNoRepType "GHC.Conc.TVar"
+  dataTypeOf _ = myMkNoRepType "GHC.Conc.TVar"
 #endif
 
 
@@ -133,7 +141,7 @@ instance Typeable a => Data (TVar a) where
 instance Typeable a => Data (MVar a) where
   toConstr _   = error "toConstr"
   gunfold _ _  = error "gunfold"
-  dataTypeOf _ = mkNoRepType "GHC.Conc.MVar"
+  dataTypeOf _ = myMkNoRepType "GHC.Conc.MVar"
 
 
 ------------------------------------------------------------------------------
@@ -142,7 +150,7 @@ instance Typeable a => Data (MVar a) where
 instance Typeable a => Data (STM a) where
   toConstr _   = error "toConstr"
   gunfold _ _  = error "gunfold"
-  dataTypeOf _ = mkNoRepType "GHC.Conc.STM"
+  dataTypeOf _ = myMkNoRepType "GHC.Conc.STM"
 #endif
 
 
@@ -151,7 +159,7 @@ instance Typeable a => Data (STM a) where
 instance (Typeable s, Typeable a) => Data (ST s a) where
   toConstr _   = error "toConstr"
   gunfold _ _  = error "gunfold"
-  dataTypeOf _ = mkNoRepType "GHC.ST.ST"
+  dataTypeOf _ = myMkNoRepType "GHC.ST.ST"
 
 
 ------------------------------------------------------------------------------
@@ -159,7 +167,7 @@ instance (Typeable s, Typeable a) => Data (ST s a) where
 instance Typeable a => Data (IORef a) where
   toConstr _   = error "toConstr"
   gunfold _ _  = error "gunfold"
-  dataTypeOf _ = mkNoRepType "GHC.IOBase.IORef"
+  dataTypeOf _ = myMkNoRepType "GHC.IOBase.IORef"
 
 
 ------------------------------------------------------------------------------
@@ -167,7 +175,7 @@ instance Typeable a => Data (IORef a) where
 instance Typeable a => Data (IO a) where
   toConstr _   = error "toConstr"
   gunfold _ _  = error "gunfold"
-  dataTypeOf _ = mkNoRepType "GHC.IOBase.IO"
+  dataTypeOf _ = myMkNoRepType "GHC.IOBase.IO"
 
 ------------------------------------------------------------------------------
 
@@ -178,6 +186,6 @@ instance Typeable a => Data (IO a) where
 instance (Data a, Data b) => Data (a -> b) where
   toConstr _   = error "toConstr"
   gunfold _ _  = error "gunfold"
-  dataTypeOf _ = mkNoRepType "Prelude.(->)"
+  dataTypeOf _ = myMkNoRepType "Prelude.(->)"
   dataCast2 f  = gcast2 f
 
