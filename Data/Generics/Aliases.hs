@@ -46,7 +46,8 @@ module Data.Generics.Aliases (
         ext1T,
         ext1M,
         ext1Q,
-        ext1R
+        ext1R,
+        ext1B
 
   ) where
 
@@ -347,6 +348,12 @@ ext1R :: (Monad m, Data d, Typeable1 t)
 ext1R def ext = unR ((R def) `ext1` (R ext))
 
 
+-- | Type extension of builders for type constructors
+ext1B :: (Data a, Typeable1 t)
+      => a
+      -> (forall b. Data b => (t b))
+      -> a
+ext1B def ext = unB ((B def) `ext1` (B ext))
 
 ------------------------------------------------------------------------------
 --
@@ -366,3 +373,6 @@ newtype Q q x = Q { unQ :: x -> q }
 
 -- | The type constructor for readers
 newtype R m x = R { unR :: m x }
+
+-- | The type constructor for builders
+newtype B x = B {unB :: x}
