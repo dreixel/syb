@@ -33,7 +33,7 @@ module Data.Generics.Aliases (
         GenericQ'(..),
         GenericM'(..),
 
-        -- * Inredients of generic functions
+        -- * Ingredients of generic functions
         orElse,
 
         -- * Function combinators on generic functions
@@ -109,7 +109,7 @@ mkM = extM return
 {-
 
 For the remaining definitions, we stick to a more concise style, i.e.,
-we fold maybies with "maybe" instead of case ... of ..., and we also
+we fold maybes with "maybe" instead of case ... of ..., and we also
 use a point-free style whenever possible.
 
 -}
@@ -259,7 +259,7 @@ newtype GenericQ' r = GQ { unGQ :: GenericQ r }
 newtype GenericM' m = GM { unGM :: forall a. Data a => a -> m a }
 
 
--- | Left-biased choice on maybies
+-- | Left-biased choice on maybes
 orElse :: Maybe a -> Maybe a -> Maybe a
 x `orElse` y = case x of
                  Just _  -> x
