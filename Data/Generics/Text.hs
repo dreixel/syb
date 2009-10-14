@@ -16,8 +16,11 @@
 
 module Data.Generics.Text (
 
-        gshow,
-        gread
+    -- * Generic show
+    gshow, gshows,
+
+    -- * Generic read
+    gread
 
  ) where
 
@@ -36,17 +39,19 @@ import Text.ParserCombinators.ReadP
 
 -- | Generic show: an alternative to \"deriving Show\"
 gshow :: Data a => a -> String
+gshow x = gshows x ""
+
+-- | Generic shows
+gshows :: Data a => a -> ShowS
 
 -- This is a prefix-show using surrounding "(" and ")",
 -- where we recurse into subterms with gmapQ.
--- 
-gshow = ( \t ->
-                "("
-             ++ showConstr (toConstr t)
-             ++ concat (gmapQ ((++) " " . gshow) t)
-             ++ ")"
-        ) `extQ` (show :: String -> String)
-
+gshows = ( \t ->
+                showChar '('
+              . (showString . showConstr . toConstr $ t)
+              . (foldr (.) id . gmapQ ((showChar ' ' .) . gshows) $ t)
+              . showChar ')'
+         ) `extQ` (shows :: String -> ShowS)
 
 
 -- | Generic read: an alternative to \"deriving Read\"
