@@ -37,9 +37,7 @@ import GHC.IOBase            -- So we can give Data instance for IO, Handle
 #endif
 import GHC.Stable            -- So we can give Data instance for StablePtr
 import GHC.ST                -- So we can give Data instance for ST
-import GHC.MVar              -- So we can give Data instance for MVar
 import GHC.Conc              -- So we can give Data instance for TVar
-import GHC.IORef
 #else
 # ifdef __HUGS__
 import Hugs.Prelude( Ratio(..) )
