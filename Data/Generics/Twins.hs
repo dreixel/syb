@@ -1,3 +1,6 @@
+{-# OPTIONS_GHC -cpp                  #-}
+{-# LANGUAGE Rank2Types               #-}
+
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Data.Generics.Twins

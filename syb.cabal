@@ -38,9 +38,7 @@ Library {
                           Generics.SYB.Text,
                           Generics.SYB.Twins
 
-  extensions:             CPP, Rank2Types, ScopedTypeVariables,
-                            DeriveDataTypeable, ExistentialQuantification,
-                            PatternGuards, FlexibleContexts
+  extensions:             CPP, Rank2Types, ScopedTypeVariables
   if impl(ghc < 6.10)
     -- PatternSignatures was deprecated in 6.10
     extensions: PatternSignatures
