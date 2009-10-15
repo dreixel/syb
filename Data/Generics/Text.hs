@@ -119,6 +119,7 @@ gread = readP_to_S gread'
     parseConstr :: ReadP String
     parseConstr =
                string "[]"     -- Compound lexeme "[]"
+          <++  string "()"     -- singleton "()"
           <++  infixOp         -- Infix operator in parantheses
           <++  readS_to_P lex  -- Ordinary constructors and literals
 
