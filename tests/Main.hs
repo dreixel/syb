@@ -2,6 +2,7 @@
 module Main where
 
 import Test.HUnit
+import System.Exit
 
 import qualified Bits
 import qualified Builders
@@ -73,4 +74,9 @@ tests =
            , Builders.tests
            ]
 
-main = putStrLn "Running tests for syb..." >> runTestTT tests
+main = do
+         putStrLn "Running tests for syb..."
+         counts <- runTestTT tests
+         if (failures counts > 0)
+           then exitFailure
+             else exitSuccess
