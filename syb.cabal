@@ -16,7 +16,7 @@ description:
 
 category:               Generics
 stability:              provisional
-build-type:             Simple
+build-type:             Custom
 cabal-version:          >= 1.2.1
 tested-with:            GHC == 6.10.4
 
