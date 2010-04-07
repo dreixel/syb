@@ -3,35 +3,35 @@ module Main where
 
 import Test.HUnit
 
+import qualified Bits
+import qualified Builders
 import qualified Datatype
+import qualified Ext1
 import qualified FoldTree
-import qualified GetC
+import qualified FreeNames
+import qualified GEq
 import qualified GMapQAssoc
 import qualified GRead
 import qualified GShow
 import qualified GShow2
+import qualified GZip
+import qualified GenUpTo
+import qualified GetC
 import qualified HList
 import qualified HOPat
 import qualified Labels
 import qualified Newtype
+import qualified Paradise
 import qualified Perm
+import qualified Reify
+import qualified Strings
+import qualified Tree
 import qualified Twin
 import qualified Typeable
 import qualified Typecase1
 import qualified Typecase2
 import qualified Where
 import qualified XML
-import qualified Tree
-import qualified Strings
-import qualified Reify
-import qualified Paradise
-import qualified GZip
-import qualified GEq
-import qualified GenUpTo
-import qualified FreeNames
-import qualified Ext1
-import qualified Bits
-import qualified Builders
 
 import qualified Encode           -- no tests, should compile
 import qualified Ext              -- no tests, should compile
