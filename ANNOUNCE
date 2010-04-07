@@ -22,7 +22,12 @@ The biggest improvements from version 0.1 are:
   * Reintegration of the testsuite;
   * Introduction of the Generics.SYB.* module hierarchy (as synonyms for their
     Data.Generics.* counterparts);
-  * Add gshows :: Data a => a -> ShowS (more efficient than gshow);
+  * Adding gshows :: Data a => a -> ShowS (more efficient than gshow);
+  * Adding gmapAccumA :: forall b d a. (Data d, Applicative a)
+                      => (forall e. Data e => b -> e -> (b, a e))
+                      -> b -> d -> (b, a d) ;
+  * Adding ext1B :: (Data a, Typeable1 t)
+                 => a -> (forall b. Data b => (t b)) -> a ;
   * Introduction of two new generic producers ('empty' and 'constrs'). The
     former produces an empty value of a given datatype, while the latter
     produces a list of values of a datatype, each using a different constructor.
