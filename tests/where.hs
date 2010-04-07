@@ -1,5 +1,7 @@
 {-# OPTIONS -fglasgow-exts #-}
 
+module Where (tests) where
+
 {-
 
 This example illustrates some differences between certain traversal
@@ -69,7 +71,8 @@ Contributed by Ralf Laemmel, ralf@cwi.nl
 
 -}
 
-module Main where
+import Test.HUnit
+
 import Data.Generics
 import Control.Monad
 
@@ -111,10 +114,12 @@ result5 = everywhereM recovered      term37   -- preserves term without notice
 result6 = somewhere (mkMp stepfail)  term42   -- rewrites term accordingly
 result7 = somewhere (mkMp stepfail)  term37   -- fails to notice lack of redex
 
-main = print $ gshow ( result1,
-                     ( result2,
-                     ( result3,
-                     ( result4,
-                     ( result5,
-                     ( result6,
-                     ( result7 )))))))
+tests = gshow ( result1,
+              ( result2,
+              ( result3,
+              ( result4,
+              ( result5,
+              ( result6,
+              ( result7 ))))))) ~=? output
+
+output = "((,) (T1b (T2 (T1a (88)))) ((,) (T1b (T2 (T1a (37)))) ((,) (Nothing) ((,) (Nothing) ((,) (Just (T1b (T2 (T1a (37))))) ((,) (Just (T1b (T2 (T1a (88))))) (Nothing)))))))"

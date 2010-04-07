@@ -1,6 +1,6 @@
 {-# OPTIONS -fglasgow-exts #-}
 
-module Main where
+module Ext () where
 
 -- There were typos in these definitions in the ICFP 2004 paper.
 
@@ -28,6 +28,3 @@ extM fn spec_fn
       Nothing           -> fn
 
 newtype M m a = M (a -> m a)
-
-main = undefined
-

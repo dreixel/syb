@@ -24,8 +24,9 @@ distinctions' as well.
 
 -}
 
-module Main where
+module FoldTree (tests) where
 
+import Test.HUnit
 
 -- Enable "ScrapYourBoilerplate"
 import Data.Generics
@@ -51,10 +52,12 @@ mytree = Fork (WithWeight (Leaf 42) 1)
 --   2. print everything wrapped with Leaf
 -- So (1.) confuses leafs and weights whereas (2.) does not.
 -- 
-main = print $ ( listify (\(_::Int) -> True)         mytree
-               , everything (++) ([] `mkQ` fromLeaf) mytree
-               )
+tests = show ( listify (\(_::Int) -> True)         mytree
+             , everything (++) ([] `mkQ` fromLeaf) mytree
+             ) ~=? output
   where
     fromLeaf :: Tree Int Int -> [Int]
     fromLeaf (Leaf x) = [x]
     fromLeaf _ = []
+
+output = "([42,1,88,37,2],[42,88,37])"

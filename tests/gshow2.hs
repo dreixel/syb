@@ -1,47 +1,47 @@
 {-# OPTIONS -fglasgow-exts #-}
- 
+
+module GShow2 (tests) where
+
 {-
- 
-The generic show example from the 2nd boilerplate paper.
-(There were some typos in the ICFP 2004 paper.)
-Also check out Data.Generics.Text.
- 
+
+This test exercices GENERIC show for the infamous company datatypes. The
+output of the program should be some representation of the infamous
+"genCom" company.
+
 -}
 
-module Main where
-import Data.Generics hiding (gshow)
-import Prelude hiding (showString)
+import Test.HUnit
 
- 
-gshow :: Data a => a -> String
-gshow = gshow_help `extQ` showString
+import Data.Generics
+import CompanyDatatypes
 
-gshow_help :: Data a => a -> String
-gshow_help t 
-     =  "("
-     ++ showConstr (toConstr t)
-     ++ concat (intersperse " " (gmapQ gshow t))
-     ++ ")"
+tests = gshow genCom ~=? output
 
-showString :: String -> String
-showString s = "\"" ++ concat (map escape s) ++ "\"" 
-               where
-                 escape '\n' = "\\n"
-                 escape other_char = [other_char]
+{-
 
-gshowList :: Data b => [b] -> String
-gshowList xs
-    = "[" ++ concat (intersperse "," (map gshow xs)) ++ "]"
+Here is another exercise:
+The following function gshow' is a completely generic variation on gshow.
+It would print strings as follows:
+
+*Main> gshow' "abc"
+"((:) ('a') ((:) ('b') ((:) ('c') ([]))))"
+
+The original gshow does a better job because it is customised for strings:
+
+*Main> gshow "foo"
+"\"foo\""
+
+In fact, this is what Haskell's normal show would also do:
+
+*Main> show "foo"
+"\"foo\""
+
+-}
 
 gshow' :: Data a => a -> String
-gshow' = gshow_help `ext1Q` gshowList 
-                    `extQ`  showString
+gshow' t =     "("
+            ++ showConstr (toConstr t)
+            ++ concat (gmapQ ((++) " " . gshow') t)
+            ++ ")"
 
-intersperse :: a -> [a] -> [a]
-intersperse _ []     = []
-intersperse x [e]    = [e]
-intersperse x (e:es) = (e:(x:intersperse x es))
-
-main = print $ ( gshow' "foo"
-               , gshow' [True,False]
-               )
+output = "(C ((:) (D \"Research\" (E (P \"Laemmel\" \"Amsterdam\") (S (8000.0))) ((:) (PU (E (P \"Joost\" \"Amsterdam\") (S (1000.0)))) ((:) (PU (E (P \"Marlow\" \"Cambridge\") (S (2000.0)))) ([])))) ((:) (D \"Strategy\" (E (P \"Blair\" \"London\") (S (100000.0))) ([])) ([]))))"

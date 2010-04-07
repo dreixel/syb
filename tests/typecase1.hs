@@ -1,5 +1,7 @@
 {-# OPTIONS -fglasgow-exts #-}
 
+module Typecase1 (tests) where
+
 {-
 
 This test demonstrates type case as it lives in Data.Typeable.
@@ -7,6 +9,8 @@ We define a function f that converts typeables into strings in some way.
 Note: we only need Data.Typeable. Say: Dynamics are NOT involved.
 
 -}
+
+import Test.HUnit
 
 import Data.Typeable
 import Data.Maybe
@@ -44,8 +48,12 @@ f a = (maybe (maybe (maybe others
 --
 -- Test the type case
 --
-main = do 
-          putStrLn $ f (41::Int)
-          putStrLn $ f (88::Float)
-          putStrLn $ f (MyCons "42")
-          putStrLn $ f True
+tests = ( f (41::Int)
+        , f (88::Float)
+        , f (MyCons "42")
+        , f True) ~=? output
+
+output = ( "got an int, incremented: 42"
+         , "got a float, multiplied by .42: 36.96"
+         , "got a term: MyCons \"42\""
+         , "got something else: True")

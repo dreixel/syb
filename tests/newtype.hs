@@ -1,10 +1,15 @@
 {-# OPTIONS -fglasgow-exts #-}
 
+module Newtype (tests) where
+
 -- The type of a newtype should treat the newtype as opaque
 
-module Main where
+import Test.HUnit
+
 import Data.Generics
 
 newtype T = MkT Int deriving( Typeable )
 
-main = print (typeOf (undefined :: T))
+tests = show (typeOf (undefined :: T)) ~=? output
+
+output = "Newtype.T"

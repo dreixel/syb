@@ -1,12 +1,11 @@
 {-# OPTIONS -fglasgow-exts #-}
 
-{-
+module Labels (tests) where
 
-This module tests availability of field labels.
+-- This module tests availability of field labels.
 
--}
+import Test.HUnit
 
-module Main where
 import Data.Generics
 
 -- A datatype without labels
@@ -24,6 +23,8 @@ noLabels  = NoLabels  42 3.14
 yesLabels = YesLabels 42 3.14
 
 -- Main function for testing
-main = print $ ( constrFields $ toConstr noLabels
-               , constrFields $ toConstr yesLabels
-               )
+tests = ( constrFields $ toConstr noLabels
+        , constrFields $ toConstr yesLabels
+        ) ~=? output
+
+output = ([],["myint","myfloat"])

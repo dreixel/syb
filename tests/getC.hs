@@ -1,6 +1,10 @@
 {-# OPTIONS -fglasgow-exts #-}
 {-# LANGUAGE OverlappingInstances, UndecidableInstances #-}
 
+module GetC (tests) where
+
+import Test.HUnit
+
 {-
 
 Ralf Laemmel, 5 November 2004 
@@ -28,12 +32,13 @@ data T3 = T3! Int                             deriving (Typeable, Data)
 
 
 -- Test cases
-main = do 
-          print $ isC T1a (T1a 1 "foo")   -- typechecks, returns True
-          print $ isC T1a (T1b "foo" 1)   -- typechecks, returns False
-          print $ isC T3  (T3 42)         -- works for strict data too
---        print $ isC T2b (T1b "foo" 1)   -- must not typecheck
+tests = show [ isC T1a (T1a 1 "foo")   -- typechecks, returns True
+             , isC T1a (T1b "foo" 1)   -- typechecks, returns False
+             , isC T3  (T3 42)]        -- works for strict data too
+        ~=? output
+-- err = show $ isC T2b (T1b "foo" 1)  -- must not typecheck
 
+output = show [True,False,True]
 
 --
 -- We look at a datum a.
