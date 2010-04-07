@@ -19,11 +19,12 @@ What's new
 ----------
 
 The biggest improvements from version 0.1 are:
-  * The reintegration of the testsuite;
-  * The introduction of two new generic producers ('empty' and 
-    'constrs'). The former produces an empty value of a given datatype, while
-    the latter produces a list of values of a datatype, each using a different
-    constructor.
+  * Reintegration of the testsuite;
+  * Introduction of the Generics.SYB.* module hierarchy (as synonyms for their
+    Data.Generics.* counterparts);
+  * Introduction of two new generic producers ('empty' and 'constrs'). The
+    former produces an empty value of a given datatype, while the latter
+    produces a list of values of a datatype, each using a different constructor.
 
 
 Features
