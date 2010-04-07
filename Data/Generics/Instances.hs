@@ -40,6 +40,8 @@ import GHC.IOBase            -- So we can give Data instance for IO, Handle
 import GHC.Stable            -- So we can give Data instance for StablePtr
 import GHC.ST                -- So we can give Data instance for ST
 import GHC.Conc              -- So we can give Data instance for TVar
+import Data.IORef            -- So we can give Data instance for IORef
+import Control.Concurrent    -- So we can give Data instance for MVar
 #else
 # ifdef __HUGS__
 import Hugs.Prelude( Ratio(..) )
@@ -49,8 +51,6 @@ import Foreign.Ptr
 import Foreign.ForeignPtr
 import Foreign.StablePtr
 import Control.Monad.ST
-import Control.Concurrent
-import Data.IORef
 #endif
 
 #include "Typeable.h"
