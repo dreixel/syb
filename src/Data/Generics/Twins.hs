@@ -27,6 +27,7 @@ module Data.Generics.Twins (
         gmapAccumQl,
         gmapAccumQr,
         gmapAccumQ,
+        gmapAccumA,
 
         -- * Mapping combinators for twin traversal
         gzipWithT,
@@ -51,6 +52,8 @@ import Data.Generics.Aliases
 #ifdef __GLASGOW_HASKELL__
 import Prelude hiding ( GT )
 #endif
+
+import Control.Applicative (Applicative(..))
 
 ------------------------------------------------------------------------------
 
@@ -103,6 +106,22 @@ gmapAccumT f a0 d0 = let (a1, d1) = gfoldlAccum k z a0 d0
   k a (ID c) d = let (a',d') = f a d
                   in (a', ID (c d'))
   z a x = (a, ID x)
+
+
+-- | Applicative version
+gmapAccumA :: forall b d a. (Data d, Applicative a)
+           => (forall e. Data e => b -> e -> (b, a e))
+           -> b -> d -> (b, a d)
+gmapAccumA f a0 d0 = gfoldlAccum k z a0 d0
+    where
+      k :: forall d' e. (Data d') =>
+           b -> a (d' -> e) -> d' -> (b, a e)
+      k a c d = let (a',d') = f a d
+                    c' = c <*> d'
+                in (a', c')
+      z :: forall t c a'. (Applicative a') =>
+           t -> c -> (t, a' c)
+      z a x = (a, pure x)
 
 
 -- | gmapM with accumulation
