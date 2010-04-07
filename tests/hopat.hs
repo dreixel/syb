@@ -1,5 +1,7 @@
 {-# OPTIONS -fglasgow-exts #-}
 
+module HOPat (tests) where
+
 {-
 
 This module is in reply to an email by C. Barry Jay
@@ -10,15 +12,16 @@ our setting.
 
 -}
 
-module Main where
+import Test.HUnit
+
 import Data.Generics
 
 
 -- Sample datatypes
 data T1 = T1a Int | T1b Float
-        deriving (Show, Typeable, Data)
+        deriving (Show, Eq, Typeable, Data)
 data T2 = T2a T1 T2 | T2b
-        deriving (Show, Typeable, Data)
+        deriving (Show, Eq, Typeable, Data)
 
 -- Eliminate a constructor if feasible
 elim' :: (Data y, Data x) => Constr -> y -> Maybe x
@@ -50,13 +53,15 @@ visitor c f = everywhere (mkT g)
 
 
 -- Main function for testing
-main = print $   ( (elim' (toConstr t1a) t1a) :: Maybe Int
-               , ( (elim' (toConstr t1a) t1b) :: Maybe Int
-               , ( (elim  T1a t1a)            :: Maybe Int
-               , ( (elim  T1a t1b)            :: Maybe Int
-               , ( (visitor T1a ((+) 46) t2)  :: T2
-               )))))
+tests = ( (  elim' (toConstr t1a) t1a) :: Maybe Int
+        , ( (elim' (toConstr t1a) t1b) :: Maybe Int
+        , ( (elim  T1a t1a)            :: Maybe Int
+        , ( (elim  T1a t1b)            :: Maybe Int
+        , ( (visitor T1a ((+) 46) t2)  :: T2
+        ))))) ~=? output
  where
    t1a = T1a 42
    t1b = T1b 3.14
    t2  = T2a t1a (T2a t1a T2b)
+
+output = (Just 42,(Nothing,(Just 42,(Nothing,T2a (T1a 88) (T2a (T1a 88) T2b)))))

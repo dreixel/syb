@@ -4,7 +4,8 @@
 -- These are downscaled versions of library functionality or real test cases.
 -- We just wanted to typecheck the fragments as shown in the paper.
 
-module Main where
+module Encode () where
+
 import Data.Generics
 
 data Bit = Zero | One
@@ -78,8 +79,3 @@ data2bits'' t = runEnc (emit t)
 emit :: Data a => a -> EncM ()
 emit t = do { emitCon (dataTypeOf t) (toConstr t) 
             ; sequence_ (gmapQ emit t) }
-
-
-------------------------------------------------------------------------------
-
-main = undefined

@@ -1,5 +1,7 @@
 {-# OPTIONS -fglasgow-exts #-}
 
+module Perm (tests) where
+
 {-
 
 This module illustrates permutation phrases.
@@ -7,7 +9,8 @@ Disclaimer: this is a perhaps naive, certainly undebugged example.
 
 -}
 
-module Main where
+import Test.HUnit
+
 import Control.Monad
 import Data.Generics
 
@@ -15,9 +18,9 @@ import Data.Generics
 -- We want to read terms of type T3 regardless of the order T1 and T2.
 ---------------------------------------------------------------------------
 
-data T1 = T1       deriving (Show, Typeable, Data)
-data T2 = T2       deriving (Show, Typeable, Data)
-data T3 = T3 T1 T2 deriving (Show, Typeable, Data)
+data T1 = T1       deriving (Show, Eq, Typeable, Data)
+data T2 = T2       deriving (Show, Eq, Typeable, Data)
+data T3 = T3 T1 T2 deriving (Show, Eq, Typeable, Data)
 
 
 ---------------------------------------------------------------------------
@@ -113,10 +116,12 @@ buildT = result
 -- The main function for testing
 ---------------------------------------------------------------------------
 
-main = print
+tests =
      ( runReadT buildT ["T1"] :: Maybe T1           -- should parse fine
    , ( runReadT buildT ["T2"] :: Maybe T2           -- should parse fine
    , ( runReadT buildT ["T3","T1","T2"] :: Maybe T3 -- should parse fine
    , ( runReadT buildT ["T3","T2","T1"] :: Maybe T3 -- should parse fine
    , ( runReadT buildT ["T3","T2","T2"] :: Maybe T3 -- should fail
-   )))))
+   ))))) ~=? output
+
+output = (Just T1,(Just T2,(Just (T3 T1 T2),(Just (T3 T1 T2),Nothing))))

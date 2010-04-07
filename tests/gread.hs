@@ -1,5 +1,7 @@
 {-# OPTIONS -fglasgow-exts #-}
 
+module GRead (tests) where
+
 {-
 
 The following examples achieve branch coverage for the various
@@ -10,7 +12,8 @@ see str5.
 
 -}
 
-module Main where
+import Test.HUnit
+
 import Data.Generics
 
 str1 = "(True)"     -- reads fine as a Bool
@@ -21,7 +24,7 @@ str5 = "( 2 ) ..."  -- could be an Int with some trailing left-over
 str6 = "([])"       -- test empty list
 str7 = "((:)" ++ " " ++ str4 ++ " " ++ str6 ++ ")" 
 
-main = print ( ( [ gread str1,
+tests = show ( ( [ gread str1,
                    gread str2,
                    gread str3
                  ]
@@ -34,6 +37,9 @@ main = print ( ( [ gread str1,
                )
              :: ( [[(Bool,  String)]]
                 , [[(Int,   String)]]
-	        , [[([Int], String)]]
+                , [[([Int], String)]]
                 ) 
-             )
+             ) ~=? output
+
+output = show 
+           ([[(True,"")],[],[]],[[(1,"")],[(2,"...")]],[[([],"")],[([1],"")]])

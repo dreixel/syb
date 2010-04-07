@@ -1,5 +1,7 @@
 {-# OPTIONS -fglasgow-exts #-}
 
+module GRead2 () where
+
 {-
 
 For the discussion in the 2nd boilerplate paper,
@@ -8,7 +10,6 @@ For the full/real story see Data.Generics.Text.
 
 -}
 
-module Main where
 import Data.Generics
 
 gread :: Data a => String -> Maybe a
@@ -48,12 +49,12 @@ parseConstr ty = D (\s ->
 readM :: forall a. Data a => DecM a
 readM = read
       where
-	read :: DecM a
-	read = do { let val = argOf read
-           	  ; let ty  = dataTypeOf val
-           	  ; constr <- parseConstr ty
-           	  ; let con::a = fromConstr constr
-           	  ; gmapM (\_ -> readM) con }
+        read :: DecM a
+        read = do { let val = argOf read
+                  ; let ty  = dataTypeOf val
+                  ; constr <- parseConstr ty
+                  ; let con::a = fromConstr constr
+                  ; gmapM (\_ -> readM) con }
 
 argOf :: c a -> a
 argOf = undefined
@@ -63,5 +64,3 @@ yareadM = do { let ty = dataTypeOf (undefined::a)
              ; constr <- parseConstr ty
              ; let con::a = fromConstr constr
              ; gmapM (\_ -> yareadM) con }
-
-main = print $ True

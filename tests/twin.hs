@@ -1,5 +1,7 @@
 {-# OPTIONS -fglasgow-exts #-}
  
+module Twin (tests) where
+
 {-
 
 For the discussion in the 2nd boilerplate paper,
@@ -12,7 +14,8 @@ See the paper for an explanation.
  
 -}
 
-module Main where
+import Test.HUnit
+
 import Data.Generics hiding (GQ,gzipWithQ,geq)
 
 geq' :: GenericQ (GenericQ Bool)
@@ -78,8 +81,10 @@ gApplyQ' qs t = reverse (snd (gfoldlQ k z t))
 
 -----------------------------------------------------------------------------
 
-main = print $ ( geq   [True,True] [True,True]
-               , geq   [True,True] [True,False]
-               , geq'' [True,True] [True,True]
-               , geq'' [True,True] [True,False]
-               )
+tests = ( geq   [True,True] [True,True]
+        , geq   [True,True] [True,False]
+        , geq'' [True,True] [True,True]
+        , geq'' [True,True] [True,False]
+        ) ~=? output
+
+output = (True,False,True,False)

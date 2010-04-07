@@ -1,8 +1,10 @@
 {-# OPTIONS -fglasgow-exts #-}
 
+module Polymatch () where
+
+
 import Data.Typeable
 import Data.Generics
-
 
 
 -- Representation of kids
