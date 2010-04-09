@@ -47,15 +47,11 @@ Requirements
 ------------
 
 * GHC 6.10.1 or later
-* Cabal 1.2.1 or later
+* Cabal 1.6 or later
 
 
 Download
 --------
-
-With cabal-install:
-
-  cabal install syb
 
 Get the package:
 
