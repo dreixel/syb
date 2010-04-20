@@ -1,5 +1,5 @@
 name:                 syb
-version:              0.2
+version:              0.2.1
 license:              BSD3
 license-file:         LICENSE
 author:               Ralf Lammel, Simon Peyton Jones
@@ -9,7 +9,8 @@ bug-reports:          http://code.google.com/p/scrapyourboilerplate/issues/list
 synopsis:             Scrap Your Boilerplate
 description:
     This package contains the generics system described in the
-    /Scrap Your Boilerplate/ papers (see <http://www.cs.vu.nl/boilerplate/>).
+    /Scrap Your Boilerplate/ papers (see 
+    <http://www.cs.uu.nl/wiki/GenericProgramming/SYB>).
     It defines the @Data@ class of types permitting folding and unfolding
     of constructor applications, instances of this class for primitive
     types, and a variety of traversals.
