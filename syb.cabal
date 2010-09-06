@@ -25,7 +25,7 @@ extra-source-files:     tests/*.hs
 
 Library {
   hs-source-dirs:         src
-  build-depends:          base >= 4.0 && < 4.3
+  build-depends:          base >= 4.0 && < 4.4
   exposed-modules:        Data.Generics,
                           Data.Generics.Basics,
                           Data.Generics.Instances,
