@@ -1,5 +1,5 @@
 name:                 syb
-version:              0.2.2
+version:              0.3
 license:              BSD3
 license-file:         LICENSE
 author:               Ralf Lammel, Simon Peyton Jones
@@ -19,7 +19,7 @@ category:               Generics
 stability:              provisional
 build-type:             Custom
 cabal-version:          >= 1.6
-tested-with:            GHC == 6.10.4, GHC == 6.12.3, GHC == 7.0.0.20100925
+tested-with:            GHC == 6.10.4, GHC == 6.12.3, GHC == 7.0.1
 
 extra-source-files:     tests/*.hs
 
