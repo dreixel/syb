@@ -103,8 +103,7 @@ everything :: (r -> r -> r) -> GenericQ r -> GenericQ r
 -- use gmapQ to recurse into immediate subterms;
 -- use ordinary foldl to reduce list of intermediate results
 -- 
-everything k f x
-  = foldl k (f x) (gmapQ (everything k f) x)
+everything k f x = foldl k (f x) (gmapQ (everything k f) x)
 
 -- | Variation of "everything" with an added stop condition
 everythingBut :: (r -> r -> r) -> GenericQ (r, Bool) -> GenericQ r
@@ -115,8 +114,7 @@ everythingBut k f x = let (v, stop) = f x
 
 -- | Get a list of all entities that meet a predicate
 listify :: Typeable r => (r -> Bool) -> GenericQ [r]
-listify p
-  = everything (++) ([] `mkQ` (\x -> if p x then [x] else []))
+listify p = everything (++) ([] `mkQ` (\x -> if p x then [x] else []))
 
 
 -- | Look up a subterm by means of a maybe-typed filter
