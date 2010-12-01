@@ -46,6 +46,7 @@ module Data.Generics.Aliases (
         choiceQ,
 
         -- * Type extension for unary type constructors
+        ext1,
         ext1T,
         ext1M,
         ext1Q,
