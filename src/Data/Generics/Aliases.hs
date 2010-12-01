@@ -51,7 +51,14 @@ module Data.Generics.Aliases (
         ext1M,
         ext1Q,
         ext1R,
-        ext1B
+        ext1B,
+
+        -- * Type extension for binary type constructors
+        ext2T,
+        ext2M,
+        ext2Q,
+        ext2R,
+        ext2B
 
   ) where
 
@@ -305,12 +312,8 @@ recoverQ r f = f `choiceQ` const (return r)
 
 
 ------------------------------------------------------------------------------
---
 --      Type extension for unary type constructors
---
 ------------------------------------------------------------------------------
-
-
 
 -- | Flexible type extension
 ext1 :: (Data a, Typeable1 t)
@@ -358,6 +361,57 @@ ext1B :: (Data a, Typeable1 t)
       -> (forall b. Data b => (t b))
       -> a
 ext1B def ext = unB ((B def) `ext1` (B ext))
+
+------------------------------------------------------------------------------
+--      Type extension for binary type constructors
+------------------------------------------------------------------------------
+
+-- | Flexible type extension
+ext2 :: (Data a, Typeable2 t)
+     => c a
+     -> (forall d1 d2. (Data d1, Data d2) => c (t d1 d2))
+     -> c a
+ext2 def ext = maybe def id (dataCast2 ext)
+
+
+-- | Type extension of transformations for unary type constructors
+ext2T :: (Data d, Typeable2 t)
+      => (forall e. Data e => e -> e)
+      -> (forall d1 d2. (Data d1, Data d2) => t d1 d2 -> t d1 d2)
+      -> d -> d
+ext2T def ext = unT ((T def) `ext2` (T ext))
+
+
+-- | Type extension of monadic transformations for type constructors
+ext2M :: (Monad m, Data d, Typeable2 t)
+      => (forall e. Data e => e -> m e)
+      -> (forall d1 d2. (Data d1, Data d2) => t d1 d2 -> m (t d1 d2))
+      -> d -> m d
+ext2M def ext = unM ((M def) `ext2` (M ext))
+
+
+-- | Type extension of queries for type constructors
+ext2Q :: (Data d, Typeable2 t)
+      => (d -> q)
+      -> (forall d1 d2. (Data d1, Data d2) => t d1 d2 -> q)
+      -> d -> q
+ext2Q def ext = unQ ((Q def) `ext2` (Q ext))
+
+
+-- | Type extension of readers for type constructors
+ext2R :: (Monad m, Data d, Typeable2 t)
+      => m d
+      -> (forall d1 d2. (Data d1, Data d2) => m (t d1 d2))
+      -> m d
+ext2R def ext = unR ((R def) `ext2` (R ext))
+
+
+-- | Type extension of builders for type constructors
+ext2B :: (Data a, Typeable2 t)
+      => a
+      -> (forall d1 d2. (Data d1, Data d2) => (t d1 d2))
+      -> a
+ext2B def ext = unB ((B def) `ext2` (B ext))
 
 ------------------------------------------------------------------------------
 --
