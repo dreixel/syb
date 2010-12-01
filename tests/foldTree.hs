@@ -1,4 +1,5 @@
-{-# OPTIONS -fglasgow-exts #-}
+{-# LANGUAGE DeriveDataTypeable  #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 
 {-
 
@@ -45,19 +46,29 @@ mytree :: Tree Int Int
 mytree = Fork (WithWeight (Leaf 42) 1)
               (WithWeight (Fork (Leaf 88) (Leaf 37)) 2)
 
+-- A less typical tree, used for testing everythingBut
+mytree' :: Tree Int Int
+mytree' = Fork (Leaf 42)
+               (WithWeight (Fork (Leaf 88) (Leaf 37)) 2)
+
 
 -- Print everything like an Int in mytree
 -- In fact, we show two attempts:
 --   1. print really just everything like an Int
 --   2. print everything wrapped with Leaf
 -- So (1.) confuses leafs and weights whereas (2.) does not.
--- 
+-- Additionally we test everythingBut, stopping when we see a WithWeight node
 tests = show ( listify (\(_::Int) -> True)         mytree
              , everything (++) ([] `mkQ` fromLeaf) mytree
+             , everythingBut (++) 
+                 (([],False) `mkQ` (\x -> (fromLeaf x, stop x))) mytree'
              ) ~=? output
   where
     fromLeaf :: Tree Int Int -> [Int]
     fromLeaf (Leaf x) = [x]
-    fromLeaf _ = []
+    fromLeaf _        = []
+    stop :: (Data a, Data b) => Tree a b -> Bool
+    stop (WithWeight _ _) = True
+    stop _                = False
 
-output = "([42,1,88,37,2],[42,88,37])"
+output = "([42,1,88,37,2],[42,88,37],[42])"
