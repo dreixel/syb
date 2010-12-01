@@ -8,6 +8,7 @@ import qualified Bits
 import qualified Builders
 import qualified Datatype
 import qualified Ext1
+import qualified Ext2
 import qualified FoldTree
 import qualified FreeNames
 import qualified GEq
@@ -70,6 +71,7 @@ tests =
            , GenUpTo.tests
            , FreeNames.tests
            , Ext1.tests
+           , Ext2.tests
            , Bits.tests
            , Builders.tests
            ]
