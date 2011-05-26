@@ -1,4 +1,6 @@
 {-# OPTIONS_GHC -cpp                  #-}
+{-# LANGUAGE DeriveDataTypeable       #-}
+{-# LANGUAGE StandaloneDeriving       #-}
 
 -----------------------------------------------------------------------------
 -- |
