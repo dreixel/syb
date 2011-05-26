@@ -21,7 +21,8 @@ build-type:             Custom
 cabal-version:          >= 1.6
 tested-with:            GHC == 6.10.4, GHC == 6.12.3, GHC == 7.0.1
 
-extra-source-files:     tests/*.hs
+extra-source-files:     tests/*.hs,
+                        README
 
 Library {
   hs-source-dirs:         src
