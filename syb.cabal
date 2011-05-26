@@ -25,7 +25,7 @@ extra-source-files:     tests/*.hs
 
 Library {
   hs-source-dirs:         src
-  build-depends:          base >= 4.0 && < 4.4
+  build-depends:          base >= 4.0 && < 4.4, containers >= 0.4 && < 0.5
   exposed-modules:        Data.Generics,
                           Data.Generics.Basics,
                           Data.Generics.Instances,
@@ -34,6 +34,7 @@ Library {
                           Data.Generics.Text,
                           Data.Generics.Twins,
                           Data.Generics.Builders,
+                          Data.Generics.GPS,
                           
                           Generics.SYB,
                           Generics.SYB.Basics,
@@ -42,7 +43,8 @@ Library {
                           Generics.SYB.Schemes,
                           Generics.SYB.Text,
                           Generics.SYB.Twins,
-                          Generics.SYB.Builders
+                          Generics.SYB.Builders,
+                          Generics.SYB.GPS
 
   extensions:             CPP, Rank2Types, ScopedTypeVariables
 
