@@ -31,12 +31,10 @@ module Data.Generics (
   module Data.Generics.Builders,  -- term builders
 
 #ifdef __GLASGOW_HASKELL__
-#if __GLASGOW_HASKELL__ < 701
 #ifndef __HADDOCK__
         -- Data types for the sum-of-products type encoding;
         -- included for backwards compatibility; maybe obsolete.
         (:*:)(..), (:+:)(..), Unit(..)
-#endif
 #endif
 #endif
 
@@ -45,12 +43,10 @@ module Data.Generics (
 ------------------------------------------------------------------------------
 
 #ifdef __GLASGOW_HASKELL__
-#if __GLASGOW_HASKELL__ < 701
 #ifndef __HADDOCK__
         -- Data types for the sum-of-products type encoding;
         -- included for backwards compatibility; maybe obsolete.
 import GHC.Base ( (:*:)(..), (:+:)(..), Unit(..) )
-#endif
 #endif
 #endif
 
