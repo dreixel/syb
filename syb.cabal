@@ -1,5 +1,5 @@
 name:                 syb
-version:              0.3.2
+version:              0.3.3
 license:              BSD3
 license-file:         LICENSE
 author:               Ralf Lammel, Simon Peyton Jones
@@ -26,7 +26,7 @@ extra-source-files:     tests/*.hs,
 
 Library {
   hs-source-dirs:         src
-  build-depends:          base >= 4.0 && < 4.4
+  build-depends:          base >= 4.0 && < 4.5
   exposed-modules:        Data.Generics,
                           Data.Generics.Basics,
                           Data.Generics.Instances,
