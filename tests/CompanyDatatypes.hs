@@ -2,7 +2,7 @@
 
 module CompanyDatatypes where
 
-import Data.Generics hiding (Unit)
+import Data.Generics (Data, Typeable)
 
 -- The organisational structure of a company
 
