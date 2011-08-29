@@ -8,7 +8,7 @@ everywhere and everything), as well as generic read, generic show and generic
 equality (i.e., gread, gshow, and geq). This approach is based on just a few 
 primitives for type-safe cast and processing constructor applications. 
 
-It was originally developed by Ralf Lämmel and Simon Peyton Jones. Since then, 
+It was originally developed by Ralf LÃ¤mmel and Simon Peyton Jones. Since then,
 many people have contributed with research relating to SYB or its applications. 
 
 More information is available on the webpage: 
