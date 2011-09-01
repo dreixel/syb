@@ -41,6 +41,7 @@
 
 
 module Data.Generics.GPS(
+    module Data.Data,
     everything, everywhere,
      GenericDomainQ, apQ, asQ, mkQ, extQ, ext1Q,
      -- gmapQ, apQWithMap,
@@ -48,6 +49,8 @@ module Data.Generics.GPS(
      GenericDomainT, apT, mkT, extT,
      -- gmapT
   ) where
+
+import Data.Data
 
 import Data.Generics hiding (everything, everywhere, mkQ, extQ, ext1Q, gmapQ, mkT, extT, gmapT, unGQ)
 import qualified Data.Generics as DG(mkQ, extQ, ext1Q, gmapQ, mkT, extT, gmapT)
