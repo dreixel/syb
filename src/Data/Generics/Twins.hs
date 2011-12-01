@@ -12,7 +12,7 @@
 -- Portability :  non-portable (local universal quantification)
 --
 -- \"Scrap your boilerplate\" --- Generic programming in Haskell 
--- See <http://www.cs.vu.nl/boilerplate/>. The present module 
+-- See <http://www.cs.uu.nl/wiki/GenericProgramming/SYB>. The present module 
 -- provides support for multi-parameter traversal, which is also 
 -- demonstrated with generic operations like equality.
 --

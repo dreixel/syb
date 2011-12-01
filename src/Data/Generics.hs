@@ -11,12 +11,9 @@
 -- Portability :  non-portable (uses Data.Generics.Basics)
 --
 -- \"Scrap your boilerplate\" --- Generic programming in Haskell 
--- See <http://www.cs.vu.nl/boilerplate/>. To scrap your boilerplate it
--- is sufficient to import the present module, which simply re-exports all
--- themes of the Data.Generics library.
---
--- For more information, please visit the new
--- SYB wiki: <http://www.cs.uu.nl/wiki/bin/view/GenericProgramming/SYB>.
+-- See <http://www.cs.uu.nl/wiki/GenericProgramming/SYB>. To scrap your
+-- boilerplate it is sufficient to import the present module, which simply
+-- re-exports all themes of the Data.Generics library.
 --
 -----------------------------------------------------------------------------
 

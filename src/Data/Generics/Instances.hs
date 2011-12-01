@@ -13,14 +13,11 @@
 -- Portability :  non-portable (uses Data.Data)
 --
 -- \"Scrap your boilerplate\" --- Generic programming in Haskell 
--- See <http://www.cs.vu.nl/boilerplate/>. The present module
+-- See <http://www.cs.uu.nl/wiki/GenericProgramming/SYB>. The present module
 -- contains thirteen 'Data' instances which are considered dubious (either
 -- because the types are abstract or just not meant to be traversed).
 -- Instances in this module might change or disappear in future releases
 -- of this package. 
---
--- For more information, please visit the new
--- SYB wiki: <http://www.cs.uu.nl/wiki/bin/view/GenericProgramming/SYB>.
 --
 -- (This module does not export anything. It really just defines instances.)
 --

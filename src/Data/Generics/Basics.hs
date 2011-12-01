@@ -9,13 +9,10 @@
 -- Portability :  non-portable (local universal quantification)
 --
 -- \"Scrap your boilerplate\" --- Generic programming in Haskell.
--- See <http://www.cs.vu.nl/boilerplate/>. This module provides
+-- See <http://www.cs.uu.nl/wiki/GenericProgramming/SYB>. This module provides
 -- the 'Data' class with its primitives for generic programming,
 -- which is now defined in @Data.Data@. Therefore this module simply
 -- re-exports @Data.Data@.
---
--- For more information, please visit the new
--- SYB wiki: <http://www.cs.uu.nl/wiki/bin/view/GenericProgramming/SYB>.
 --
 -----------------------------------------------------------------------------
 
