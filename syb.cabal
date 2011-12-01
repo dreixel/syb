@@ -1,8 +1,8 @@
 name:                 syb
-version:              0.3.4
+version:              0.3.5
 license:              BSD3
 license-file:         LICENSE
-author:               Ralf Lammel, Simon Peyton Jones
+author:               Ralf Lammel, Simon Peyton Jones, Jose Pedro Magalhaes
 maintainer:           generics@haskell.org
 homepage:             http://www.cs.uu.nl/wiki/GenericProgramming/SYB
 bug-reports:          http://code.google.com/p/scrapyourboilerplate/issues/list
@@ -23,6 +23,10 @@ tested-with:            GHC == 6.10.4, GHC == 6.12.3, GHC == 7.0.1
 
 extra-source-files:     tests/*.hs,
                         README
+
+source-repository head
+  type:                 git
+  location:             https://github.com/dreixel/syb
 
 Library {
   hs-source-dirs:         src
