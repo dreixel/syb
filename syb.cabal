@@ -30,7 +30,7 @@ source-repository head
 
 Library {
   hs-source-dirs:         src
-  build-depends:          base >= 4.0 && < 4.5
+  build-depends:          base >= 4.0 && < 4.6
   exposed-modules:        Data.Generics,
                           Data.Generics.Basics,
                           Data.Generics.Instances,
