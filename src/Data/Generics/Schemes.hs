@@ -1,5 +1,5 @@
 {-# OPTIONS_GHC -cpp                  #-}
-{-# LANGUAGE Rank2Types               #-}
+{-# LANGUAGE RankNTypes               #-}
 {-# LANGUAGE ScopedTypeVariables      #-}
 
 -----------------------------------------------------------------------------
