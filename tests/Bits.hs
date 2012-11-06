@@ -38,8 +38,8 @@ import Test.HUnit
 
 import Data.Generics
 import Data.Char
-import Maybe
-import Monad
+import Data.Maybe
+import Control.Monad
 import CompanyDatatypes
 
 
