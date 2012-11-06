@@ -1,6 +1,4 @@
-{-# OPTIONS_GHC -cpp                  #-}
-{-# LANGUAGE RankNTypes               #-}
-
+{-# LANGUAGE RankNTypes, CPP #-}
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Data.Generics.Aliases

@@ -1,7 +1,4 @@
-{-# OPTIONS_GHC -cpp                  #-}
-{-# LANGUAGE RankNTypes               #-}
-{-# LANGUAGE ScopedTypeVariables      #-}
-
+{-# LANGUAGE RankNTypes, ScopedTypeVariables, CPP #-}
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Data.Generics.Schemes

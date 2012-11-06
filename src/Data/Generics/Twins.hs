@@ -1,6 +1,4 @@
-{-# OPTIONS_GHC -cpp                  #-}
-{-# LANGUAGE RankNTypes               #-}
-
+{-# LANGUAGE RankNTypes, ScopedTypeVariables, CPP #-}
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Data.Generics.Twins

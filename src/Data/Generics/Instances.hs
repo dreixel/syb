@@ -1,7 +1,4 @@
-{-# OPTIONS_GHC -cpp                  #-}
-{-# LANGUAGE DeriveDataTypeable       #-}
-{-# LANGUAGE StandaloneDeriving       #-}
-
+{-# LANGUAGE DeriveDataTypeable, StandaloneDeriving, CPP #-}
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Data.Generics.Instances

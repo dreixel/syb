@@ -27,7 +27,7 @@ source-repository head
   type:                 git
   location:             https://github.com/dreixel/syb
 
-Library {
+Library
   hs-source-dirs:         src
   build-depends:          base >= 4.0 && < 5.0
   exposed-modules:        Data.Generics,
@@ -48,10 +48,7 @@ Library {
                           Generics.SYB.Twins,
                           Generics.SYB.Builders
 
-  extensions:             CPP, RankNTypes, ScopedTypeVariables
-
   if impl(ghc < 6.12) 
     ghc-options:          -package-name syb
   
   ghc-options:            -Wall
-}
