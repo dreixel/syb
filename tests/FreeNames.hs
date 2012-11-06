@@ -101,9 +101,7 @@ freeNames :: Data a => a -> [Name]
 freeNames x = ( (refsFun x)
                 `union`
                 (nub . concat . gmapQ freeNames) x
-              )
-              \\
-              decsFun x
+              ) \\ decsFun x
 
 {-
 
