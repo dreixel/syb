@@ -17,8 +17,8 @@ description:
 
 category:               Generics
 stability:              provisional
-build-type:             Custom
-cabal-version:          >= 1.6
+build-type:             Simple
+cabal-version:          >= 1.8
 
 extra-source-files:     tests/*.hs,
                         README
@@ -52,3 +52,13 @@ Library
     ghc-options:          -package-name syb
   
   ghc-options:            -Wall
+
+test-suite unit-tests
+  type:                   exitcode-stdio-1.0
+  hs-source-dirs:         tests
+  main-is:                Main.hs
+  build-depends:          base
+                        , syb
+                        , HUnit
+                        , containers
+                        , mtl
