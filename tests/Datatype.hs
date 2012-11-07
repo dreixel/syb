@@ -1,7 +1,7 @@
 {-# OPTIONS -fglasgow-exts #-}
 
 -- These are simple tests to observe (data)type representations.
-module Datatype (tests) where
+module Datatype  where
 
 import Test.HUnit
 
@@ -9,8 +9,7 @@ import Data.Tree
 import Data.Generics
 
 -- A simple polymorphic datatype
-data Data a =>
-     MyDataType a = MyDataType a
+data MyDataType a = MyDataType a
                   deriving (Typeable, Data)
 
 
@@ -19,7 +18,7 @@ myTerm     = undefined :: MyDataType Int
 myTypeRep  = typeOf myTerm            -- type representation in Typeable
 myTyCon    = typeRepTyCon myTypeRep   -- type constructor via Typeable
 myDataType = dataTypeOf myTerm        -- datatype representation in Data
-myString1  = tyConString myTyCon      -- type constructor via Typeable
+myString1  = tyConName myTyCon        -- type constructor via Typeable
 myString2  = dataTypeName myDataType  -- type constructor via Data
 
 -- Main function for testing
@@ -32,4 +31,4 @@ tests =  show ( myTypeRep
             ))))))
        ~=? output
 
-output = "(Datatype.MyDataType Int,(DataType {tycon = \"Datatype.MyDataType\", datarep = AlgRep [MyDataType]},(\"Datatype\",(\"MyDataType\",(\"Datatype\",\"MyDataType\")))))"
+output = "(MyDataType Int,(DataType {tycon = \"Datatype.MyDataType\", datarep = AlgRep [MyDataType]},(\"\",(\"MyDataType\",(\"Datatype\",\"MyDataType\")))))"

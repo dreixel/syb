@@ -12,4 +12,4 @@ newtype T = MkT Int deriving( Typeable )
 
 tests = show (typeOf (undefined :: T)) ~=? output
 
-output = "Newtype.T"
+output = "T"
