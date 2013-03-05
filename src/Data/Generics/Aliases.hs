@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Data.Generics.Aliases
--- Copyright   :  (c) The University of Glasgow, CWI 2001--2004
+-- Copyright   :  (c) The University of Glasgow, CWI 2001--2013
 -- License     :  BSD-style (see the LICENSE file)
 -- 
 -- Maintainer  :  generics@haskell.org
@@ -312,6 +312,11 @@ recoverQ r f = f `choiceQ` const (return r)
 ------------------------------------------------------------------------------
 --      Type extension for unary type constructors
 ------------------------------------------------------------------------------
+
+#if __GLASGOW_HASKELL__ >= 707
+#define Typeable1 Typeable
+#define Typeable2 Typeable
+#endif
 
 -- | Flexible type extension
 ext1 :: (Data a, Typeable1 t)
