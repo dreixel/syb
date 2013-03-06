@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Data.Generics.Aliases
--- Copyright   :  (c) The University of Glasgow, CWI 2001--2013
+-- Copyright   :  (c) The University of Glasgow, CWI 2001--2004
 -- License     :  BSD-style (see the LICENSE file)
 -- 
 -- Maintainer  :  generics@haskell.org
