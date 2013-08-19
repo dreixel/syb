@@ -1,5 +1,6 @@
 {-# OPTIONS -fglasgow-exts #-}
 {-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE DeriveDataTypeable   #-}
 
 module NestedDatatypes () where
 
@@ -20,17 +21,7 @@ import Data.Generics
 
  
 -- A nested datatype
-data Nest a = Box a | Wrap (Nest [a])
-
-
--- The representation of the type constructor    
-nestTc = mkTyCon "Nest"
-
-
--- The Typeable instance for the nested datatype    
-instance Typeable1 Nest
-  where
-    typeOf1 n = mkTyConApp nestTc []
+data Nest a = Box a | Wrap (Nest [a]) deriving Typeable
 
 
 -- The Data instance for the nested datatype

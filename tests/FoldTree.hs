@@ -34,8 +34,7 @@ import Data.Generics
 
 
 -- A parameterised datatype for binary trees with data at the leafs
-data (Data a, Data w) =>
-     Tree a w = Leaf a
+data Tree a w = Leaf a
               | Fork (Tree a w) (Tree a w)
               | WithWeight (Tree a w) w  
        deriving (Typeable, Data)

@@ -29,7 +29,6 @@ import qualified Reify
 import qualified Strings
 import qualified Tree
 import qualified Twin
-import qualified Typeable
 import qualified Typecase1
 import qualified Typecase2
 import qualified Where
@@ -57,7 +56,6 @@ tests =
            , Newtype.tests
            , Perm.tests
            , Twin.tests
-           , Typeable.tests
            , Typecase1.tests
            , Typecase2.tests
            , Where.tests
