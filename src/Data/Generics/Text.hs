@@ -34,6 +34,7 @@ import Control.Monad
 import Data.Data
 import Data.Generics.Aliases
 import Text.ParserCombinators.ReadP
+import Text.Read.Lex
 
 ------------------------------------------------------------------------------
 
@@ -120,7 +121,7 @@ gread = readP_to_S gread'
                string "[]"     -- Compound lexeme "[]"
           <++  string "()"     -- singleton "()"
           <++  infixOp         -- Infix operator in parantheses
-          <++  readS_to_P lex  -- Ordinary constructors and literals
+          <++  hsLex           -- Ordinary constructors and literals
 
     -- Handle infix operators such as (:)
     infixOp :: ReadP String
