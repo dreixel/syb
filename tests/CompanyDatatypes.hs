@@ -27,7 +27,7 @@ genCom' :: Company
 genCom' = C [D "Research" lammel [PU joost, PU marlow],
              D "Strategy" blair   []]
 
-lammel, laemmel, joost, blair :: Employee
+lammel, laemmel, joost, marlow, blair :: Employee
 lammel  = E (P "Lammel" "Amsterdam") (S 8000)
 laemmel = E (P "Laemmel" "Amsterdam") (S 8000)
 joost   = E (P "Joost"   "Amsterdam") (S 1000)
