@@ -49,8 +49,6 @@ import Foreign.StablePtr
 import Control.Monad.ST
 #endif
 
-#include "Typeable.h"
-
 -- Version compatibility issues caused by #2760
 myMkNoRepType :: String -> DataType
 #if __GLASGOW_HASKELL__ >= 611
@@ -87,8 +85,10 @@ instance Data TyCon where
 
 
 ------------------------------------------------------------------------------
-
+#if __GLASGOW_HASKELL__ < 709
+#include "Typeable.h"
 INSTANCE_TYPEABLE0(DataType,dataTypeTc,"DataType")
+#endif
 
 instance Data DataType where
   toConstr _   = error "toConstr"
