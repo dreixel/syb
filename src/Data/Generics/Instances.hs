@@ -86,8 +86,7 @@ instance Data TyCon where
 
 ------------------------------------------------------------------------------
 #if __GLASGOW_HASKELL__ < 709
-#include "Typeable.h"
-INSTANCE_TYPEABLE0(DataType,dataTypeTc,"DataType")
+deriving instance Typeable DataType
 #endif
 
 instance Data DataType where
