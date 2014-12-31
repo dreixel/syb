@@ -4,14 +4,14 @@
 -- Module      :  Data.Generics.Twins
 -- Copyright   :  (c) The University of Glasgow, CWI 2001--2004
 -- License     :  BSD-style (see the LICENSE file)
--- 
+--
 -- Maintainer  :  generics@haskell.org
 -- Stability   :  experimental
 -- Portability :  non-portable (local universal quantification)
 --
--- \"Scrap your boilerplate\" --- Generic programming in Haskell 
--- See <http://www.cs.uu.nl/wiki/GenericProgramming/SYB>. The present module 
--- provides support for multi-parameter traversal, which is also 
+-- \"Scrap your boilerplate\" --- Generic programming in Haskell
+-- See <http://www.cs.uu.nl/wiki/GenericProgramming/SYB>. The present module
+-- provides support for multi-parameter traversal, which is also
 -- demonstrated with generic operations like equality.
 --
 -----------------------------------------------------------------------------
@@ -198,7 +198,7 @@ newtype Qr r a = Qr { unQr  :: r -> r }
 ------------------------------------------------------------------------------
 
 
--- | Twin map for transformation 
+-- | Twin map for transformation
 gzipWithT :: GenericQ (GenericT) -> GenericQ (GenericT)
 gzipWithT f x y = case gmapAccumT perkid funs y of
                     ([], c) -> c
@@ -209,7 +209,7 @@ gzipWithT f x y = case gmapAccumT perkid funs y of
 
 
 
--- | Twin map for monadic transformation 
+-- | Twin map for monadic transformation
 gzipWithM :: Monad m => GenericQ (GenericM m) -> GenericQ (GenericM m)
 gzipWithM f x y = case gmapAccumM perkid funs y of
                     ([], c) -> c

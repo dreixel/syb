@@ -4,17 +4,17 @@
 -- Module      :  Data.Generics.Instances
 -- Copyright   :  (c) The University of Glasgow, CWI 2001--2004
 -- License     :  BSD-style (see the LICENSE file)
--- 
+--
 -- Maintainer  :  generics@haskell.org
 -- Stability   :  experimental
 -- Portability :  non-portable (uses Data.Data)
 --
--- \"Scrap your boilerplate\" --- Generic programming in Haskell 
+-- \"Scrap your boilerplate\" --- Generic programming in Haskell
 -- See <http://www.cs.uu.nl/wiki/GenericProgramming/SYB>. The present module
 -- contains thirteen 'Data' instances which are considered dubious (either
 -- because the types are abstract or just not meant to be traversed).
 -- Instances in this module might change or disappear in future releases
--- of this package. 
+-- of this package.
 --
 -- (This module does not export anything. It really just defines instances.)
 --

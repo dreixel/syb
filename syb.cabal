@@ -9,7 +9,7 @@ bug-reports:          http://code.google.com/p/scrapyourboilerplate/issues/list
 synopsis:             Scrap Your Boilerplate
 description:
     This package contains the generics system described in the
-    /Scrap Your Boilerplate/ papers (see 
+    /Scrap Your Boilerplate/ papers (see
     <http://www.cs.uu.nl/wiki/GenericProgramming/SYB>).
     It defines the @Data@ class of types permitting folding and unfolding
     of constructor applications, instances of this class for primitive
@@ -38,7 +38,7 @@ Library
                           Data.Generics.Text,
                           Data.Generics.Twins,
                           Data.Generics.Builders,
-                          
+
                           Generics.SYB,
                           Generics.SYB.Basics,
                           Generics.SYB.Instances,
@@ -48,9 +48,9 @@ Library
                           Generics.SYB.Twins,
                           Generics.SYB.Builders
 
-  if impl(ghc < 6.12) 
+  if impl(ghc < 6.12)
     ghc-options:          -package-name syb
-  
+
   ghc-options:            -Wall
 
 test-suite unit-tests
