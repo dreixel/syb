@@ -39,6 +39,7 @@ import Test.HUnit
 import Data.Generics
 import Data.Char
 import Data.Maybe
+import Control.Applicative (Alternative(..), Applicative(..))
 import Control.Monad
 import CompanyDatatypes
 
@@ -129,6 +130,16 @@ showBin t
 data ReadB a = ReadB (Bin -> (Maybe a, Bin))
 unReadB (ReadB f) = f
 
+instance Functor ReadB where
+  fmap  = liftM
+
+instance Applicative ReadB where
+  pure  = return
+  (<*>) = ap
+
+instance Alternative ReadB where
+  (<|>) = mplus
+  empty = mzero
 
 -- It's a monad.
 instance Monad ReadB where
