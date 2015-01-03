@@ -10,6 +10,8 @@ For the full/real story see Data.Generics.Text.
 
 -}
 
+import Control.Applicative (Applicative(..))
+import Control.Monad (ap, liftM)
 import Data.Generics
 
 gread :: Data a => String -> Maybe a
@@ -17,6 +19,13 @@ gread input = runDec input readM
 
 -- The decoder monad
 newtype DecM a = D (String -> Maybe (String, a))
+
+instance Functor DecM where
+    fmap  = liftM
+
+instance Applicative DecM where
+    pure  = return
+    (<*>) = ap
 
 instance Monad DecM where
     return a = D (\s -> Just (s,a))
