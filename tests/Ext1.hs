@@ -1,4 +1,5 @@
 {-# OPTIONS -fglasgow-exts #-}
+{-# LANGUAGE CPP #-}
 
 module Ext1 (tests) where
 
@@ -11,8 +12,11 @@ This example records some experiments with polymorphic datatypes.
 import Test.HUnit
 
 import Data.Generics
+#if MIN_VERSION_base(4,8,0)
+import GHC.Base hiding(foldr)
+#else
 import GHC.Base
-
+#endif
 
 -- Unsafe coerce
 unsafeCoerce :: a -> b
