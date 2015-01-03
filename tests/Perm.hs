@@ -11,6 +11,7 @@ Disclaimer: this is a perhaps naive, certainly undebugged example.
 
 import Test.HUnit
 
+import Control.Applicative (Alternative(..), Applicative(..))
 import Control.Monad
 import Data.Generics
 
@@ -43,6 +44,17 @@ readT =  ReadT (\x -> if null x
                         then Nothing
                         else Just (tail x, head x)
                )
+
+instance Functor ReadT where
+  fmap  = liftM
+
+instance Applicative ReadT where
+  pure  = return
+  (<*>) = ap
+
+instance Alternative ReadT where
+  (<|>) = mplus
+  empty = mzero
 
 -- ReadT is a monad!
 instance Monad ReadT where
