@@ -13,6 +13,7 @@ Haskell data as homogeneous tree structures
 
 import Test.HUnit
 
+import Control.Applicative (Alternative(..), Applicative(..))
 import Control.Monad
 import Data.Maybe
 import Data.Generics
@@ -156,6 +157,17 @@ readX =  ReadX (\x -> if null x
                         then Nothing
                         else Just (tail x, head x)
                )
+
+instance Functor ReadX where
+  fmap  = liftM
+
+instance Applicative ReadX where
+  pure  = return
+  (<*>) = ap
+
+instance Alternative ReadX where
+  (<|>) = mplus
+  empty = mzero
 
 -- ReadX is a monad!
 instance Monad ReadX where
