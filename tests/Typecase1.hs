@@ -22,17 +22,17 @@ data MyTypeable = MyCons String deriving (Show, Typeable)
 -- Some function that performs type case.
 --
 f :: (Show a, Typeable a) => a -> String
-f a = (maybe (maybe (maybe others 
-      		mytys (cast a) )
-      		float (cast a) )
-      		int   (cast a) )
+f a = (maybe (maybe (maybe others
+              mytys (cast a) )
+              float (cast a) )
+              int   (cast a) )
 
  where
 
   -- do something with ints
   int :: Int -> String
   int a =  "got an int, incremented: " ++ show (a + 1)
-  
+
   -- do something with floats
   float :: Float -> String
   float a = "got a float, multiplied by .42: " ++ show (a * 0.42)

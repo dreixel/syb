@@ -21,11 +21,11 @@ import CompanyDatatypes
 
 ------------------------------------------------------------------------------
 --
---	Encoding types as values; some other way.
+--    Encoding types as values; some other way.
 --
 ------------------------------------------------------------------------------
 
-{- 
+{-
 
 This group provides a style of encoding types as values and using
 them. This style is seen as an alternative to the pragmatic style used
@@ -104,7 +104,7 @@ extType f x = maybe f id (cast x)
 
 ------------------------------------------------------------------------------
 --
---	Mapping operators to map over type structure
+--    Mapping operators to map over type structure
 --
 ------------------------------------------------------------------------------
 
@@ -116,7 +116,7 @@ gmapType :: ([(Constr,r')] -> r)
          -> GTypeFun r
 
 gmapType (o::[(Constr,r')] -> r) f (t::TypeVal a)
- = 
+ =
    o $ zip cons query
 
  where
@@ -125,7 +125,7 @@ gmapType (o::[(Constr,r')] -> r) f (t::TypeVal a)
   cons :: [Constr]
   cons  = if isAlgType $ dataTypeOf $ type2val t
            then dataTypeConstrs $ dataTypeOf $ type2val t
-	   else []
+       else []
 
   -- Query constructors
   query :: [r']
@@ -139,7 +139,7 @@ gmapConstr :: ([r] -> r')
            -> GTypeFun (Constr -> r')
 
 gmapConstr (o::[r] -> r') f (t::TypeVal a) c
- = 
+ =
    o $ query
 
  where
@@ -159,7 +159,7 @@ constrArity t c = glength $ withType (fromConstr c) t
 
 
 -- | Query all immediate subterm types of a given type
-gmapSubtermTypes :: (Data a, Typeable r) 
+gmapSubtermTypes :: (Data a, Typeable r)
          => (r -> r -> r) -> r -> GTypeFun r -> TypeVal a -> r
 gmapSubtermTypes o (r::r) f (t::TypeVal a)
   =
@@ -204,8 +204,8 @@ unGTypeFun' (GTypeFun' f) = f
 gmapSubtermTypesConst :: (Data a, Typeable r)
                       => (r -> r -> r)
                       -> r
-                      -> GTypeFun r 
-                      -> TypeVal a 
+                      -> GTypeFun r
+                      -> TypeVal a
                       -> r
 gmapSubtermTypesConst o (r::r) f (t::TypeVal a)
   =
@@ -224,7 +224,7 @@ gcountSubtermTypes = gmapSubtermTypes (+) (0::Int) (const 1)
 --   Weakness: no awareness of doubles.
 --   Strength: easy to comprehend as it uses gmapType and gmapConstr.
 
-_gmapSubtermTypes :: (Data a, Typeable r) 
+_gmapSubtermTypes :: (Data a, Typeable r)
                   => (r -> r -> r) -> r -> GTypeFun r -> TypeVal a -> r
 _gmapSubtermTypes o (r::r) f
   =
@@ -241,7 +241,7 @@ _gmapSubtermTypes o (r::r) f
 
 ------------------------------------------------------------------------------
 --
---	Some reifying relations on types
+--    Some reifying relations on types
 --
 ------------------------------------------------------------------------------
 
@@ -264,11 +264,11 @@ reachableType (a::TypeVal a) (b::TypeVal b)
 
 depthOfType :: GTypeFun Bool -> GTypeFun (Maybe (Constr, Maybe Int))
 depthOfType p (t::TypeVal a)
-  = 
+  =
     gmapType o f t
 
  where
-   
+
   o :: [(Constr, Maybe Int)] -> Maybe (Constr, Maybe Int)
   o l = if null l then Nothing else Just (foldr1 min' l)
 
@@ -322,7 +322,7 @@ depthOfConstr p (t::TypeVal a) c
 
 ------------------------------------------------------------------------------
 --
---	Build a shallow term 
+--    Build a shallow term
 --
 ------------------------------------------------------------------------------
 
@@ -331,29 +331,29 @@ shallowTerm cust
   = result
   where
     result :: forall b. Data b => b
-	-- Need a type signature here to bring 'b' into scope
+    -- Need a type signature here to bring 'b' into scope
     result = maybe gdefault id cust
-	 where
+     where
 
-	  -- The worker, also used for type disambiguation
-	  gdefault :: b
-	  gdefault = case con of
-	              Just (con, Just _) -> fromConstrB (shallowTerm cust) con
-	              _ -> error "no shallow term!"
+      -- The worker, also used for type disambiguation
+      gdefault :: b
+      gdefault = case con of
+                  Just (con, Just _) -> fromConstrB (shallowTerm cust) con
+                  _ -> error "no shallow term!"
 
-	  -- The type to be constructed
-	  typeVal :: TypeVal b
-	  typeVal = val2type gdefault
+      -- The type to be constructed
+      typeVal :: TypeVal b
+      typeVal = val2type gdefault
 
-          -- The most shallow constructor if any 
-          con :: Maybe (Constr, Maybe Int)
-          con = depthOfType (const True) typeVal
+      -- The most shallow constructor if any
+      con :: Maybe (Constr, Maybe Int)
+      con = depthOfType (const True) typeVal
 
 
 
 -- For testing shallowTerm
 shallowTermBase :: GenericR Maybe
-shallowTermBase =        Nothing 
+shallowTermBase =        Nothing
                   `extR` Just (1.23::Float)
                   `extR` Just ("foo"::String)
 

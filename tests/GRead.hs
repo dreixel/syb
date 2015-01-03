@@ -19,10 +19,10 @@ import Data.Generics
 str1 = "(True)"     -- reads fine as a Bool
 str2 = "(Treu)"     -- invalid constructor
 str3 = "True"       -- lacks parentheses
-str4 = "(1)"	    -- could be an Int
+str4 = "(1)"        -- could be an Int
 str5 = "( 2 ) ..."  -- could be an Int with some trailing left-over
 str6 = "([])"       -- test empty list
-str7 = "((:)" ++ " " ++ str4 ++ " " ++ str6 ++ ")" 
+str7 = "((:)" ++ " " ++ str4 ++ " " ++ str6 ++ ")"
 
 tests = show ( ( [ gread str1,
                    gread str2,
@@ -38,8 +38,8 @@ tests = show ( ( [ gread str1,
              :: ( [[(Bool,  String)]]
                 , [[(Int,   String)]]
                 , [[([Int], String)]]
-                ) 
+                )
              ) ~=? output
 
-output = show 
+output = show
            ([[(True,"")],[],[]],[[(1,"")],[(2,"...")]],[[([],"")],[([1],"")]])
