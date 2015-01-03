@@ -6,6 +6,8 @@
 
 module Encode () where
 
+import Control.Applicative (Applicative(..))
+import Control.Monad (ap, liftM)
 import Data.Generics
 
 data Bit = Zero | One
@@ -62,6 +64,11 @@ show_bin t st = (st2, con_bits ++ args_bits)
 -- Sec. 3.3 cont'd
 
 data EncM a   -- The encoder monad
+instance Functor EncM where
+  fmap  = liftM
+instance Applicative EncM where
+  pure  = return
+  (<*>) = ap
 instance Monad EncM
  where
   return  = undefined
