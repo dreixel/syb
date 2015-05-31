@@ -34,7 +34,8 @@ module Data.Generics.Twins (
 
         -- * Typical twin traversals
         geq,
-        gzip
+        gzip,
+        gcompare
 
   ) where
 
@@ -53,6 +54,7 @@ import Prelude hiding ( GT )
 
 #if __GLASGOW_HASKELL__ < 709
 import Control.Applicative (Applicative(..))
+import Data.Monoid         ( (<>), mconcat )
 #endif
 
 ------------------------------------------------------------------------------
@@ -270,3 +272,20 @@ gzip f x y =
   if toConstr x == toConstr y
     then gzipWithM (gzip f) x y
     else Nothing
+
+-- | Generic comparison: an alternative to \"deriving Ord\"
+gcompare :: Data a => a -> a -> Ordering
+gcompare = gcompare'
+  where
+    gcompare' :: (Data a, Data b) => a -> b -> Ordering
+    gcompare' x y
+      = let repX = constrRep $ toConstr x
+            repY = constrRep $ toConstr y
+        in
+        case (repX, repY) of
+          (AlgConstr nX,   AlgConstr nY)   ->
+            nX `compare` nY <> mconcat (gzipWithQ gcompare' x y)
+          (IntConstr iX,   IntConstr iY)   -> iX `compare` iY
+          (FloatConstr rX, FloatConstr rY) -> rX `compare` rY
+          (CharConstr cX,  CharConstr cY)  -> cX `compare` cY
+          _ -> error "type incompatibility in gcompare"
