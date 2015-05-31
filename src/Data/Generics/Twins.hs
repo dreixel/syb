@@ -54,7 +54,7 @@ import Prelude hiding ( GT )
 
 #if __GLASGOW_HASKELL__ < 709
 import Control.Applicative (Applicative(..))
-import Data.Monoid         ( (<>), mconcat )
+import Data.Monoid         ( mappend, mconcat )
 #endif
 
 ------------------------------------------------------------------------------
@@ -284,7 +284,7 @@ gcompare = gcompare'
         in
         case (repX, repY) of
           (AlgConstr nX,   AlgConstr nY)   ->
-            nX `compare` nY <> mconcat (gzipWithQ gcompare' x y)
+            nX `compare` nY `mappend` mconcat (gzipWithQ gcompare' x y)
           (IntConstr iX,   IntConstr iY)   -> iX `compare` iY
           (FloatConstr rX, FloatConstr rY) -> rX `compare` rY
           (CharConstr cX,  CharConstr cY)  -> cX `compare` cY
