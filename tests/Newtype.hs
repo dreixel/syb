@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# OPTIONS -fglasgow-exts #-}
 
 module Newtype (tests) where
@@ -10,6 +11,10 @@ import Data.Generics
 
 newtype T = MkT Int deriving( Typeable )
 
-tests = show (typeOf (undefined :: T)) ~=? output
+tests = show (typeOf (undefined :: T)) ~?= output
 
+#if __GLASGOW_HASKELL__ >= 701
 output = "T"
+#else
+output = "Newtype.T"
+#endif
