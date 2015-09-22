@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# OPTIONS -fglasgow-exts #-}
 
 -- These are simple tests to observe (data)type representations.
@@ -29,6 +30,11 @@ tests =  show ( myTypeRep
             , ( tyconModule myString2
             , ( tyconUQname myString2
             ))))))
-       ~=? output
+       ~?= output
 
+#if __GLASGOW_HASKELL__ >= 709
+-- In GHC 7.10 module name is stripped from DataType
+output = "(MyDataType Int,(DataType {tycon = \"MyDataType\", datarep = AlgRep [MyDataType]},(\"\",(\"MyDataType\",(\"\",\"MyDataType\")))))"
+#else
 output = "(MyDataType Int,(DataType {tycon = \"Datatype.MyDataType\", datarep = AlgRep [MyDataType]},(\"\",(\"MyDataType\",(\"Datatype\",\"MyDataType\")))))"
+#endif
