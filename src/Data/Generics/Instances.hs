@@ -70,10 +70,12 @@ myMkNoRepType = mkNorepType
 -- Instances of abstract datatypes (6)
 ------------------------------------------------------------------------------
 
+#if __GLASGOW_HASKELL__ < 801
 instance Data TypeRep where
   toConstr _   = error "toConstr"
   gunfold _ _  = error "gunfold"
   dataTypeOf _ = myMkNoRepType "Data.Typeable.TypeRep"
+#endif
 
 
 ------------------------------------------------------------------------------
