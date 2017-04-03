@@ -21,6 +21,7 @@ module Data.Generics.Schemes (
         everywhere',
         everywhereBut,
         everywhereM,
+        everywhereM',
         somewhere,
         everything,
         everythingBut,
@@ -82,6 +83,12 @@ everywhereM :: Monad m => GenericM m -> GenericM m
 -- Bottom-up order is also reflected in order of do-actions
 everywhereM f x = do x' <- gmapM (everywhereM f) x
                      f x'
+
+-- | Top-down variation on everywhereM.
+everywhereM' :: Monad m => GenericM m -> GenericM m
+everywhereM' f x
+  = do x' <- f x
+       gmapM (everywhereM' f) x'
 
 
 -- | Apply a monadic transformation at least somewhere
