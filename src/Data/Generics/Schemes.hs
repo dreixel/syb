@@ -84,7 +84,7 @@ everywhereM :: Monad m => GenericM m -> GenericM m
 everywhereM f x = do x' <- gmapM (everywhereM f) x
                      f x'
 
--- | Monadic variation on everywhere'
+-- | Top-down variation on everywhereM.
 everywhereM' :: Monad m => GenericM m -> GenericM m
 everywhereM' f x
   = do x' <- f x
