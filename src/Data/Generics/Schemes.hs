@@ -4,12 +4,12 @@
 -- Module      :  Data.Generics.Schemes
 -- Copyright   :  (c) The University of Glasgow, CWI 2001--2003
 -- License     :  BSD-style (see the LICENSE file)
--- 
+--
 -- Maintainer  :  generics@haskell.org
 -- Stability   :  experimental
 -- Portability :  non-portable (local universal quantification)
 --
--- \"Scrap your boilerplate\" --- Generic programming in Haskell 
+-- \"Scrap your boilerplate\" --- Generic programming in Haskell
 -- See <http://www.cs.uu.nl/wiki/GenericProgramming/SYB>. The present module
 -- provides frequently used generic traversal schemes.
 --
@@ -47,8 +47,8 @@ import Data.Data
 import Data.Generics.Aliases
 import Control.Monad
 
-
 -- | Apply a transformation everywhere in bottom-up manner
+
 everywhere :: (forall a. Data a => a -> a)
            -> (forall a. Data a => a -> a)
 
@@ -127,7 +127,7 @@ something :: GenericQ (Maybe u) -> GenericQ (Maybe u)
 
 -- "something" can be defined in terms of "everything"
 -- when a suitable "choice" operator is used for reduction
--- 
+--
 something = everything orElse
 
 
