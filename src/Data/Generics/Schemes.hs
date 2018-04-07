@@ -55,67 +55,90 @@ everywhere :: (forall a. Data a => a -> a)
 -- Use gmapT to recurse into immediate subterms;
 -- recall: gmapT preserves the outermost constructor;
 -- post-process recursively transformed result via f
--- 
-everywhere f = f . gmapT (everywhere f)
-
+--
+everywhere f = go
+  where
+    go :: forall a. Data a => a -> a
+    go = f . gmapT go
 
 -- | Apply a transformation everywhere in top-down manner
 everywhere' :: (forall a. Data a => a -> a)
             -> (forall a. Data a => a -> a)
 
 -- Arguments of (.) are flipped compared to everywhere
-everywhere' f = gmapT (everywhere' f) . f
+everywhere' f = go
+  where
+    go :: forall a. Data a => a -> a
+    go = gmapT go . f
 
 
 -- | Variation on everywhere with an extra stop condition
 everywhereBut :: GenericQ Bool -> GenericT -> GenericT
 
 -- Guarded to let traversal cease if predicate q holds for x
-everywhereBut q f x
-    | q x       = x
-    | otherwise = f (gmapT (everywhereBut q f) x)
+everywhereBut q f = go
+  where
+    go :: GenericT
+    go x
+      | q x       = x
+      | otherwise = f (gmapT go x)
 
 
 -- | Monadic variation on everywhere
-everywhereM :: Monad m => GenericM m -> GenericM m
+everywhereM :: forall m. Monad m => GenericM m -> GenericM m
 
 -- Bottom-up order is also reflected in order of do-actions
-everywhereM f x = do x' <- gmapM (everywhereM f) x
-                     f x'
+everywhereM f = go
+  where
+    go :: GenericM m
+    go x = do
+      x' <- gmapM go x
+      f x'
 
 
 -- | Apply a monadic transformation at least somewhere
-somewhere :: MonadPlus m => GenericM m -> GenericM m
+somewhere :: forall m. MonadPlus m => GenericM m -> GenericM m
 
 -- We try "f" in top-down manner, but descent into "x" when we fail
 -- at the root of the term. The transformation fails if "f" fails
 -- everywhere, say succeeds nowhere.
--- 
-somewhere f x = f x `mplus` gmapMp (somewhere f) x
+--
+somewhere f = go
+  where
+    go :: GenericM m
+    go x = f x `mplus` gmapMp go x
 
 
 -- | Summarise all nodes in top-down, left-to-right order
-everything :: (r -> r -> r) -> GenericQ r -> GenericQ r
+everything :: forall r. (r -> r -> r) -> GenericQ r -> GenericQ r
 
 -- Apply f to x to summarise top-level node;
 -- use gmapQ to recurse into immediate subterms;
 -- use ordinary foldl to reduce list of intermediate results
--- 
-everything k f x = foldl k (f x) (gmapQ (everything k f) x)
+--
+everything k f = go
+  where
+    go :: GenericQ r
+    go x = foldl k (f x) (gmapQ go x)
 
 -- | Variation of "everything" with an added stop condition
-everythingBut :: (r -> r -> r) -> GenericQ (r, Bool) -> GenericQ r
-everythingBut k f x = let (v, stop) = f x
-                      in if stop
-                           then v
-                           else foldl k v (gmapQ (everythingBut k f) x)
+everythingBut :: forall r. (r -> r -> r) -> GenericQ (r, Bool) -> GenericQ r
+everythingBut k f = go
+  where
+    go :: GenericQ r
+    go x = let (v, stop) = f x
+           in if stop
+                then v
+                else foldl k v (gmapQ go x)
 
 -- | Summarise all nodes in top-down, left-to-right order, carrying some state
 -- down the tree during the computation, but not left-to-right to siblings.
-everythingWithContext :: s -> (r -> r -> r) -> GenericQ (s -> (r, s)) -> GenericQ r
-everythingWithContext s0 f q x =
-  foldl f r (gmapQ (everythingWithContext s' f q) x)
-    where (r, s') = q x s0
+everythingWithContext :: forall s r. s -> (r -> r -> r) -> GenericQ (s -> (r, s)) -> GenericQ r
+everythingWithContext s0 f q = go s0
+  where
+    go :: s -> GenericQ r
+    go s x = foldl f r (gmapQ (go s') x)
+      where (r, s') = q x s
 
 -- | Get a list of all entities that meet a predicate
 listify :: Typeable r => (r -> Bool) -> GenericQ [r]
@@ -136,8 +159,11 @@ something = everything orElse
 --   2nd argument o is for reduction of results from subterms;
 --   3rd argument f updates the synthesised data according to the given term
 --
-synthesize :: s  -> (t -> s -> s) -> GenericQ (s -> t) -> GenericQ t
-synthesize z o f x = f x (foldr o z (gmapQ (synthesize z o f) x))
+synthesize :: forall s t. s  -> (t -> s -> s) -> GenericQ (s -> t) -> GenericQ t
+synthesize z o f = go
+  where
+    go :: GenericQ t
+    go x = f x (foldr o z (gmapQ go x))
 
 
 -- | Compute size of an arbitrary data structure

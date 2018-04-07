@@ -266,12 +266,15 @@ geq x0 y0 = geq' x0 y0
 -- | Generic zip controlled by a function with type-specific branches
 gzip :: GenericQ (GenericM Maybe) -> GenericQ (GenericM Maybe)
 -- See testsuite/.../Generics/gzip.hs for an illustration
-gzip f x y =
-  f x y
-  `orElse`
-  if toConstr x == toConstr y
-    then gzipWithM (gzip f) x y
-    else Nothing
+gzip f = go
+  where
+    go :: GenericQ (GenericM Maybe)
+    go x y =
+      f x y
+      `orElse`
+      if toConstr x == toConstr y
+        then gzipWithM go x y
+        else Nothing
 
 -- | Generic comparison: an alternative to \"deriving Ord\"
 gcompare :: Data a => a -> a -> Ordering
