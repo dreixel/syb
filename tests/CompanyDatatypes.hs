@@ -3,6 +3,7 @@
 module CompanyDatatypes where
 
 import Data.Generics (Data, Typeable)
+import Data.Ratio
 
 -- The organisational structure of a company
 
@@ -11,7 +12,7 @@ data Dept     = D Name Manager [Unit]  deriving (Eq, Show, Typeable, Data)
 data Unit     = PU Employee | DU Dept  deriving (Eq, Show, Typeable, Data)
 data Employee = E Person Salary        deriving (Eq, Show, Typeable, Data)
 data Person   = P Name Address         deriving (Eq, Show, Typeable, Data)
-data Salary   = S Float                deriving (Eq, Show, Typeable, Data)
+data Salary   = S Rational             deriving (Eq, Show, Typeable, Data)
 type Manager  = Employee
 type Name     = String
 type Address  = String

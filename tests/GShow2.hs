@@ -15,7 +15,7 @@ import Test.HUnit
 import Data.Generics
 import CompanyDatatypes
 
-tests = gshow genCom ~=? output
+tests = output ~=? gshow genCom
 
 {-
 
@@ -44,4 +44,4 @@ gshow' t =     "("
             ++ concat (gmapQ ((++) " " . gshow') t)
             ++ ")"
 
-output = "(C ((:) (D \"Research\" (E (P \"Laemmel\" \"Amsterdam\") (S (8000.0))) ((:) (PU (E (P \"Joost\" \"Amsterdam\") (S (1000.0)))) ((:) (PU (E (P \"Marlow\" \"Cambridge\") (S (2000.0)))) ([])))) ((:) (D \"Strategy\" (E (P \"Blair\" \"London\") (S (100000.0))) ([])) ([]))))"
+output = "(C ((:) (D \"Research\" (E (P \"Laemmel\" \"Amsterdam\") (S (:% (8000) (1)))) ((:) (PU (E (P \"Joost\" \"Amsterdam\") (S (:% (1000) (1))))) ((:) (PU (E (P \"Marlow\" \"Cambridge\") (S (:% (2000) (1))))) ([])))) ((:) (D \"Strategy\" (E (P \"Blair\" \"London\") (S (:% (100000) (1)))) ([])) ([]))))"

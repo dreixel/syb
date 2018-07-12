@@ -15,15 +15,16 @@ import Test.HUnit
 
 import Data.Generics
 import CompanyDatatypes
+import Data.Ratio
 
 -- Increase salary by percentage
-increase :: Float -> Company -> Company
+increase :: Rational -> Company -> Company
 increase k = everywhere (mkT (incS k))
 
 -- "interesting" code for increase
-incS :: Float -> Salary -> Salary
-incS k (S s) = S (s * (1+k))
+incS :: Rational -> Salary -> Salary
+incS k (S s) = S (s * (1 + k))
 
-tests = increase 0.1 genCom ~=? output
+tests = increase (1 / 10) genCom ~=? output
 
-output = C [D "Research" (E (P "Laemmel" "Amsterdam") (S 8800.0)) [PU (E (P "Joost" "Amsterdam") (S 1100.0)),PU (E (P "Marlow" "Cambridge") (S 2200.0))],D "Strategy" (E (P "Blair" "London") (S 110000.0)) []]
+output = C [D "Research" (E (P "Laemmel" "Amsterdam") (S 8800)) [PU (E (P "Joost" "Amsterdam") (S 1100)),PU (E (P "Marlow" "Cambridge") (S 2200))],D "Strategy" (E (P "Blair" "London") (S 110000)) []]
