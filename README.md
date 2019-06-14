@@ -35,7 +35,7 @@ Bugs & Support
 
 Please report issues or request features at the bug tracker:
 
-  http://code.google.com/p/scrapyourboilerplate/issues/list
+  https://github.com/dreixel/syb/issues
 
 For discussion about the library with the authors, maintainers, and other
 interested persons use the mailing list:
