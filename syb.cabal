@@ -5,7 +5,7 @@ license-file:         LICENSE
 author:               Ralf Lammel, Simon Peyton Jones, Jose Pedro Magalhaes
 maintainer:           generics@haskell.org
 homepage:             http://www.cs.uu.nl/wiki/GenericProgramming/SYB
-bug-reports:          http://code.google.com/p/scrapyourboilerplate/issues/list
+bug-reports:          https://github.com/dreixel/syb/issues
 synopsis:             Scrap Your Boilerplate
 description:
     This package contains the generics system described in the
