@@ -1,0 +1,5 @@
+2019-06-15 Sergey Vinokurov <serg.foo@gmail.com>
+
+	* 0.7.1: Define recursive traversals in two parts, non-recursive
+	wrapper and recursive local helper to facilitate inlining and
+	avoid passing the same argument to all recursive calls
