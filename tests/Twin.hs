@@ -23,7 +23,7 @@ geq' x y =  toConstr x == toConstr y
          && and (gzipWithQ geq' x y)
 
 geq :: Data a => a -> a -> Bool
-geq = geq'
+geq a = geq' a
 
 newtype GQ r = GQ (GenericQ r)
 

@@ -28,7 +28,7 @@ import Data.Generics  -- to access t's subterms and constructors.
 -- Some silly data types
 data T1 = T1a Int String | T1b String Int     deriving (Typeable, Data)
 data T2 = T2a Int Int    | T2b String String  deriving (Typeable, Data)
-data T3 = T3! Int                             deriving (Typeable, Data)
+data T3 = T3  !Int                            deriving (Typeable, Data)
 
 
 -- Test cases
