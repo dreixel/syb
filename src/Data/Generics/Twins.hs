@@ -278,9 +278,9 @@ gzip f = go
 
 -- | Generic comparison: an alternative to \"deriving Ord\"
 gcompare :: Data a => a -> a -> Ordering
-gcompare = gcompare'
+gcompare x' = gcompare' x'
   where
-    gcompare' :: (Data a, Data b) => a -> b -> Ordering
+    gcompare' :: Data a => a -> forall b. Data b => b -> Ordering
     gcompare' x y
       = let repX = constrRep $ toConstr x
             repY = constrRep $ toConstr y
