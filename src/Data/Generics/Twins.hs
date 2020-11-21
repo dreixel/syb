@@ -287,7 +287,7 @@ gcompare = gcompare'
         in
         case (repX, repY) of
           (AlgConstr nX,   AlgConstr nY)   ->
-            nX `compare` nY `mappend` mconcat (gzipWithQ gcompare' x y)
+            nX `compare` nY `mappend` mconcat (gzipWithQ (\a -> gcompare' a) x y)
           (IntConstr iX,   IntConstr iY)   -> iX `compare` iY
           (FloatConstr rX, FloatConstr rY) -> rX `compare` rY
           (CharConstr cX,  CharConstr cY)  -> cX `compare` cY

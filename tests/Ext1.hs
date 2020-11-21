@@ -12,6 +12,7 @@ This example records some experiments with polymorphic datatypes.
 import Test.HUnit
 
 import Data.Generics
+import GHC.Exts (unsafeCoerce#)
 #if MIN_VERSION_base(4,8,0)
 import GHC.Base hiding(foldr)
 #else
