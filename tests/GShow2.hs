@@ -10,12 +10,12 @@ output of the program should be some representation of the infamous
 
 -}
 
-import Test.HUnit
+import Test.Tasty.HUnit
 
 import Data.Generics
 import CompanyDatatypes
 
-tests = gshow genCom ~=? output
+tests = gshow genCom @=? output
 
 {-
 

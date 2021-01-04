@@ -48,11 +48,11 @@ b) everywhereM
 
    Attempts to reach all nodes where all the sub-traversals are performed
    in monadic bind-sequence. Failure of the traversal for a given subterm
-   implies failure of the entire traversal. Hence, the argument of 
+   implies failure of the entire traversal. Hence, the argument of
    "everywhereM" should be designed in a way that it tends to succeed
    except for the purpose of propagating a proper error in the sense of
    violating a pre-/post-condition. For example, "mkM stepfail" should
-   not be passed to "everywhereM" as it will fail for all but one term 
+   not be passed to "everywhereM" as it will fail for all but one term
    pattern; see "recovered" for a way to massage "stepfail" accordingly.
 
 c) somewhere
@@ -71,7 +71,7 @@ Contributed by Ralf Laemmel, ralf@cwi.nl
 
 -}
 
-import Test.HUnit
+import Test.Tasty.HUnit
 
 import Data.Generics
 import Control.Monad
@@ -120,6 +120,6 @@ tests = gshow ( result1,
               ( result4,
               ( result5,
               ( result6,
-              ( result7 ))))))) ~=? output
+              ( result7 ))))))) @=? output
 
 output = "((,) (T1b (T2 (T1a (88)))) ((,) (T1b (T2 (T1a (37)))) ((,) (Nothing) ((,) (Nothing) ((,) (Just (T1b (T2 (T1a (37))))) ((,) (Just (T1b (T2 (T1a (88))))) (Nothing)))))))"

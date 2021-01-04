@@ -27,7 +27,7 @@ distinctions' as well.
 
 module FoldTree (tests) where
 
-import Test.HUnit
+import Test.Tasty.HUnit
 
 -- Enable "ScrapYourBoilerplate"
 import Data.Generics
@@ -36,7 +36,7 @@ import Data.Generics
 -- A parameterised datatype for binary trees with data at the leafs
 data Tree a w = Leaf a
               | Fork (Tree a w) (Tree a w)
-              | WithWeight (Tree a w) w  
+              | WithWeight (Tree a w) w
        deriving (Typeable, Data)
 
 
@@ -59,9 +59,9 @@ mytree' = Fork (Leaf 42)
 -- Additionally we test everythingBut, stopping when we see a WithWeight node
 tests = show ( listify (\(_::Int) -> True)         mytree
              , everything (++) ([] `mkQ` fromLeaf) mytree
-             , everythingBut (++) 
+             , everythingBut (++)
                  (([],False) `mkQ` (\x -> (fromLeaf x, stop x))) mytree'
-             ) ~=? output
+             ) @=? output
   where
     fromLeaf :: Tree Int Int -> [Int]
     fromLeaf (Leaf x) = [x]

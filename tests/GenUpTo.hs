@@ -9,7 +9,7 @@ namely all terms of a given depth are generated.
 
 -}
 
-import Test.HUnit
+import Test.Tasty.HUnit
 
 import Data.Generics
 
@@ -18,17 +18,17 @@ import Data.Generics
 
 The following datatypes comprise the abstract syntax of a simple
 imperative language. Some provisions are such that the discussion
-of test-set generation is simplified. In particular, we do not 
+of test-set generation is simplified. In particular, we do not
 consider anything but monomorphic *data*types --- no primitive
 types, no tuples, ...
 
 -}
- 
-data Prog = Prog Dec Stat 
+
+data Prog = Prog Dec Stat
             deriving (Show, Eq, Typeable, Data)
 
 data Dec  = Nodec
-          | Ondec Id Type 
+          | Ondec Id Type
           | Manydecs Dec Dec
             deriving (Show, Eq, Typeable, Data)
 
@@ -43,7 +43,7 @@ data Stat = Noop
           | Seq Stat Stat
             deriving (Show, Eq, Typeable, Data)
 
-data Exp = Zero 
+data Exp = Zero
          | Succ Exp
            deriving (Show, Eq, Typeable, Data)
 
@@ -62,7 +62,7 @@ genUpTo d = result
 
      -- Find all terms headed by a specific Constr
      recurse :: Data a => Constr -> [a]
-     recurse con = gmapM (\_ -> genUpTo (d-1)) 
+     recurse con = gmapM (\_ -> genUpTo (d-1))
                          (fromConstr con)
 
      -- We could also deal with primitive types easily.
@@ -75,7 +75,7 @@ genUpTo d = result
               FloatRep    -> [mkIntegralConstr ty 0]
               CharRep     -> [mkCharConstr ty 'x']
       where
-        ty = dataTypeOf (head result)     
+        ty = dataTypeOf (head result)
 
 
 -- For silly tests
@@ -89,6 +89,6 @@ tests = (   genUpTo 0 :: [Id]
         , ( genUpTo 2 :: [Id]
         , ( genUpTo 2 :: [T0]
         , ( genUpTo 3 :: [Prog]
-        ))))) ~=? output
+        ))))) @=? output
 
 output = ([],([A,B],([A,B],([T0 T1a T2a T3a,T0 T1a T2a T3b,T0 T1a T2b T3a,T0 T1a T2b T3b,T0 T1b T2a T3a,T0 T1b T2a T3b,T0 T1b T2b T3a,T0 T1b T2b T3b],[Prog Nodec Noop,Prog Nodec (Assign A Zero),Prog Nodec (Assign B Zero),Prog Nodec (Seq Noop Noop),Prog (Ondec A Int) Noop,Prog (Ondec A Int) (Assign A Zero),Prog (Ondec A Int) (Assign B Zero),Prog (Ondec A Int) (Seq Noop Noop),Prog (Ondec A Bool) Noop,Prog (Ondec A Bool) (Assign A Zero),Prog (Ondec A Bool) (Assign B Zero),Prog (Ondec A Bool) (Seq Noop Noop),Prog (Ondec B Int) Noop,Prog (Ondec B Int) (Assign A Zero),Prog (Ondec B Int) (Assign B Zero),Prog (Ondec B Int) (Seq Noop Noop),Prog (Ondec B Bool) Noop,Prog (Ondec B Bool) (Assign A Zero),Prog (Ondec B Bool) (Assign B Zero),Prog (Ondec B Bool) (Seq Noop Noop),Prog (Manydecs Nodec Nodec) Noop,Prog (Manydecs Nodec Nodec) (Assign A Zero),Prog (Manydecs Nodec Nodec) (Assign B Zero),Prog (Manydecs Nodec Nodec) (Seq Noop Noop)]))))

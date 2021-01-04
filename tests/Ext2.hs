@@ -4,7 +4,7 @@ module Ext2 (tests) where
 
 -- Tests for ext2 and friends
 
-import Test.HUnit
+import Test.Tasty.HUnit
 import Data.Generics
 
 
@@ -57,7 +57,7 @@ t4 = unifyPair (t4' :: Pair Int Char) t4' where
 
 
 -- Main function for testing
-tests = (t1, t2, t3, t4) ~=? output
+tests = (t1, t2, t3, t4) @=? output
 
 output = ((map flipPair s1, (flipPair p2, l2))
          ,(Just (flipPair p1),Nothing)

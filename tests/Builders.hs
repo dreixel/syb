@@ -2,9 +2,9 @@
 
 module Builders (tests) where
 
--- Testing Data.Generics.Builders functionality 
+-- Testing Data.Generics.Builders functionality
 
-import Test.HUnit
+import Test.Tasty.HUnit
 
 import Data.Data
 import Data.Generics.Builders
@@ -15,6 +15,6 @@ tests = ( constrs :: [Maybe Int]
         , constrs :: [String]
         , constrs :: [Either Int Float]
         , constrs :: [((), Integer)]
-        ) ~=? output
+        ) @=? output
 
 output = ([Nothing,Just 0],["","\NUL"],[Left 0,Right 0.0],[((),0)])

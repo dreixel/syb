@@ -1,7 +1,8 @@
 
 module Main where
 
-import Test.HUnit
+import Test.Tasty
+import Test.Tasty.HUnit
 import System.Exit
 
 import qualified Bits
@@ -41,42 +42,34 @@ import qualified LocalQuantors    -- no tests, should compile
 import qualified NestedDatatypes  -- no tests, should compile
 import qualified Polymatch        -- no tests, should compile
 
-
-tests =
-  "All" ~: [ Datatype.tests
-           , FoldTree.tests
-           , GetC.tests
-           , GMapQAssoc.tests
-           , GRead.tests
-           , GShow.tests
-           , GShow2.tests
-           , HList.tests
-           , HOPat.tests
-           , Labels.tests
-           , Newtype.tests
-           , Perm.tests
-           , Twin.tests
-           , Typecase1.tests
-           , Typecase2.tests
-           , Where.tests
-           , XML.tests
-           , Tree.tests
-           , Strings.tests
-           , Reify.tests
-           , Paradise.tests
-           , GZip.tests
-           , GEq.tests
-           , GenUpTo.tests
-           , FreeNames.tests
-           , Ext1.tests
-           , Ext2.tests
-           , Bits.tests
-           , Builders.tests
-           ]
-
-main = do
-         putStrLn "Running tests for syb..."
-         counts <- runTestTT tests
-         if (failures counts > 0)
-           then exitFailure
-             else exitSuccess
+main = defaultMain $ testGroup "All"
+  [ testCase "Datatype"   Datatype.tests
+  , testCase "FoldTree"   FoldTree.tests
+  , testCase "GetC"       GetC.tests
+  , testCase "GMapQAssoc" GMapQAssoc.tests
+  , testCase "GRead"      GRead.tests
+  , testCase "GShow"      GShow.tests
+  , testCase "GShow2"     GShow2.tests
+  , testCase "HList"      HList.tests
+  , testCase "HOPat"      HOPat.tests
+  , testCase "Labels"     Labels.tests
+  , testCase "Newtype"    Newtype.tests
+  , testCase "Perm"       Perm.tests
+  , testCase "Twin"       Twin.tests
+  , testCase "Typecase1"  Typecase1.tests
+  , testCase "Typecase2"  Typecase2.tests
+  , testCase "Where"      Where.tests
+  , testCase "XML"        XML.tests
+  , testCase "Tree"       Tree.tests
+  , testCase "Strings"    Strings.tests
+  , testCase "Reify"      Reify.tests
+  , testCase "Paradise"   Paradise.tests
+  , testCase "GZip"       GZip.tests
+  , testCase "GEq"        GEq.tests
+  , testCase "GenUpTo"    GenUpTo.tests
+  , testCase "FreeNames"  FreeNames.tests
+  , testCase "Ext1"       Ext1.tests
+  , testCase "Ext2"       Ext2.tests
+  , testCase "Bits"       Bits.tests
+  , testCase "Builders"   Builders.tests
+  ]

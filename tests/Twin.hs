@@ -1,5 +1,5 @@
 {-# OPTIONS -fglasgow-exts #-}
- 
+
 module Twin (tests) where
 
 {-
@@ -8,13 +8,13 @@ For the discussion in the 2nd boilerplate paper,
 we favour some simplified development of twin traversal.
 So the full general, stepwise story is in Data.Generics.Twin,
 but the short version from the paper is turned into a test
-case below. 
+case below.
 
 See the paper for an explanation.
- 
+
 -}
 
-import Test.HUnit
+import Test.Tasty.HUnit
 
 import Data.Generics hiding (GQ,gzipWithQ,geq)
 
@@ -29,7 +29,7 @@ newtype GQ r = GQ (GenericQ r)
 
 gzipWithQ :: GenericQ (GenericQ r)
           -> GenericQ (GenericQ [r])
-gzipWithQ f t1 t2 
+gzipWithQ f t1 t2
     = gApplyQ (gmapQ (\x -> GQ (f x)) t1) t2
 
 gApplyQ :: Data a => [GQ r] -> a -> [r]
@@ -42,7 +42,7 @@ gApplyQ qs t = reverse (snd (gfoldlQ k z t))
 newtype R r x = R { unR :: r }
 
 gfoldlQ :: (r -> GenericQ r)
-        -> r 
+        -> r
         -> GenericQ r
 
 gfoldlQ k z t = unR (gfoldl k' z' t)
@@ -85,6 +85,6 @@ tests = ( geq   [True,True] [True,True]
         , geq   [True,True] [True,False]
         , geq'' [True,True] [True,True]
         , geq'' [True,True] [True,False]
-        ) ~=? output
+        ) @=? output
 
 output = (True,False,True,False)

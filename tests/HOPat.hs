@@ -12,7 +12,7 @@ our setting.
 
 -}
 
-import Test.HUnit
+import Test.Tasty.HUnit
 
 import Data.Generics
 
@@ -31,7 +31,7 @@ elim' c y = if toConstr y == c
 
 
 -- Unwrap a term; Return its single component
-unwrap :: (Data y, Data x) => y -> Maybe x 
+unwrap :: (Data y, Data x) => y -> Maybe x
 unwrap y = case gmapQ (Nothing `mkQ` Just) y of
              [Just x] -> Just x
              _ -> Nothing
@@ -48,7 +48,7 @@ visitor :: (Data x, Data y, Data z)
 visitor c f = everywhere (mkT g)
   where
     g y = case elim c y of
-            Just x  -> c (f x) 
+            Just x  -> c (f x)
             Nothing -> y
 
 
@@ -58,7 +58,7 @@ tests = ( (  elim' (toConstr t1a) t1a) :: Maybe Int
         , ( (elim  T1a t1a)            :: Maybe Int
         , ( (elim  T1a t1b)            :: Maybe Int
         , ( (visitor T1a ((+) 46) t2)  :: T2
-        ))))) ~=? output
+        ))))) @=? output
  where
    t1a = T1a 42
    t1b = T1b 3.14

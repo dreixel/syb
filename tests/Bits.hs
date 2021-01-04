@@ -3,7 +3,7 @@
 module Bits (tests) where
 
 {-
- 
+
 This test exercices some oldies of generic programming, namely
 encoding terms as bit streams and decoding these bit streams in turn
 to obtain terms again. (This sort of function might actually be useful
@@ -34,7 +34,7 @@ encoded).
 
 -}
 
-import Test.HUnit
+import Test.Tasty.HUnit
 
 import Data.Generics
 import Data.Char
@@ -70,7 +70,7 @@ varNat2bin 0 = []
 varNat2bin x =
   ( ( if even x then Zero else One )
   : varNat2bin (x `div` 2)
-  ) 
+  )
 
 
 -- Encode a natural as a bit stream of fixed length
@@ -79,7 +79,7 @@ fixedNat2bin 0 0 = []
 fixedNat2bin p x | p>0 =
   ( ( if even x then Zero else One )
   : fixedNat2bin (p - 1) (x `div` 2)
-  ) 
+  )
 
 
 -- Decode a natural
@@ -197,7 +197,7 @@ readBin = result
   max :: Int
   max = maxConstrIndex myDataType
 
-  -- Convert a bit stream into a constructor 
+  -- Convert a bit stream into a constructor
   bin2con :: Bin -> Constr
   bin2con bin = indexConstr myDataType ((bin2nat bin) + 1)
 
@@ -217,8 +217,8 @@ tests = (   showBin True
         , ( showBin (1::Int)
         , ( showBin "1"
         , ( showBin genCom
-        , ( geq genCom genCom' 
-        )))))) ~=? output
+        , ( geq genCom genCom'
+        )))))) @=? output
  where
   genCom' = fromJust (fst (unReadB readBin (showBin genCom))) :: Company
 

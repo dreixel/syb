@@ -10,7 +10,7 @@ Note: we only need Data.Typeable. Say: Dynamics are NOT involved.
 
 -}
 
-import Test.HUnit
+import Test.Tasty.HUnit
 
 import Data.Typeable
 import Data.Maybe
@@ -51,7 +51,7 @@ f a = (maybe (maybe (maybe others
 tests = ( f (41::Int)
         , f (88::Float)
         , f (MyCons "42")
-        , f True) ~=? output
+        , f True) @=? output
 
 output = ( "got an int, incremented: 42"
          , "got a float, multiplied by .42: 36.96"
