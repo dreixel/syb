@@ -26,4 +26,4 @@ incS k (S s) = S (s * (1+k))
 
 tests = increase 0.1 genCom @=? output
 
-output = C [D "Research" (E (P "Laemmel" "Amsterdam") (S 8800.0)) [PU (E (P "Joost" "Amsterdam") (S 1100.0)),PU (E (P "Marlow" "Cambridge") (S 2200.0))],D "Strategy" (E (P "Blair" "London") (S 110000.0)) []]
+output = C [D "Research" (E (P "Laemmel" "Amsterdam") (S 8800.0)) [PU (E (P "Joost" "Amsterdam") (S 1100.0)),PU (E (P "Marlow" "Cambridge") (S 2200.0))],D "Strategy" (E (P "Blair" "London") (S 110000.00000000001)) []]
