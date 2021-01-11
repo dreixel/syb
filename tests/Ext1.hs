@@ -9,7 +9,7 @@ This example records some experiments with polymorphic datatypes.
 
 -}
 
-import Test.HUnit
+import Test.Tasty.HUnit
 
 import Data.Generics
 import GHC.Exts (unsafeCoerce#)
@@ -37,7 +37,7 @@ extListQ' :: Data d
 extListQ' def ext d =
   if isList d
     then ext (unsafeCoerce d)
-    else def d 
+    else def d
 
 
 -- Test extListQ'
@@ -55,7 +55,7 @@ extListQ'' :: Data d
 extListQ'' def ext d =
   if isList d
     then undefined -- hard to avoid an ambiguous type
-    else def d 
+    else def d
 
 
 -- Test extListQ from Data.Generics.Aliases
@@ -98,7 +98,7 @@ isCons x = toConstr x == toConstr (():[])
 -- gmapQ for polymorphic lists
 gmapListQ :: forall a q. Data a => (forall a. Data a => a -> q) -> a -> [q]
 gmapListQ f x =
-  if not $ isList x 
+  if not $ isList x
     then error "gmapListQ"
     else if isNil x
            then []
@@ -124,6 +124,6 @@ tests = ( t1
         , ( t4
         , ( t5
         , ( t6
-        )))))) ~=? output
+        )))))) @=? output
 
 output = (0,(2,(0,(4,(0,4)))))

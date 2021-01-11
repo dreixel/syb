@@ -11,11 +11,11 @@ read term is equal to the original term in terms of "geq".
 
 -}
 
-import Test.HUnit
+import Test.Tasty.HUnit
 
 import Data.Generics
 import CompanyDatatypes
 
 tests = ( geq genCom genCom
         , geq genCom genCom'
-        ) ~=? (True,False)
+        ) @=? (True,False)

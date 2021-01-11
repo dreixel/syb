@@ -25,7 +25,7 @@ Contributed by Ralf Laemmel, ralf@cwi.nl
 
 -}
 
-import Test.HUnit
+import Test.Tasty.HUnit
 
 import Data.Generics
 
@@ -48,7 +48,7 @@ data IntTree = Leaf Int | Fork IntTree IntTree
                deriving (Typeable, Data)
 
 
--- Select int if faced with a leaf 
+-- Select int if faced with a leaf
 leaf (Leaf i) = [i]
 leaf _        = []
 
@@ -63,6 +63,6 @@ term = Fork (Leaf 1) (Leaf 2)
 --
 tests = show ( gmapQ   ([] `mkQ` leaf) term
              , gmapQ'  ([] `mkQ` leaf) term
-             ) ~=? output
+             ) @=? output
 
 output = show ([[1],[2]],[[2],[1]])

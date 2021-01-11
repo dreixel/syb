@@ -4,7 +4,7 @@ module Labels (tests) where
 
 -- This module tests availability of field labels.
 
-import Test.HUnit
+import Test.Tasty.HUnit
 
 import Data.Generics
 
@@ -25,6 +25,6 @@ yesLabels = YesLabels 42 3.14
 -- Main function for testing
 tests = ( constrFields $ toConstr noLabels
         , constrFields $ toConstr yesLabels
-        ) ~=? output
+        ) @=? output
 
 output = ([],["myint","myfloat"])

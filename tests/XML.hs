@@ -11,7 +11,7 @@ Haskell data as homogeneous tree structures
 
 -}
 
-import Test.HUnit
+import Test.Tasty.HUnit
 
 import Control.Applicative (Alternative(..), Applicative(..))
 import Control.Monad
@@ -44,14 +44,14 @@ type Misc      = ()
 data2content :: Data a => a -> [Content]
 data2content =         element
                `ext1Q` list
-               `extQ`  string 
+               `extQ`  string
                `extQ`  float
 
  where
 
   -- Handle an element
   element x = [CElem (Elem (tyconUQname (dataTypeName (dataTypeOf x)))
-                           [] -- no attributes 
+                           [] -- no attributes
                            (concat (gmapQ data2content x)))]
 
   -- A special case for lists
@@ -72,7 +72,7 @@ content2data :: forall a. Data a => ReadX a
 content2data = result
 
  where
- 
+
   -- Case-discriminating worker
   result =         element
            `ext1R` list
@@ -111,7 +111,7 @@ content2data = result
 
   -- Retrieve all constructors of the requested type
   consOf = dataTypeConstrs
-         $ dataTypeOf 
+         $ dataTypeOf
          $ myType
 
   -- Recurse into subterms
@@ -147,13 +147,13 @@ newtype ReadX a =
                         -> Maybe ([Content], a) }
 
 -- Run a computation
-runReadX x y = case unReadX x y of 
+runReadX x y = case unReadX x y of
                  Just ([],y) -> Just y
                  _           -> Nothing
 
 -- Read one content particle
 readX :: ReadX Content
-readX =  ReadX (\x -> if null x 
+readX =  ReadX (\x -> if null x
                         then Nothing
                         else Just (tail x, head x)
                )
@@ -198,8 +198,8 @@ tests = (   genCom
         , ( zigzag person1 :: Maybe Person
         , ( zigzag genCom  :: Maybe Company
         , ( zigzag genCom == Just genCom
-        ))))) ~=? output
- where 
+        ))))) @=? output
+ where
   -- Trealise back and forth
   zigzag :: Data a => a -> Maybe a
   zigzag = runReadX content2data . data2content

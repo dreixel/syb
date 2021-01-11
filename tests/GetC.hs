@@ -3,11 +3,11 @@
 
 module GetC (tests) where
 
-import Test.HUnit
+import Test.Tasty.HUnit
 
 {-
 
-Ralf Laemmel, 5 November 2004 
+Ralf Laemmel, 5 November 2004
 
 Joe Stoy suggested the idiom to test for the outermost constructor.
 
@@ -35,7 +35,7 @@ data T3 = T3  !Int                            deriving (Typeable, Data)
 tests = show [ isC T1a (T1a 1 "foo")   -- typechecks, returns True
              , isC T1a (T1b "foo" 1)   -- typechecks, returns False
              , isC T3  (T3 42)]        -- works for strict data too
-        ~=? output
+        @=? output
 -- err = show $ isC T2b (T1b "foo" 1)  -- must not typecheck
 
 output = show [True,False,True]
@@ -47,7 +47,7 @@ output = show [True,False,True]
 -- The class GetC computes maybe the constructor ...
 -- ... if the subterms of the datum at hand fit for f.
 -- Finally we compare the constructors.
--- 
+--
 
 isC :: (Data a, GetT f a, GetC f) => f -> a -> Bool
 isC f t = maybe False ((==) (toConstr t)) con
@@ -59,18 +59,18 @@ isC f t = maybe False ((==) (toConstr t)) con
 --
 -- We prepare for a list of kids using existential envelopes.
 -- We could also just operate on TypeReps for non-strict datatypes.
--- 
+--
 
 data ExTypeable = forall a. Typeable a => ExTypeable a
 unExTypeable (ExTypeable a) = cast a
 
 
--- 
+--
 -- Compute the result type of a function type.
 -- Beware: the TypeUnify constraint causes headache.
 -- We can't have GetT t t because the FD will be violated then.
--- We can't omit the FD because unresolvable overlapping will hold then. 
--- 
+-- We can't omit the FD because unresolvable overlapping will hold then.
+--
 
 class GetT f t | f -> t -- FD is optional
 instance GetT g t => GetT (x -> g) t
@@ -79,7 +79,7 @@ instance TypeUnify t t' => GetT t t'
 
 --
 -- Obtain the constructor if term can be completed
---  
+--
 
 class GetC f
  where
@@ -104,7 +104,7 @@ instance Data t => GetC t
 -- Type unification; we could try this:
 --  class TypeUnify a b | a -> b, b -> a
 --  instance TypeUnify a a
--- 
+--
 -- However, if the instance is placed in the present module,
 -- then type improvement would inline this instance. Sigh!!!
 --
@@ -114,8 +114,8 @@ instance Data t => GetC t
 --
 
 class    TypeUnify   a  b   |    a -> b,   b -> a
-class    TypeUnify'  x  a b |  x a -> b, x b -> a  
-class    TypeUnify'' x  a b |  x a -> b, x b -> a  
+class    TypeUnify'  x  a b |  x a -> b, x b -> a
+class    TypeUnify'' x  a b |  x a -> b, x b -> a
 instance TypeUnify'  () a b => TypeUnify    a b
 instance TypeUnify'' x  a b => TypeUnify' x a b
 instance TypeUnify'' () a a

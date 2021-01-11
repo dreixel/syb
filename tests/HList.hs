@@ -8,7 +8,7 @@ This module illustrates heterogeneously typed lists.
 
 -}
 
-import Test.HUnit
+import Test.Tasty.HUnit
 
 import Data.Typeable
 
@@ -16,7 +16,7 @@ import Data.Typeable
 -- Heterogeneously typed lists
 type HList = [DontKnow]
 
-data DontKnow = forall a. Typeable a => DontKnow a 
+data DontKnow = forall a. Typeable a => DontKnow a
 
 -- The empty list
 initHList :: HList
@@ -57,6 +57,6 @@ tests = (   show (nth1HList 1 mylist :: Maybe Int)    -- shows Just 1
         , ( show (nth1HList 1 mylist :: Maybe Bool)   -- shows Nothing
         , ( show (nth1HList 2 mylist :: Maybe Bool)   -- shows Just True
         , ( show (nth1HList 3 mylist :: Maybe String) -- shows Just "42"
-        )))) ~=? output
+        )))) @=? output
 
 output = ("Just 1",("Nothing",("Just True","Just \"42\"")))

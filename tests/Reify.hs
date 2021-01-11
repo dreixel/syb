@@ -10,7 +10,7 @@ types and constructors as means to steer the generation.
 
 -}
 
-import Test.HUnit
+import Test.Tasty.HUnit
 
 import Data.Maybe
 import Data.Generics
@@ -406,7 +406,7 @@ tests = (   test0
         , ( test8
         , ( test9
         , ( test10
-        ))))))))))) ~=? output
+        ))))))))))) @=? output
 
 output = (True,(True,(False,(True,(True,(1,(2,(3,(P "foo" "foo",
            (E (P "foo" "foo") (S 1.23),

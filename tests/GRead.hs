@@ -12,7 +12,7 @@ see str5.
 
 -}
 
-import Test.HUnit
+import Test.Tasty.HUnit
 
 import Data.Generics
 
@@ -39,7 +39,7 @@ tests = show ( ( [ gread str1,
                 , [[(Int,   String)]]
                 , [[([Int], String)]]
                 )
-             ) ~=? output
+             ) @=? output
 
 output = show
            ([[(True,"")],[],[]],[[(1,"")],[(2,"...")]],[[([],"")],[([1],"")]])

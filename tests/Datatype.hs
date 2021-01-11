@@ -4,7 +4,7 @@
 -- These are simple tests to observe (data)type representations.
 module Datatype  where
 
-import Test.HUnit
+import Test.Tasty.HUnit
 
 import Data.Tree
 import Data.Generics
@@ -32,7 +32,7 @@ tests =  show ( myTypeRep
             , ( tyconModule myString2
             , ( tyconUQname myString2
             ))))))
-       ~?= output
+       @?= output
 
 #if __GLASGOW_HASKELL__ >= 709
 -- In GHC 7.10 module name is stripped from DataType
@@ -44,7 +44,7 @@ output = "(MyDataType Int,(DataType {tycon = \"Datatype.MyDataType\", datarep = 
 #else
 
 tests = show ( myTypeRep, myDataType )
-        ~?= output
+        @?= output
 
 #if __GLASGOW_HASKELL__ >= 701
 output = "(MyDataType Int,DataType {tycon = \"Datatype.MyDataType\", datarep = AlgRep [MyDataType]})"

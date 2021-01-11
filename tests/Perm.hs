@@ -9,7 +9,7 @@ Disclaimer: this is a perhaps naive, certainly undebugged example.
 
 -}
 
-import Test.HUnit
+import Test.Tasty.HUnit
 
 import Control.Applicative (Alternative(..), Applicative(..))
 import Control.Monad
@@ -134,6 +134,6 @@ tests =
    , ( runReadT buildT ["T3","T1","T2"] :: Maybe T3 -- should parse fine
    , ( runReadT buildT ["T3","T2","T1"] :: Maybe T3 -- should parse fine
    , ( runReadT buildT ["T3","T2","T2"] :: Maybe T3 -- should fail
-   ))))) ~=? output
+   ))))) @=? output
 
 output = (Just T1,(Just T2,(Just (T3 T1 T2),(Just (T3 T1 T2),Nothing))))

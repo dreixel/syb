@@ -20,7 +20,7 @@ Contributed by Ralf Laemmel, ralf@cwi.nl
 
 -}
 
-import Test.HUnit
+import Test.Tasty.HUnit
 
 import Data.Generics
 import Data.List
@@ -96,7 +96,7 @@ root of the present term, but subtract all the names that are declared
 at the root.
 
 -}
- 
+
 freeNames :: Data a => a -> [Name]
 freeNames x = ( (refsFun x)
                 `union`
@@ -113,6 +113,6 @@ explicit datatype declarations ;-)
 
 -}
 
-tests = freeNames sys1 ~=? output
+tests = freeNames sys1 @=? output
 
 output = ["id","C"]

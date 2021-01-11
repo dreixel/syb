@@ -11,11 +11,11 @@ read term is equal to the original term in terms of "geq".
 
 -}
 
-import Test.HUnit
+import Test.Tasty.HUnit
 
 import Data.Generics
 import CompanyDatatypes
 
 tests = (case gread (gshow genCom) of
            [(x,_)] -> geq genCom x
-           _ -> False) ~=? True
+           _ -> False) @=? True
