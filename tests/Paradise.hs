@@ -17,11 +17,11 @@ import Data.Generics
 import CompanyDatatypes
 
 -- Increase salary by percentage
-increase :: Float -> Company -> Company
+increase :: Double -> Company -> Company
 increase k = everywhere (mkT (incS k))
 
 -- "interesting" code for increase
-incS :: Float -> Salary -> Salary
+incS :: Double -> Salary -> Salary
 incS k (S s) = S (s * (1+k))
 
 tests = increase 0.1 genCom @=? output

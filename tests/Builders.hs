@@ -13,7 +13,7 @@ import Data.Generics.Builders
 -- Main function for testing
 tests = ( constrs :: [Maybe Int]
         , constrs :: [String]
-        , constrs :: [Either Int Float]
+        , constrs :: [Either Int Double]
         , constrs :: [((), Integer)]
         ) @=? output
 

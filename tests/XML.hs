@@ -63,7 +63,7 @@ data2content =         element
   string x = [CString True x]
 
   -- A special case for floats
-  float :: Float -> [Content]
+  float :: Double -> [Content]
   float x = [CString True (show x)]
 
 
@@ -127,7 +127,7 @@ content2data = result
                  _             -> mzero
 
   -- A special case for floats
-  float :: ReadX Float
+  float :: ReadX Double
   float =  do c <- readX
               case c of
                 (CString _ x) -> return (read x)
