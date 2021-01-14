@@ -18,7 +18,7 @@ import Data.Generics
 
 
 -- Sample datatypes
-data T1 = T1a Int | T1b Float
+data T1 = T1a Int | T1b Double
         deriving (Show, Eq, Typeable, Data)
 data T2 = T2a T1 T2 | T2b
         deriving (Show, Eq, Typeable, Data)

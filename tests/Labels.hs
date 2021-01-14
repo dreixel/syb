@@ -9,12 +9,12 @@ import Test.Tasty.HUnit
 import Data.Generics
 
 -- A datatype without labels
-data NoLabels = NoLabels Int Float
+data NoLabels = NoLabels Int Double
               deriving (Typeable, Data)
 
 -- A datatype with labels
 data YesLabels = YesLabels { myint   :: Int
-                           , myfloat :: Float
+                           , myfloat :: Double
                            }
                deriving (Typeable, Data)
 

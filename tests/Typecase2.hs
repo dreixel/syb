@@ -35,7 +35,7 @@ f a = (maybe (maybe (maybe others
   int a =  "got an int, incremented: " ++ show (a + 1)
 
   -- do something with floats
-  float :: Float -> String
+  float :: Double -> String
   float a = "got a float, multiplied by .42: " ++ show (a * 0.42)
 
   -- do something with my data
@@ -50,7 +50,7 @@ f a = (maybe (maybe (maybe others
 -- Test the type case
 --
 tests = ( f (41::Int)
-        , f (88::Float)
+        , f (88::Double)
         , f (MyCons "42")
         , f True) @=? output
 

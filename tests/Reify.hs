@@ -354,7 +354,7 @@ shallowTerm cust
 -- For testing shallowTerm
 shallowTermBase :: GenericR Maybe
 shallowTermBase =        Nothing
-                  `extR` Just (1.23::Float)
+                  `extR` Just (1.23::Double)
                   `extR` Just ("foo"::String)
 
 
