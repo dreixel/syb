@@ -1,3 +1,11 @@
+2022-09-17 Sergey Vinokurov <serg.foo@gmail.com>
+
+	* 0.7.2.2: Compatibility with GHC 9.4
+
+2021-01-20 Sergey Vinokurov <serg.foo@gmail.com>
+
+	* 0.7.2.1: Update cabal version
+
 2021-01-18 Sergey Vinokurov <serg.foo@gmail.com>
 
 	* 0.7.2: Add compatibility with GHC 9, switch to tasty for tests,
