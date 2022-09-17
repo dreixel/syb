@@ -1,5 +1,16 @@
-{-# OPTIONS -fglasgow-exts #-}
-{-# LANGUAGE OverlappingInstances, UndecidableInstances #-}
+{-# LANGUAGE DeriveDataTypeable        #-}
+{-# LANGUAGE ExistentialQuantification #-}
+{-# LANGUAGE FlexibleContexts          #-}
+{-# LANGUAGE FlexibleInstances         #-}
+{-# LANGUAGE FunctionalDependencies    #-}
+{-# LANGUAGE MultiParamTypeClasses     #-}
+{-# LANGUAGE ScopedTypeVariables       #-}
+{-# LANGUAGE UndecidableInstances      #-}
+
+{-# LANGUAGE CPP #-}
+# if __GLASGOW_HASKELL__ <= 708
+{-# LANGUAGE OverlappingInstances      #-}
+#endif
 
 module GetC (tests) where
 
@@ -73,8 +84,8 @@ unExTypeable (ExTypeable a) = cast a
 --
 
 class GetT f t | f -> t -- FD is optional
-instance GetT g t => GetT (x -> g) t
-instance TypeUnify t t' => GetT t t'
+instance  GetT g t => GetT (x -> g) t
+instance {-# OVERLAPPABLE #-} TypeUnify t t' => GetT t t'
 
 
 --
@@ -94,7 +105,7 @@ instance (Typeable x, GetC g) => GetC (x -> g)
          (x::x) <- unExTypeable h
          getC (f x) t
 
-instance Data t => GetC t
+instance {-# OVERLAPPABLE #-} Data t => GetC t
  where
   getC y []    = Just $ toConstr y
   getC _ (_:_) = Nothing

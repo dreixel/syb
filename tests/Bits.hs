@@ -1,4 +1,4 @@
-{-# OPTIONS -fglasgow-exts #-}
+{-# LANGUAGE DeriveDataTypeable #-}
 
 module Bits (tests) where
 
@@ -134,7 +134,7 @@ instance Functor ReadB where
   fmap  = liftM
 
 instance Applicative ReadB where
-  pure  = return
+  pure a = ReadB (\bs -> (Just a, bs))
   (<*>) = ap
 
 instance Alternative ReadB where
@@ -143,7 +143,7 @@ instance Alternative ReadB where
 
 -- It's a monad.
 instance Monad ReadB where
-  return a = ReadB (\bs -> (Just a, bs))
+  return = pure
   (ReadB c) >>= f = ReadB (\bs -> case c bs of
                              (Just a, bs')  -> unReadB (f a) bs'
                              (Nothing, bs') -> (Nothing, bs')

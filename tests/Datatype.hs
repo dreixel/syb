@@ -1,5 +1,5 @@
-{-# LANGUAGE CPP #-}
-{-# OPTIONS -fglasgow-exts #-}
+{-# LANGUAGE CPP                #-}
+{-# LANGUAGE DeriveDataTypeable #-}
 
 -- These are simple tests to observe (data)type representations.
 module Datatype  where
@@ -34,22 +34,25 @@ tests =  show ( myTypeRep
             ))))))
        @?= output
 
-#if __GLASGOW_HASKELL__ >= 709
+# if __GLASGOW_HASKELL__ >= 904
+-- In GHC 9.4 module name is included
+output = "(MyDataType Int,(DataType {tycon = \"Datatype.MyDataType\", datarep = AlgRep [MyDataType]},(\"\",(\"MyDataType\",(\"Datatype\",\"MyDataType\")))))"
+# elif __GLASGOW_HASKELL__ >= 709
 -- In GHC 7.10 module name is stripped from DataType
 output = "(MyDataType Int,(DataType {tycon = \"MyDataType\", datarep = AlgRep [MyDataType]},(\"\",(\"MyDataType\",(\"\",\"MyDataType\")))))"
-#else
+# else
 output = "(MyDataType Int,(DataType {tycon = \"Datatype.MyDataType\", datarep = AlgRep [MyDataType]},(\"\",(\"MyDataType\",(\"Datatype\",\"MyDataType\")))))"
-#endif
+# endif
 
 #else
 
 tests = show ( myTypeRep, myDataType )
         @?= output
 
-#if __GLASGOW_HASKELL__ >= 701
+# if __GLASGOW_HASKELL__ >= 701
 output = "(MyDataType Int,DataType {tycon = \"Datatype.MyDataType\", datarep = AlgRep [MyDataType]})"
-#else
+# else
 output = "(Datatype.MyDataType Int,DataType {tycon = \"Datatype.MyDataType\", datarep = AlgRep [MyDataType]})"
-#endif
+# endif
 
 #endif

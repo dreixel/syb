@@ -1,4 +1,5 @@
-{-# OPTIONS -fglasgow-exts #-}
+{-# LANGUAGE DeriveDataTypeable  #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 
 module XML (tests) where
 
@@ -162,7 +163,7 @@ instance Functor ReadX where
   fmap  = liftM
 
 instance Applicative ReadX where
-  pure  = return
+  pure x = ReadX (\y -> Just (y,x))
   (<*>) = ap
 
 instance Alternative ReadX where
@@ -171,7 +172,7 @@ instance Alternative ReadX where
 
 -- ReadX is a monad!
 instance Monad ReadX where
-  return x = ReadX (\y -> Just (y,x))
+  return = pure
   c >>= f  = ReadX (\x -> case unReadX c x of
                             Nothing -> Nothing
                             Just (x', a) -> unReadX (f a) x'

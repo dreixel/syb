@@ -1,6 +1,7 @@
-{-# OPTIONS -fglasgow-exts #-}
-{-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE DeriveDataTypeable   #-}
+{-# LANGUAGE FlexibleContexts     #-}
+{-# LANGUAGE MonoLocalBinds       #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 module NestedDatatypes () where
 
@@ -19,7 +20,7 @@ undecidable instances.
 import Data.Dynamic
 import Data.Generics
 
- 
+
 -- A nested datatype
 data Nest a = Box a | Wrap (Nest [a]) deriving Typeable
 
