@@ -1,4 +1,5 @@
-{-# OPTIONS -fglasgow-exts #-}
+{-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE RankNTypes         #-}
 
 module LocalQuantors () where
 
@@ -12,7 +13,7 @@ data Test = Test (GenericT) deriving Typeable
 
 instance Data Test
   where
-    gfoldl _ z x = z x -- folding without descent 
+    gfoldl _ z x = z x -- folding without descent
     toConstr (Test _) = testConstr
     gunfold _ _ = error "gunfold"
     dataTypeOf _ = testDataType

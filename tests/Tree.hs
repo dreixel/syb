@@ -1,4 +1,4 @@
-{-# OPTIONS -fglasgow-exts #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 
 module Tree (tests) where
 
@@ -34,13 +34,13 @@ tree2data = gdefault `extR` atString
     gdefault (Node x ts) = res
       where
 
-	-- a helper for type capture
+        -- a helper for type capture
         res  = maybe Nothing (kids . fromConstr) con
 
-	-- the type to constructed
+        -- the type to constructed
         ta   = fromJust res
 
-	-- construct constructor
+        -- construct constructor
         con  = readConstr (dataTypeOf ta) x
 
         -- recursion per kid with accumulation

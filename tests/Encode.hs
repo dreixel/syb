@@ -1,4 +1,5 @@
-{-# OPTIONS -fglasgow-exts #-}
+{-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE EmptyDataDecls     #-}
 
 -- A bit more test code for the 2nd boilerplate paper.
 -- These are downscaled versions of library functionality or real test cases.
@@ -67,11 +68,10 @@ data EncM a   -- The encoder monad
 instance Functor EncM where
   fmap  = liftM
 instance Applicative EncM where
-  pure  = return
+  pure  = undefined
   (<*>) = ap
-instance Monad EncM
- where
-  return  = undefined
+instance Monad EncM where
+  return  = pure
   c >>= f = undefined
 
 runEnc  :: EncM () -> [Bit]
@@ -84,5 +84,5 @@ data2bits'' :: Data a => a -> [Bit]
 data2bits'' t = runEnc (emit t)
 
 emit :: Data a => a -> EncM ()
-emit t = do { emitCon (dataTypeOf t) (toConstr t) 
+emit t = do { emitCon (dataTypeOf t) (toConstr t)
             ; sequence_ (gmapQ emit t) }

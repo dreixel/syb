@@ -1,4 +1,6 @@
-{-# OPTIONS -fglasgow-exts #-}
+{-# LANGUAGE DeriveDataTypeable  #-}
+{-# LANGUAGE RankNTypes          #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 
 module Perm (tests) where
 
@@ -49,7 +51,7 @@ instance Functor ReadT where
   fmap  = liftM
 
 instance Applicative ReadT where
-  pure  = return
+  pure x = ReadT (\y -> Just (y,x))
   (<*>) = ap
 
 instance Alternative ReadT where
@@ -58,7 +60,7 @@ instance Alternative ReadT where
 
 -- ReadT is a monad!
 instance Monad ReadT where
-  return x = ReadT (\y -> Just (y,x))
+  return   = pure
   c >>= f  = ReadT (\x -> case unReadT c x of
                             Nothing -> Nothing
                             Just (x', a) -> unReadT (f a) x'

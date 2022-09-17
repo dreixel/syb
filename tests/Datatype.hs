@@ -1,5 +1,5 @@
-{-# LANGUAGE CPP #-}
-{-# OPTIONS -fglasgow-exts #-}
+{-# LANGUAGE CPP                #-}
+{-# LANGUAGE DeriveDataTypeable #-}
 
 -- These are simple tests to observe (data)type representations.
 module Datatype  where

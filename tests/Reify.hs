@@ -1,4 +1,7 @@
-{-# OPTIONS -fglasgow-exts #-}
+
+{-# LANGUAGE DeriveDataTypeable  #-}
+{-# LANGUAGE RankNTypes          #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 
 module Reify (tests) where
 
@@ -92,7 +95,7 @@ type TypeFun a r = TypeVal a -> r
 -- Generic type functions,
 -- i.e., functions mapping types to values
 --
-type GTypeFun r  = forall a. Data a => TypeFun a r
+type GTypeFun r = forall a. Data a => TypeFun a r
 
 
 

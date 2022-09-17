@@ -1,5 +1,5 @@
-{-# LANGUAGE CPP #-}
-{-# OPTIONS -fglasgow-exts #-}
+{-# LANGUAGE CPP                #-}
+{-# LANGUAGE DeriveDataTypeable #-}
 
 module Newtype (tests) where
 

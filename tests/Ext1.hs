@@ -1,5 +1,6 @@
-{-# OPTIONS -fglasgow-exts #-}
-{-# LANGUAGE CPP #-}
+{-# LANGUAGE CPP        #-}
+{-# LANGUAGE MagicHash  #-}
+{-# LANGUAGE RankNTypes #-}
 
 module Ext1 (tests) where
 

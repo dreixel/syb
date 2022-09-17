@@ -1,4 +1,5 @@
-{-# OPTIONS -fglasgow-exts #-}
+{-# LANGUAGE DeriveDataTypeable  #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 
 module GRead2 () where
 
@@ -24,17 +25,17 @@ instance Functor DecM where
     fmap  = liftM
 
 instance Applicative DecM where
-    pure  = return
+    pure a = D (\s -> Just (s,a))
     (<*>) = ap
 
 instance Monad DecM where
-    return a = D (\s -> Just (s,a))
+    return = pure
     (D m) >>= k = D (\s ->
       case m s of
         Nothing -> Nothing
         Just (s1,a) -> let D n = k a
                         in n s1)
-        
+
 runDec :: String -> DecM a -> Maybe a
 runDec input (D m) = do (_,x) <- m input
                         return x

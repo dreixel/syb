@@ -1,4 +1,4 @@
-{-# OPTIONS -fglasgow-exts #-}
+{-# LANGUAGE ExistentialQuantification #-}
 
 module HList (tests) where
 

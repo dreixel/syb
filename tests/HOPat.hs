@@ -1,4 +1,5 @@
-{-# OPTIONS -fglasgow-exts #-}
+{-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE ExplicitForAll     #-}
 
 module HOPat (tests) where
 

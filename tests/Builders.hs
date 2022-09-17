@@ -1,5 +1,3 @@
-{-# OPTIONS -fglasgow-exts #-}
-
 module Builders (tests) where
 
 -- Testing Data.Generics.Builders functionality
