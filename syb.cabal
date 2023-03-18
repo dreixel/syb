@@ -32,22 +32,22 @@ Library
   hs-source-dirs:         src
   default-language:       Haskell98
   build-depends:          base >= 4.0 && < 5.0
-  exposed-modules:        Data.Generics,
-                          Data.Generics.Basics,
-                          Data.Generics.Instances,
-                          Data.Generics.Aliases,
-                          Data.Generics.Schemes,
-                          Data.Generics.Text,
-                          Data.Generics.Twins,
-                          Data.Generics.Builders,
+  exposed-modules:        Data.Generics
+                          Data.Generics.Basics
+                          Data.Generics.Instances
+                          Data.Generics.Aliases
+                          Data.Generics.Schemes
+                          Data.Generics.Text
+                          Data.Generics.Twins
+                          Data.Generics.Builders
 
-                          Generics.SYB,
-                          Generics.SYB.Basics,
-                          Generics.SYB.Instances,
-                          Generics.SYB.Aliases,
-                          Generics.SYB.Schemes,
-                          Generics.SYB.Text,
-                          Generics.SYB.Twins,
+                          Generics.SYB
+                          Generics.SYB.Basics
+                          Generics.SYB.Instances
+                          Generics.SYB.Aliases
+                          Generics.SYB.Schemes
+                          Generics.SYB.Text
+                          Generics.SYB.Twins
                           Generics.SYB.Builders
 
   if impl(ghc < 6.12)
