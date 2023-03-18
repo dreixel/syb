@@ -11,11 +11,12 @@ but we replace *series* by *trees* so to say.
 
 import Test.Tasty.HUnit
 
-import Control.Monad.Reader
 import Control.Monad (guard)
+import Control.Monad.Reader
 import Data.Generics
 import Data.Maybe
 import Data.Tree
+
 import CompanyDatatypes
 
 

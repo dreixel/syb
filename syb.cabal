@@ -1,5 +1,5 @@
 name:                 syb
-version:              0.7.2.2
+version:              0.7.2.3
 license:              BSD3
 license-file:         LICENSE
 author:               Ralf Lammel, Simon Peyton Jones, Jose Pedro Magalhaes
@@ -19,10 +19,26 @@ category:               Generics
 stability:              provisional
 build-type:             Simple
 cabal-version:          >= 1.10
-tested-with:            GHC==8.10.3, GHC==8.8.4, GHC==8.6.5, GHC==8.4.4, GHC==8.2.2, GHC==8.0.2, GHC==7.10.3, GHC==7.8.4, GHC==7.6.3, GHC==7.4.2, GHC==7.2.2, GHC==7.0.4
+tested-with:
+  GHC == 9.6.1
+  GHC == 9.4.4
+  GHC == 9.2.7
+  GHC == 9.0.2
+  GHC == 8.10.7
+  GHC == 8.8.4
+  GHC == 8.6.5
+  GHC == 8.4.4
+  GHC == 8.2.2
+  GHC == 8.0.2
+  GHC == 7.10.3
+  GHC == 7.8.4
+  GHC == 7.6.3
+  GHC == 7.4.2
+  GHC == 7.2.2
+  GHC == 7.0.4
 
 extra-source-files:     README.md,
-                        ChangeLog
+                        Changelog.md
 
 source-repository head
   type:                 git
@@ -32,22 +48,22 @@ Library
   hs-source-dirs:         src
   default-language:       Haskell98
   build-depends:          base >= 4.0 && < 5.0
-  exposed-modules:        Data.Generics,
-                          Data.Generics.Basics,
-                          Data.Generics.Instances,
-                          Data.Generics.Aliases,
-                          Data.Generics.Schemes,
-                          Data.Generics.Text,
-                          Data.Generics.Twins,
-                          Data.Generics.Builders,
+  exposed-modules:        Data.Generics
+                          Data.Generics.Basics
+                          Data.Generics.Instances
+                          Data.Generics.Aliases
+                          Data.Generics.Schemes
+                          Data.Generics.Text
+                          Data.Generics.Twins
+                          Data.Generics.Builders
 
-                          Generics.SYB,
-                          Generics.SYB.Basics,
-                          Generics.SYB.Instances,
-                          Generics.SYB.Aliases,
-                          Generics.SYB.Schemes,
-                          Generics.SYB.Text,
-                          Generics.SYB.Twins,
+                          Generics.SYB
+                          Generics.SYB.Basics
+                          Generics.SYB.Instances
+                          Generics.SYB.Aliases
+                          Generics.SYB.Schemes
+                          Generics.SYB.Text
+                          Generics.SYB.Twins
                           Generics.SYB.Builders
 
   if impl(ghc < 6.12)
