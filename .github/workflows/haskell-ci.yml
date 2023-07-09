@@ -47,18 +47,21 @@ jobs:
     - name: Cabal version
       run: |
         cabal --version
+    - name: Unpack
+      run: |
+        cabal sdist --ignore-project --output-directory ..
+        cd ..
+        cabal get syb-*.tar.gz
     - name: Build & Test
       run: |
-        cabal sdist --ignore-project --output-directory .
-        cabal get syb-*.tar.gz
-        cd syb-*/
+        cd ../syb-*/
         cabal build all --enable-tests
         cabal test --enable-tests --test-show-details=direct all
     - name: Haddock
       run: |
-        cd syb-*/
+        cd ../syb-*/
         cabal haddock all
     - name: Cabal check
       run: |
-        cd syb-*/
+        cd ../syb-*/
         cabal check
