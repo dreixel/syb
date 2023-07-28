@@ -77,6 +77,14 @@ import Data.Data
 --   start from a type-specific case;
 --   preserve the term otherwise
 --
+-- === __Examples__
+--
+-- >>> mkT not True
+-- False
+--
+-- >>> mkT not 'a'
+-- 'a'
+--
 mkT :: ( Typeable a
        , Typeable b
        )
@@ -89,6 +97,14 @@ mkT = extT id
 -- | Make a generic query;
 --   start from a type-specific case;
 --   return a constant otherwise
+--
+-- === __Examples__
+--
+-- >>> mkQ "default" (show :: Bool -> String) True
+-- "True"
+--
+-- >>> mkQ "default" (show :: Bool -> String) ()
+-- "default"
 --
 mkQ :: ( Typeable a
        , Typeable b
@@ -105,6 +121,14 @@ mkQ :: ( Typeable a
 -- | Make a generic monadic transformation;
 --   start from a type-specific case;
 --   resort to return otherwise
+--
+-- === __Examples__
+--
+-- >>> mkM (\x -> [x, not x]) True
+-- [True,False]
+--
+-- >>> mkM (\x -> [x, not x]) (5 :: Int)
+-- [5]
 --
 mkM :: ( Monad m
        , Typeable a
@@ -128,6 +152,14 @@ use a point-free style whenever possible.
 -- | Make a generic monadic transformation for MonadPlus;
 --   use \"const mzero\" (i.e., failure) instead of return as default.
 --
+-- === __Examples__
+--
+-- >>> mkMp (\x -> Just (not x)) True
+-- Just False
+--
+-- >>> mkMp (\x -> Just (not x)) 'a'
+-- Nothing
+--
 mkMp :: ( MonadPlus m
         , Typeable a
         , Typeable b
@@ -139,8 +171,16 @@ mkMp = extM (const mzero)
 
 
 -- | Make a generic builder;
---   start from a type-specific ase;
+--   start from a type-specific case;
 --   resort to no build (i.e., mzero) otherwise
+--
+-- === __Examples__
+--
+-- >>> mkR (Just True) :: Maybe Bool
+-- Just True
+--
+-- >>> mkR (Just True) :: Maybe Int
+-- Nothing
 --
 mkR :: ( MonadPlus m
        , Typeable a
@@ -151,11 +191,29 @@ mkR f = mzero `extR` f
 
 
 -- | Flexible type extension
+--
+-- === __Examples__
+--
+-- >>> ext0 [1 :: Int, 2, 3] [True, False] :: [Int]
+-- [1,2,3]
+--
+-- >>> ext0 [1 :: Int, 2, 3] [4 :: Int, 5, 6] :: [Int]
+-- [4,5,6]
+--
 ext0 :: (Typeable a, Typeable b) => c a -> c b -> c a
 ext0 def ext = maybe def id (gcast ext)
 
 
 -- | Extend a generic transformation by a type-specific case
+--
+-- === __Examples__
+--
+-- >>> extT id not True
+-- False
+--
+-- >>> extT id not 'a'
+-- 'a'
+--
 extT :: ( Typeable a
         , Typeable b
         )
@@ -167,6 +225,15 @@ extT def ext = unT ((T def) `ext0` (T ext))
 
 
 -- | Extend a generic query by a type-specific case
+--
+-- === __Examples__
+--
+-- >>> extQ (const True) not True
+-- False
+--
+-- >>> extQ (const True) not 'a'
+-- True
+--
 extQ :: ( Typeable a
         , Typeable b
         )
@@ -178,6 +245,15 @@ extQ f g a = maybe (f a) g (cast a)
 
 
 -- | Extend a generic monadic transformation by a type-specific case
+--
+-- === __Examples__
+--
+-- >>> extM (\x -> [x,x])(\x -> [not x, x]) True
+-- [False,True]
+--
+-- >>> extM (\x -> [x,x])(\x -> [not x, x]) (5 :: Int)
+-- [5,5]
+--
 extM :: ( Monad m
         , Typeable a
         , Typeable b
@@ -187,6 +263,15 @@ extM def ext = unM ((M def) `ext0` (M ext))
 
 
 -- | Extend a generic MonadPlus transformation by a type-specific case
+--
+-- === __Examples__
+--
+-- >>> extMp (\x -> [x,x])(\x -> [not x, x]) True
+-- [False,True]
+--
+-- >>> extMp (\x -> [x,x])(\x -> [not x, x]) (5 :: Int)
+-- [5,5]
+--
 extMp :: ( MonadPlus m
          , Typeable a
          , Typeable b
@@ -196,6 +281,15 @@ extMp = extM
 
 
 -- | Extend a generic builder
+--
+-- === __Examples__
+--
+-- >>> extB True 'a'
+-- True
+--
+-- >>> extB True False
+-- False
+--
 extB :: ( Typeable a
         , Typeable b
         )
@@ -204,6 +298,15 @@ extB a = maybe a id . cast
 
 
 -- | Extend a generic reader
+--
+-- === __Examples__
+--
+-- >>> extR (Just True) (Just 'a')
+-- Just True
+--
+-- >>> extR (Just True) (Just False)
+-- Just False
+--
 extR :: ( Monad m
         , Typeable a
         , Typeable b
@@ -270,6 +373,21 @@ newtype GenericM' m = GM { unGM :: forall a. Data a => a -> m a }
 
 
 -- | Left-biased choice on maybes
+--
+-- === __Examples__
+--
+-- >>> orElse Nothing Nothing
+-- Nothing
+--
+-- >>> orElse Nothing (Just 'a')
+-- Just 'a'
+--
+-- >>> orElse (Just 'a') Nothing
+-- Just 'a'
+--
+-- >>> orElse (Just 'a') (Just 'b')
+-- Just 'a'
+--
 orElse :: Maybe a -> Maybe a -> Maybe a
 x `orElse` y = case x of
                  Just _  -> x
