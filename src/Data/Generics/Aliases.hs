@@ -228,9 +228,10 @@ mkMp :: ( MonadPlus m
 mkMp = extM (const mzero)
 
 
--- | Make a generic builder;
---   start from a type-specific case;
---   resort to no build (i.e., mzero) otherwise
+-- | Make a generic reader from a type-specific case.
+-- The function created by @mkR f@ behaves like the reader @f@ if an expression
+-- of type @a@ can be cast to type @b@, and like the expression @mzero@ otherwise.
+-- The name 'mkR' is short for "make reader".
 --
 -- === __Examples__
 --
@@ -245,7 +246,9 @@ mkR :: ( MonadPlus m
        , Typeable a
        , Typeable b
        )
-    => m b -> m a
+    => m b
+    -- ^ The type-specific reader
+    -> m a
 mkR f = mzero `extR` f
 
 
@@ -377,7 +380,10 @@ extMp :: ( MonadPlus m
 extMp = extM
 
 
--- | Extend a generic builder
+-- | Extend a generic builder by a type-specific case.
+-- The builder created by @extB def ext@ returns @def@ if @ext@ cannot be cast
+-- to type @a@, and like @ext@ otherwise.
+-- The name 'extB' is short for "extend builder".
 --
 -- === __Examples__
 --
@@ -391,11 +397,19 @@ extMp = extM
 extB :: ( Typeable a
         , Typeable b
         )
-     => a -> b -> a
+     => a
+     -- ^ The default result
+     -> b
+     -- ^ The argument we try to cast to type @a@
+     -> a
 extB a = maybe a id . cast
 
 
--- | Extend a generic reader
+-- | Extend a generic reader by a type-specific case.
+-- The reader created by @extR def ext@ behaves like the reader @def@
+-- if expressions of type @b@ cannot be cast to type @a@, and like the
+-- reader @ext@ otherwise.
+-- The name 'extR' is short for "extend reader".
 --
 -- === __Examples__
 --
@@ -410,7 +424,11 @@ extR :: ( Monad m
         , Typeable a
         , Typeable b
         )
-     => m a -> m b -> m a
+     => m a
+     -- ^ The generic reader we want to extend
+     -> m b
+     -- ^ The type-specific reader
+     -> m a
 extR def ext = unR ((R def) `ext0` (R ext))
 
 
