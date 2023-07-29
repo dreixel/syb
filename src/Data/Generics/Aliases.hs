@@ -105,9 +105,11 @@ import Data.Data
 -- This section provides combinators which make use of 'cast' internally to
 -- provide various polymorphic functions with type-specific behaviour.
 
--- | Make a generic transformation;
---   start from a type-specific case;
---   preserve the term otherwise
+
+-- | Extend the identity function with a type-specific transformation.
+-- The function created by @mkT f@ behaves like the identity function on all
+-- arguments which cannot be cast to type @b@, and like the function @f@ otherwise.
+-- The name 'mkT' is short for "make transformation".
 --
 -- === __Examples__
 --
@@ -122,14 +124,17 @@ mkT :: ( Typeable a
        , Typeable b
        )
     => (b -> b)
+    -- ^ The type-specific transformation
     -> a
+    -- ^ The argument we try to cast to type @b@
     -> a
 mkT = extT id
 
 
--- | Make a generic query;
---   start from a type-specific case;
---   return a constant otherwise
+-- | The function created by @mkQ def f@ returns the default argument
+-- @def@ if its argument cannot be cast to type @b@, otherwise it returns
+-- the result of applying @f@ to its argument.
+-- The name 'mkQ' is short for "make query".
 --
 -- === __Examples__
 --
@@ -144,17 +149,21 @@ mkQ :: ( Typeable a
        , Typeable b
        )
     => r
+    -- ^ The default argument
     -> (b -> r)
+    -- ^ The transformation to apply if the cast is succesful
     -> a
+    -- ^ The argument we try to cast to type @b@
     -> r
 (r `mkQ` br) a = case cast a of
                         Just b  -> br b
                         Nothing -> r
 
 
--- | Make a generic monadic transformation;
---   start from a type-specific case;
---   resort to return otherwise
+-- | Extend the default monadic action @pure :: Monad m => a -> m a@ by a type-specific
+-- monadic action. The function created by @mkM act@ behaves like 'pure' if its
+-- argument cannot be cast to type @b@, and like the monadic action @act@ otherwise.
+-- The name 'mkM' is short for "make monadic transformation".
 --
 -- === __Examples__
 --
@@ -170,22 +179,16 @@ mkM :: ( Monad m
        , Typeable b
        )
     => (b -> m b)
+    -- ^ The type-specific monadic transformation
     -> a
+    -- ^ The argument we try to cast to type @b@
     -> m a
 mkM = extM return
 
-
-{-
-
-For the remaining definitions, we stick to a more concise style, i.e.,
-we fold maybes with "maybe" instead of case ... of ..., and we also
-use a point-free style whenever possible.
-
--}
-
-
--- | Make a generic monadic transformation for MonadPlus;
---   use \"const mzero\" (i.e., failure) instead of return as default.
+-- | Extend the default 'MonadPlus' action @const mzero@ by a type-specific 'MonadPlus'
+-- action. The function created by @mkMp act@ behaves like @const mzero@ if its argument
+-- cannot be cast to type @b@, and like the monadic action @act@ otherwise.
+-- The name 'mkMp' is short for "make MonadPlus transformation".
 --
 -- === __Examples__
 --
@@ -201,7 +204,9 @@ mkMp :: ( MonadPlus m
         , Typeable b
         )
      => (b -> m b)
+     -- ^ The type-specific MonadPlus action
      -> a
+     -- ^ The argument we try to cast to type @b@
      -> m a
 mkMp = extM (const mzero)
 
