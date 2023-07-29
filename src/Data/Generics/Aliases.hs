@@ -91,6 +91,7 @@ import Data.Data
 -- >>> mkT not 'a'
 -- 'a'
 --
+-- @since 0.1.0.0
 mkT :: ( Typeable a
        , Typeable b
        )
@@ -112,6 +113,7 @@ mkT = extT id
 -- >>> mkQ "default" (show :: Bool -> String) ()
 -- "default"
 --
+-- @since 0.1.0.0
 mkQ :: ( Typeable a
        , Typeable b
        )
@@ -136,6 +138,7 @@ mkQ :: ( Typeable a
 -- >>> mkM (\x -> [x, not x]) (5 :: Int)
 -- [5]
 --
+-- @since 0.1.0.0
 mkM :: ( Monad m
        , Typeable a
        , Typeable b
@@ -166,6 +169,7 @@ use a point-free style whenever possible.
 -- >>> mkMp (\x -> Just (not x)) 'a'
 -- Nothing
 --
+-- @since 0.1.0.0
 mkMp :: ( MonadPlus m
         , Typeable a
         , Typeable b
@@ -188,6 +192,7 @@ mkMp = extM (const mzero)
 -- >>> mkR (Just True) :: Maybe Int
 -- Nothing
 --
+-- @since 0.1.0.0
 mkR :: ( MonadPlus m
        , Typeable a
        , Typeable b
@@ -206,6 +211,7 @@ mkR f = mzero `extR` f
 -- >>> ext0 [1 :: Int, 2, 3] [4 :: Int, 5, 6] :: [Int]
 -- [4,5,6]
 --
+-- @since 0.1.0.0
 ext0 :: (Typeable a, Typeable b) => c a -> c b -> c a
 ext0 def ext = maybe def id (gcast ext)
 
@@ -220,6 +226,7 @@ ext0 def ext = maybe def id (gcast ext)
 -- >>> extT id not 'a'
 -- 'a'
 --
+-- @since 0.1.0.0
 extT :: ( Typeable a
         , Typeable b
         )
@@ -240,6 +247,7 @@ extT def ext = unT ((T def) `ext0` (T ext))
 -- >>> extQ (const True) not 'a'
 -- True
 --
+-- @since 0.1.0.0
 extQ :: ( Typeable a
         , Typeable b
         )
@@ -260,6 +268,7 @@ extQ f g a = maybe (f a) g (cast a)
 -- >>> extM (\x -> [x,x])(\x -> [not x, x]) (5 :: Int)
 -- [5,5]
 --
+-- @since 0.1.0.0
 extM :: ( Monad m
         , Typeable a
         , Typeable b
@@ -278,6 +287,7 @@ extM def ext = unM ((M def) `ext0` (M ext))
 -- >>> extMp (\x -> [x,x])(\x -> [not x, x]) (5 :: Int)
 -- [5,5]
 --
+-- @since 0.1.0.0
 extMp :: ( MonadPlus m
          , Typeable a
          , Typeable b
@@ -296,6 +306,7 @@ extMp = extM
 -- >>> extB True False
 -- False
 --
+-- @since 0.1.0.0
 extB :: ( Typeable a
         , Typeable b
         )
@@ -313,6 +324,7 @@ extB a = maybe a id . cast
 -- >>> extR (Just True) (Just False)
 -- Just False
 --
+-- @since 0.1.0.0
 extR :: ( Monad m
         , Typeable a
         , Typeable b
@@ -332,42 +344,53 @@ extR def ext = unR ((R def) `ext0` (R ext))
 -- | Generic transformations,
 --   i.e., take an \"a\" and return an \"a\"
 --
+-- @since 0.1.0.0
 type GenericT = forall a. Data a => a -> a
 
 -- | The type synonym `GenericT` has a polymorphic type, and can therefore not
 --   appear in places where monomorphic types are expected, for example in a list.
 --   The newtype `GenericT'` wraps `GenericT` in a newtype to lift this restriction.
+--
+-- @since 0.1.0.0
 newtype GenericT' = GT { unGT :: GenericT }
 
 -- | Generic queries of type \"r\",
 --   i.e., take any \"a\" and return an \"r\"
 --
+-- @since 0.1.0.0
 type GenericQ r = forall a. Data a => a -> r
 
 -- | The type synonym `GenericQ` has a polymorphic type, and can therefore not
 --   appear in places where monomorphic types are expected, for example in a list.
 --   The newtype `GenericQ'` wraps `GenericQ` in a newtype to lift this restriction.
+--
+-- @since 0.1.0.0
 newtype GenericQ' r = GQ { unGQ :: GenericQ r }
 
 -- | Generic monadic transformations,
 --   i.e., take an \"a\" and compute an \"a\"
 --
+-- @since 0.1.0.0
 type GenericM m = forall a. Data a => a -> m a
 
 -- | The type synonym `GenericM` has a polymorphic type, and can therefore not
 --   appear in places where monomorphic types are expected, for example in a list.
 --   The newtype `GenericM'` wraps `GenericM` in a newtype to lift this restriction.
+--
+-- @since 0.1.0.0
 newtype GenericM' m = GM { unGM :: GenericM m }
 
 -- | Generic builders
 --   i.e., produce an \"a\".
 --
+-- @since 0.1.0.0
 type GenericB = forall a. Data a => a
 
 
 -- | Generic readers, say monadic builders,
 --   i.e., produce an \"a\" with the help of a monad \"m\".
 --
+-- @since 0.1.0.0
 type GenericR m = forall a. Data a => m a
 
 
@@ -375,12 +398,15 @@ type GenericR m = forall a. Data a => m a
 --   assumed by gfoldl; there are isomorphisms such as
 --   GenericT = Generic T.
 --
+-- @since 0.1.0.0
 type Generic c = forall a. Data a => a -> c a
 
 
 -- | The type synonym `Generic` has a polymorphic type, and can therefore not
 --   appear in places where monomorphic types are expected, for example in a list.
 --   The data type `Generic'` wraps `Generic` in a data type to lift this restriction.
+--
+-- @since 0.1.0.0
 data Generic' c = Generic' { unGeneric' :: Generic c }
 
 ------------------------------------------------------------------------------
@@ -405,6 +431,7 @@ data Generic' c = Generic' { unGeneric' :: Generic c }
 -- >>> orElse (Just 'a') (Just 'b')
 -- Just 'a'
 --
+-- @since 0.1.0.0
 orElse :: Maybe a -> Maybe a -> Maybe a
 x `orElse` y = case x of
                  Just _  -> x
