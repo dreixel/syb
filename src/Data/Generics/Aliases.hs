@@ -525,6 +525,8 @@ recoverQ r f = f `choiceQ` const (return r)
 #endif
 
 -- | Flexible type extension
+--
+-- @since 0.3
 ext1 :: (Data a, Typeable1 t)
      => c a
      -> (forall d. Data d => c (t d))
@@ -533,6 +535,8 @@ ext1 def ext = maybe def id (dataCast1 ext)
 
 
 -- | Type extension of transformations for unary type constructors
+--
+-- @since 0.1.0.0
 ext1T :: (Data d, Typeable1 t)
       => (forall e. Data e => e -> e)
       -> (forall f. Data f => t f -> t f)
@@ -541,6 +545,8 @@ ext1T def ext = unT ((T def) `ext1` (T ext))
 
 
 -- | Type extension of monadic transformations for type constructors
+--
+-- @since 0.1.0.0
 ext1M :: (Monad m, Data d, Typeable1 t)
       => (forall e. Data e => e -> m e)
       -> (forall f. Data f => t f -> m (t f))
@@ -549,6 +555,8 @@ ext1M def ext = unM ((M def) `ext1` (M ext))
 
 
 -- | Type extension of queries for type constructors
+--
+-- @since 0.1.0.0
 ext1Q :: (Data d, Typeable1 t)
       => (d -> q)
       -> (forall e. Data e => t e -> q)
@@ -557,6 +565,8 @@ ext1Q def ext = unQ ((Q def) `ext1` (Q ext))
 
 
 -- | Type extension of readers for type constructors
+--
+-- @since 0.1.0.0
 ext1R :: (Monad m, Data d, Typeable1 t)
       => m d
       -> (forall e. Data e => m (t e))
@@ -565,6 +575,8 @@ ext1R def ext = unR ((R def) `ext1` (R ext))
 
 
 -- | Type extension of builders for type constructors
+--
+-- @since 0.2
 ext1B :: (Data a, Typeable1 t)
       => a
       -> (forall b. Data b => (t b))
