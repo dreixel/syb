@@ -19,24 +19,41 @@ module Data.Generics.Aliases (
         -- * Combinators which create generic functions via cast
         --
         -- $castcombinators
-        mkT, mkQ, mkM, mkMp, mkR,
-        ext0, extT, extQ, extM, extMp, extB, extR,
 
+        -- ** Transformations
+        mkT,
+        extT,
+        -- ** Queries
+        mkQ,
+        extQ,
+        -- ** Monadic transformations
+        mkM,
+        extM,
+        -- ** MonadPlus transformations
+        mkMp,
+        extMp,
+        -- ** Readers
+        mkR,
+        extR,
+        -- ** Builders
+        extB,
+        -- ** Other
+        ext0,
         -- * Types for generic functions
-        -- ** Generic transformations
+        -- ** Transformations
         GenericT,
         GenericT'(..),
-        -- ** Generic queries
+        -- ** Queries
         GenericQ,
         GenericQ'(..),
-        -- ** Generic monadic transformations
+        -- ** Monadic transformations
         GenericM,
         GenericM'(..),
-        -- ** Generic builders
-        GenericB,
-        -- ** Generic readers
+        -- ** Readers
         GenericR,
-        -- ** Generic functions
+        -- ** Builders
+        GenericB,
+        -- ** Other
         Generic,
         Generic'(..),
 
@@ -89,7 +106,7 @@ import Data.Data
 -- can only be the identity function or a function which loops indefinitely
 -- or throws an exception. That is, it must implement exactly the same behaviour
 -- for any type at which it is used. But sometimes it is very useful to have
--- a function which can accept (almost) any type and show a different behaviour
+-- a function which can accept (almost) any type and exhibit a different behaviour
 -- for different types. Haskell provides this functionality with the 'Typeable'
 -- typeclass, whose instances can be automatically derived by GHC for almost all
 -- types. This typeclass allows the definition of a functon 'cast' which has type
@@ -107,8 +124,8 @@ import Data.Data
 
 
 -- | Extend the identity function with a type-specific transformation.
--- The function created by @mkT f@ behaves like the identity function on all
--- arguments which cannot be cast to type @b@, and like the function @f@ otherwise.
+-- The function created by @mkT ext@ behaves like the identity function on all
+-- arguments which cannot be cast to type @b@, and like the function @ext@ otherwise.
 -- The name 'mkT' is short for "make transformation".
 --
 -- === __Examples__
@@ -131,7 +148,7 @@ mkT :: ( Typeable a
 mkT = extT id
 
 
--- | The function created by @mkQ def f@ returns the default argument
+-- | The function created by @mkQ def f@ returns the default result
 -- @def@ if its argument cannot be cast to type @b@, otherwise it returns
 -- the result of applying @f@ to its argument.
 -- The name 'mkQ' is short for "make query".
@@ -149,9 +166,9 @@ mkQ :: ( Typeable a
        , Typeable b
        )
     => r
-    -- ^ The default argument
+    -- ^ The default result
     -> (b -> r)
-    -- ^ The transformation to apply if the cast is succesful
+    -- ^ The transformation to apply if the cast is successful
     -> a
     -- ^ The argument we try to cast to type @b@
     -> r
@@ -247,7 +264,11 @@ ext0 :: (Typeable a, Typeable b) => c a -> c b -> c a
 ext0 def ext = maybe def id (gcast ext)
 
 
--- | Extend a generic transformation by a type-specific case
+-- | Extend a generic transformation by a type-specific transformation.
+-- The function created by @extT def ext@ behaves like the generic transformation
+-- @def@ if its argument cannot be cast to the type @b@, and like the type-specific
+-- transformation @ext@ otherwise.
+-- The name 'extT' is short for "extend transformation".
 --
 -- === __Examples__
 --
@@ -262,13 +283,19 @@ extT :: ( Typeable a
         , Typeable b
         )
      => (a -> a)
+     -- ^ The transformation we want to extend
      -> (b -> b)
+     -- ^ The type-specific transformation
      -> a
+     -- ^ The argument we try to cast to type @b@
      -> a
 extT def ext = unT ((T def) `ext0` (T ext))
 
 
--- | Extend a generic query by a type-specific case
+-- | Extend a generic query by a type-specific query. The function created by @extQ def ext@ behaves
+-- like the generic query @def@ if its argument cannot be cast to the type @b@, and like the type-specific
+-- query @ext@ otherwise.
+-- The name 'extQ' is short for "extend query".
 --
 -- === __Examples__
 --
@@ -282,14 +309,21 @@ extT def ext = unT ((T def) `ext0` (T ext))
 extQ :: ( Typeable a
         , Typeable b
         )
-     => (a -> q)
-     -> (b -> q)
+     => (a -> r)
+     -- ^ The query we want to extend
+     -> (b -> r)
+     -- ^ The type-specific query
      -> a
-     -> q
+     -- ^ The argument we try to cast to type @b@
+     -> r
 extQ f g a = maybe (f a) g (cast a)
 
 
--- | Extend a generic monadic transformation by a type-specific case
+-- | Extend a generic monadic transformation by a type-specific case.
+-- The function created by @extM def ext@ behaves like the monadic transformation
+-- @def@ if its argument cannot be cast to type @b@, and like the monadic transformation
+-- @ext@ otherwise.
+-- The name 'extM' is short for "extend monadic transformation".
 --
 -- === __Examples__
 --
@@ -304,11 +338,21 @@ extM :: ( Monad m
         , Typeable a
         , Typeable b
         )
-     => (a -> m a) -> (b -> m b) -> a -> m a
+     => (a -> m a)
+     -- ^ The monadic transformation we want to extend
+     -> (b -> m b)
+     -- ^ The type-specific monadic transformation
+     -> a
+     -- ^ The argument we try to cast to type @b@
+     -> m a
 extM def ext = unM ((M def) `ext0` (M ext))
 
 
--- | Extend a generic MonadPlus transformation by a type-specific case
+-- | Extend a generic MonadPlus transformation by a type-specific case.
+-- The function created by @extMp def ext@ behaves like 'MonadPlus' transformation @def@
+-- if its argument cannot be cast to type @b@, and like the transformation @ext@ otherwise.
+-- Note that 'extMp' behaves exactly like 'extM'.
+-- The name 'extMp' is short for "extend MonadPlus transformation".
 --
 -- === __Examples__
 --
@@ -323,7 +367,13 @@ extMp :: ( MonadPlus m
          , Typeable a
          , Typeable b
          )
-      => (a -> m a) -> (b -> m b) -> a -> m a
+      => (a -> m a)
+      -- ^ The 'MonadPlus' transformation we want to extend
+      -> (b -> m b)
+      -- ^ The type-specific 'MonadPlus' transformation
+      -> a
+      -- ^ The argument we try to cast to type @b@
+      -> m a
 extMp = extM
 
 
