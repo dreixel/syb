@@ -469,6 +469,11 @@ x `orElse` y = case x of
                  Nothing -> y
 
 
+------------------------------------------------------------------------------
+--
+-- Function combinators on generic functions
+--
+------------------------------------------------------------------------------
 {-
 
 The following variations take "orElse" to the function
@@ -482,21 +487,29 @@ queries a given constant is returned.
 -}
 
 -- | Choice for monadic transformations
+--
+-- @since 0.1.0.0
 choiceMp :: MonadPlus m => GenericM m -> GenericM m -> GenericM m
 choiceMp f g x = f x `mplus` g x
 
 
 -- | Choice for monadic queries
+--
+-- @since 0.1.0.0
 choiceQ :: MonadPlus m => GenericQ (m r) -> GenericQ (m r) -> GenericQ (m r)
 choiceQ f g x = f x `mplus` g x
 
 
 -- | Recover from the failure of monadic transformation by identity
+--
+-- @since 0.1.0.0
 recoverMp :: MonadPlus m => GenericM m -> GenericM m
 recoverMp f = f `choiceMp` return
 
 
 -- | Recover from the failure of monadic query by a constant
+--
+-- @since 0.1.0.0
 recoverQ :: MonadPlus m => r -> GenericQ (m r) -> GenericQ (m r)
 recoverQ r f = f `choiceQ` const (return r)
 
