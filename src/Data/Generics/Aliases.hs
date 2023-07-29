@@ -4,7 +4,7 @@
 -- Module      :  Data.Generics.Aliases
 -- Copyright   :  (c) The University of Glasgow, CWI 2001--2004
 -- License     :  BSD-style (see the LICENSE file)
--- 
+--
 -- Maintainer  :  generics@haskell.org
 -- Stability   :  experimental
 -- Portability :  non-portable (local universal quantification)
@@ -22,17 +22,23 @@ module Data.Generics.Aliases (
         mkT, mkQ, mkM, mkMp, mkR,
         ext0, extT, extQ, extM, extMp, extB, extR,
 
-        -- * Type synonyms for generic function types
+        -- * Types for generic functions
+        -- ** Generic transformations
         GenericT,
+        GenericT'(..),
+        -- ** Generic queries
         GenericQ,
+        GenericQ'(..),
+        -- ** Generic monadic transformations
         GenericM,
+        GenericM'(..),
+        -- ** Generic builders
         GenericB,
+        -- ** Generic readers
         GenericR,
+        -- ** Generic functions
         Generic,
         Generic'(..),
-        GenericT'(..),
-        GenericQ'(..),
-        GenericM'(..),
 
         -- * Ingredients of generic functions
         orElse,
@@ -318,7 +324,7 @@ extR def ext = unR ((R def) `ext0` (R ext))
 
 ------------------------------------------------------------------------------
 --
---      Type synonyms for generic function types
+--      Types for generic functions
 --
 ------------------------------------------------------------------------------
 
@@ -328,18 +334,30 @@ extR def ext = unR ((R def) `ext0` (R ext))
 --
 type GenericT = forall a. Data a => a -> a
 
+-- | The type synonym `GenericT` has a polymorphic type, and can therefore not
+--   appear in places where monomorphic types are expected, for example in a list.
+--   The newtype `GenericT'` wraps `GenericT` in a newtype to lift this restriction.
+newtype GenericT' = GT { unGT :: GenericT }
 
 -- | Generic queries of type \"r\",
 --   i.e., take any \"a\" and return an \"r\"
 --
 type GenericQ r = forall a. Data a => a -> r
 
+-- | The type synonym `GenericQ` has a polymorphic type, and can therefore not
+--   appear in places where monomorphic types are expected, for example in a list.
+--   The newtype `GenericQ'` wraps `GenericQ` in a newtype to lift this restriction.
+newtype GenericQ' r = GQ { unGQ :: GenericQ r }
 
 -- | Generic monadic transformations,
 --   i.e., take an \"a\" and compute an \"a\"
 --
 type GenericM m = forall a. Data a => a -> m a
 
+-- | The type synonym `GenericM` has a polymorphic type, and can therefore not
+--   appear in places where monomorphic types are expected, for example in a list.
+--   The newtype `GenericM'` wraps `GenericM` in a newtype to lift this restriction.
+newtype GenericM' m = GM { unGM :: GenericM m }
 
 -- | Generic builders
 --   i.e., produce an \"a\".
@@ -360,17 +378,16 @@ type GenericR m = forall a. Data a => m a
 type Generic c = forall a. Data a => a -> c a
 
 
--- | Wrapped generic functions;
---   recall: [Generic c] would be legal but [Generic' c] not.
---
+-- | The type synonym `Generic` has a polymorphic type, and can therefore not
+--   appear in places where monomorphic types are expected, for example in a list.
+--   The data type `Generic'` wraps `Generic` in a data type to lift this restriction.
 data Generic' c = Generic' { unGeneric' :: Generic c }
 
-
--- | Other first-class polymorphic wrappers
-newtype GenericT'   = GT { unGT :: forall a. Data a => a -> a }
-newtype GenericQ' r = GQ { unGQ :: GenericQ r }
-newtype GenericM' m = GM { unGM :: forall a. Data a => a -> m a }
-
+------------------------------------------------------------------------------
+--
+-- Ingredients of generic functions
+--
+------------------------------------------------------------------------------
 
 -- | Left-biased choice on maybes
 --
