@@ -9,16 +9,16 @@
 -- Stability   :  experimental
 -- Portability :  non-portable (local universal quantification)
 --
--- \"Scrap your boilerplate\" --- Generic programming in Haskell 
--- See <http://www.cs.uu.nl/wiki/GenericProgramming/SYB>.
--- The present module provides a number of declarations for typical generic
+-- This module provides a number of declarations for typical generic
 -- function types, corresponding type case, and others.
 --
 -----------------------------------------------------------------------------
 
 module Data.Generics.Aliases (
 
-        -- * Combinators to \"make\" generic functions via cast
+        -- * Combinators which create generic functions via cast
+        --
+        -- $castcombinators
         mkT, mkQ, mkM, mkMp, mkR,
         ext0, extT, extQ, extM, extMp, extB, extR,
 
@@ -78,6 +78,32 @@ import Data.Data
 --      We use type-safe cast in a number of ways to make generic functions.
 --
 ------------------------------------------------------------------------------
+
+-- $castcombinators
+--
+-- Other programming languages sometimes provide an operator @instanceof@ which
+-- can check whether an expression is an instance of a given type. This operator
+-- allows programmers to implement a function @f :: forall a. a -> a@ which exhibits
+-- a different behaviour depending on whether a `Bool` or a `Char` is passed.
+-- In Haskell this is not the case: A function with type @forall a. a -> a@
+-- can only be the identity function or a function which loops indefinitely
+-- or throws an exception. That is, it must implement exactly the same behaviour
+-- for any type at which it is used. But sometimes it is very useful to have
+-- a function which can accept (almost) any type and show a different behaviour
+-- for different types. Haskell provides this functionality with the 'Typeable'
+-- typeclass, whose instances can be automatically derived by GHC for almost all
+-- types. This typeclass allows the definition of a functon 'cast' which has type
+-- @forall a b. (Typeable a, Typeable b) => a -> Maybe b@. The 'cast' function allows
+-- to implement a polymorphic function with different behaviour at different types:
+--
+-- >>> cast True :: Maybe Bool
+-- Just True
+--
+-- >>> cast True :: Maybe Int
+-- Nothing
+--
+-- This section provides combinators which make use of 'cast' internally to
+-- provide various polymorphic functions with type-specific behaviour.
 
 -- | Make a generic transformation;
 --   start from a type-specific case;
