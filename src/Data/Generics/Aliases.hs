@@ -596,6 +596,8 @@ ext2 def ext = maybe def id (dataCast2 ext)
 
 
 -- | Type extension of transformations for unary type constructors
+--
+-- @since 0.3
 ext2T :: (Data d, Typeable2 t)
       => (forall e. Data e => e -> e)
       -> (forall d1 d2. (Data d1, Data d2) => t d1 d2 -> t d1 d2)
@@ -604,6 +606,8 @@ ext2T def ext = unT ((T def) `ext2` (T ext))
 
 
 -- | Type extension of monadic transformations for type constructors
+--
+-- @since 0.3
 ext2M :: (Monad m, Data d, Typeable2 t)
       => (forall e. Data e => e -> m e)
       -> (forall d1 d2. (Data d1, Data d2) => t d1 d2 -> m (t d1 d2))
@@ -612,6 +616,8 @@ ext2M def ext = unM ((M def) `ext2` (M ext))
 
 
 -- | Type extension of queries for type constructors
+--
+-- @since 0.3
 ext2Q :: (Data d, Typeable2 t)
       => (d -> q)
       -> (forall d1 d2. (Data d1, Data d2) => t d1 d2 -> q)
@@ -620,6 +626,8 @@ ext2Q def ext = unQ ((Q def) `ext2` (Q ext))
 
 
 -- | Type extension of readers for type constructors
+--
+-- @since 0.3
 ext2R :: (Monad m, Data d, Typeable2 t)
       => m d
       -> (forall d1 d2. (Data d1, Data d2) => m (t d1 d2))
@@ -628,6 +636,8 @@ ext2R def ext = unR ((R def) `ext2` (R ext))
 
 
 -- | Type extension of builders for type constructors
+--
+-- @since 0.3
 ext2B :: (Data a, Typeable2 t)
       => a
       -> (forall d1 d2. (Data d1, Data d2) => (t d1 d2))
