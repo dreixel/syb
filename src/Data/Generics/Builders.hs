@@ -6,7 +6,7 @@
 -- Module      :  Data.Generics.Builders
 -- Copyright   :  (c) 2008 Universiteit Utrecht
 -- License     :  BSD-style
--- 
+--
 -- Maintainer  :  generics@haskell.org
 -- Stability   :  experimental
 -- Portability :  non-portable
@@ -22,6 +22,8 @@ import Data.Generics.Aliases (extB)
 
 -- | Construct the empty value for a datatype. For algebraic datatypes, the
 -- leftmost constructor is chosen.
+--
+-- @since 0.2
 empty :: forall a. Data a => a
 empty = general 
       `extB` char 
@@ -43,6 +45,8 @@ empty = general
 
 -- | Return a list of values of a datatype. Each value is one of the possible
 -- constructors of the datatype, populated with 'empty' values.
+--
+-- @since 0.2
 constrs :: forall a. Data a => [a]
 constrs = general
       `extB` char
