@@ -75,6 +75,7 @@ module Data.Generics.Aliases (
         ext1B,
 
         -- * Type extension for binary type constructors
+        ext2,
         ext2T,
         ext2M,
         ext2Q,
