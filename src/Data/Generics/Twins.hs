@@ -82,7 +82,8 @@ Applying the same scheme we obtain an accumulating gfoldl.
 --------------------------------------------------------------}
 
 -- | gfoldl with accumulation
-
+--
+-- @since 0.1.0.0
 gfoldlAccum :: Data d
             => (forall e r. Data e => a -> c (e -> r) -> e -> (a, c r))
             -> (forall g. a -> g -> (a, c g))
@@ -99,6 +100,8 @@ newtype A a c d = A { unA :: a -> (a, c d) }
 
 
 -- | gmapT with accumulation
+--
+-- @since 0.1.0.0
 gmapAccumT :: Data d
            => (forall e. Data e => a -> e -> (a,e))
            -> a -> d -> (a, d)
@@ -111,6 +114,8 @@ gmapAccumT f a0 d0 = let (a1, d1) = gfoldlAccum k z a0 d0
 
 
 -- | Applicative version
+--
+-- @since 0.2
 gmapAccumA :: forall b d a. (Data d, Applicative a)
            => (forall e. Data e => b -> e -> (b, a e))
            -> b -> d -> (b, a d)
@@ -127,6 +132,8 @@ gmapAccumA f a0 d0 = gfoldlAccum k z a0 d0
 
 
 -- | gmapM with accumulation
+--
+-- @since 0.1.0.0
 gmapAccumM :: (Data d, Monad m)
            => (forall e. Data e => a -> e -> (a, m e))
            -> a -> d -> (a, m d)
@@ -138,6 +145,8 @@ gmapAccumM f = gfoldlAccum k z
 
 
 -- | gmapQl with accumulation
+--
+-- @since 0.1.0.0
 gmapAccumQl :: Data d
             => (r -> r' -> r)
             -> r
@@ -152,6 +161,8 @@ gmapAccumQl o r0 f a0 d0 = let (a1, r1) = gfoldlAccum k z a0 d0
 
 
 -- | gmapQr with accumulation
+--
+-- @since 0.1.0.0
 gmapAccumQr :: Data d
             => (r' -> r -> r)
             -> r
@@ -166,6 +177,8 @@ gmapAccumQr o r0 f a0 d0 = let (a1, l) = gfoldlAccum k z a0 d0
 
 
 -- | gmapQ with accumulation
+--
+-- @since 0.1.0.0
 gmapAccumQ :: Data d
            => (forall e. Data e => a -> e -> (a,q))
            -> a -> d -> (a, [q])
@@ -201,6 +214,8 @@ newtype Qr r a = Qr { unQr  :: r -> r }
 
 
 -- | Twin map for transformation
+--
+-- @since 0.1.0.0
 gzipWithT :: GenericQ (GenericT) -> GenericQ (GenericT)
 gzipWithT f x y = case gmapAccumT perkid funs y of
                     ([], c) -> c
@@ -212,6 +227,8 @@ gzipWithT f x y = case gmapAccumT perkid funs y of
 
 
 -- | Twin map for monadic transformation
+--
+-- @since 0.1.0.0
 gzipWithM :: Monad m => GenericQ (GenericM m) -> GenericQ (GenericM m)
 gzipWithM f x y = case gmapAccumM perkid funs y of
                     ([], c) -> c
@@ -222,6 +239,8 @@ gzipWithM f x y = case gmapAccumM perkid funs y of
 
 
 -- | Twin map for queries
+--
+-- @since 0.1.0.0
 gzipWithQ :: GenericQ (GenericQ r) -> GenericQ (GenericQ [r])
 gzipWithQ f x y = case gmapAccumQ perkid funs y of
                    ([], r) -> r
@@ -239,6 +258,8 @@ gzipWithQ f x y = case gmapAccumQ perkid funs y of
 ------------------------------------------------------------------------------
 
 -- | Generic equality: an alternative to \"deriving Eq\"
+--
+-- @since 0.1.0.0
 geq :: Data a => a -> a -> Bool
 
 {-
@@ -264,6 +285,8 @@ geq x0 y0 = geq' x0 y0
 
 
 -- | Generic zip controlled by a function with type-specific branches
+--
+-- @since 0.1.0.0
 gzip :: GenericQ (GenericM Maybe) -> GenericQ (GenericM Maybe)
 -- See testsuite/.../Generics/gzip.hs for an illustration
 gzip f = go
@@ -277,6 +300,8 @@ gzip f = go
         else Nothing
 
 -- | Generic comparison: an alternative to \"deriving Ord\"
+--
+-- @since 0.5
 gcompare :: Data a => a -> a -> Ordering
 gcompare = gcompare'
   where

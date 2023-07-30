@@ -40,10 +40,14 @@ import Text.Read.Lex
 
 
 -- | Generic show: an alternative to \"deriving Show\"
+--
+-- @since 0.1.0.0
 gshow :: Data a => a -> String
 gshow x = gshows x ""
 
 -- | Generic shows
+--
+-- @since 0.2
 gshows :: Data a => a -> ShowS
 
 -- This is a prefix-show using surrounding "(" and ")",
@@ -57,6 +61,8 @@ gshows = ( \t ->
 
 
 -- | Generic read: an alternative to \"deriving Read\"
+--
+-- @since 0.1.0.0
 gread :: Data a => ReadS a
 
 {-

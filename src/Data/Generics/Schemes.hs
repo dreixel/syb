@@ -48,7 +48,8 @@ import Data.Generics.Aliases
 import Control.Monad
 
 -- | Apply a transformation everywhere in bottom-up manner
-
+--
+-- @since 0.1.0.0
 everywhere :: (forall a. Data a => a -> a)
            -> (forall a. Data a => a -> a)
 
@@ -62,6 +63,8 @@ everywhere f = go
     go = f . gmapT go
 
 -- | Apply a transformation everywhere in top-down manner
+--
+-- @since 0.1.0.0
 everywhere' :: (forall a. Data a => a -> a)
             -> (forall a. Data a => a -> a)
 
@@ -73,6 +76,8 @@ everywhere' f = go
 
 
 -- | Variation on everywhere with an extra stop condition
+--
+-- @since 0.1.0.0
 everywhereBut :: GenericQ Bool -> GenericT -> GenericT
 
 -- Guarded to let traversal cease if predicate q holds for x
@@ -85,6 +90,8 @@ everywhereBut q f = go
 
 
 -- | Monadic variation on everywhere
+--
+-- @since 0.1.0.0
 everywhereM :: forall m. Monad m => GenericM m -> GenericM m
 
 -- Bottom-up order is also reflected in order of do-actions
@@ -97,6 +104,8 @@ everywhereM f = go
 
 
 -- | Apply a monadic transformation at least somewhere
+--
+-- @since 0.1.0.0
 somewhere :: forall m. MonadPlus m => GenericM m -> GenericM m
 
 -- We try "f" in top-down manner, but descent into "x" when we fail
@@ -110,6 +119,8 @@ somewhere f = go
 
 
 -- | Summarise all nodes in top-down, left-to-right order
+--
+-- @since 0.1.0.0
 everything :: forall r. (r -> r -> r) -> GenericQ r -> GenericQ r
 
 -- Apply f to x to summarise top-level node;
@@ -122,6 +133,8 @@ everything k f = go
     go x = foldl k (f x) (gmapQ go x)
 
 -- | Variation of "everything" with an added stop condition
+--
+-- @since 0.3
 everythingBut :: forall r. (r -> r -> r) -> GenericQ (r, Bool) -> GenericQ r
 everythingBut k f = go
   where
@@ -133,6 +146,8 @@ everythingBut k f = go
 
 -- | Summarise all nodes in top-down, left-to-right order, carrying some state
 -- down the tree during the computation, but not left-to-right to siblings.
+--
+-- @since 0.3.7
 everythingWithContext :: forall s r. s -> (r -> r -> r) -> GenericQ (s -> (r, s)) -> GenericQ r
 everythingWithContext s0 f q = go s0
   where
@@ -141,11 +156,15 @@ everythingWithContext s0 f q = go s0
       where (r, s') = q x s
 
 -- | Get a list of all entities that meet a predicate
+--
+-- @since 0.1.0.0
 listify :: Typeable r => (r -> Bool) -> GenericQ [r]
 listify p = everything (++) ([] `mkQ` (\x -> if p x then [x] else []))
 
 
 -- | Look up a subterm by means of a maybe-typed filter
+--
+-- @since 0.1.0.0
 something :: GenericQ (Maybe u) -> GenericQ (Maybe u)
 
 -- "something" can be defined in terms of "everything"
@@ -159,6 +178,7 @@ something = everything orElse
 --   2nd argument o is for reduction of results from subterms;
 --   3rd argument f updates the synthesised data according to the given term
 --
+-- @since 0.1.0.0
 synthesize :: forall s t. s  -> (t -> s -> s) -> GenericQ (s -> t) -> GenericQ t
 synthesize z o f = go
   where
@@ -167,36 +187,50 @@ synthesize z o f = go
 
 
 -- | Compute size of an arbitrary data structure
+--
+-- @since 0.1.0.0
 gsize :: Data a => a -> Int
 gsize t = 1 + sum (gmapQ gsize t)
 
 
 -- | Count the number of immediate subterms of the given term
+--
+-- @since 0.1.0.0
 glength :: GenericQ Int
 glength = length . gmapQ (const ())
 
 
 -- | Determine depth of the given term
+--
+-- @since 0.1.0.0
 gdepth :: GenericQ Int
 gdepth = (+) 1 . foldr max 0 . gmapQ gdepth
 
 
 -- | Determine the number of all suitable nodes in a given term
+--
+-- @since 0.1.0.0
 gcount :: GenericQ Bool -> GenericQ Int
 gcount p =  everything (+) (\x -> if p x then 1 else 0)
 
 
 -- | Determine the number of all nodes in a given term
+--
+-- @since 0.1.0.0
 gnodecount :: GenericQ Int
 gnodecount = gcount (const True)
 
 
 -- | Determine the number of nodes of a given type in a given term
+--
+-- @since 0.1.0.0
 gtypecount :: Typeable a => a -> GenericQ Int
 gtypecount (_::a) = gcount (False `mkQ` (\(_::a) -> True))
 
 
 -- | Find (unambiguously) an immediate subterm of a given type
+--
+-- @since 0.1.0.0
 gfindtype :: (Data x, Typeable y) => x -> Maybe y
 gfindtype = singleton
           . foldl unJust []
