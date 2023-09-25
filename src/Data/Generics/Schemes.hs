@@ -24,7 +24,11 @@ module Data.Generics.Schemes (
         somewhere,
         everything,
         everythingBut,
+        everythingButM,
+        everythingMButM,
         everythingWithContext,
+        everythingWithContextM,
+        everythingMWithContextM,
         listify,
         something,
         synthesize,
@@ -144,6 +148,32 @@ everythingBut k f = go
                 then v
                 else foldl k v (gmapQ go x)
 
+-- | Variation of "everythingBut" with monadic result and stop condition 
+everythingButM :: forall m r. Monad m => (r -> r -> r) -> GenericQ (m (r, Bool)) -> GenericQ (m r)
+everythingButM k f = go
+      where
+            go :: GenericQ (m r)
+            go x = do 
+                (res, stop) <- f x
+                if stop 
+                    then return res
+                    else do 
+                      ls <- sequence $ (gmapQ go x :: [m r])
+                      return $ foldl k res ls
+
+-- | Variation of "everythingBut" with monadic binary operation, result and stop condition
+everythingMButM :: forall m r. Monad m => (m r -> m r -> m r) -> GenericQ (m (r, Bool)) -> GenericQ (m r)
+everythingMButM k f = go
+      where
+            go :: forall a. Data a => a -> m r
+            go x = do 
+                (res, stop) <- f x
+                if stop 
+                    then return res
+                    else do 
+                      let ls = gmapQ go x
+                      foldl k (return res) ls
+
 -- | Summarise all nodes in top-down, left-to-right order, carrying some state
 -- down the tree during the computation, but not left-to-right to siblings.
 --
@@ -154,6 +184,31 @@ everythingWithContext s0 f q = go s0
     go :: s -> GenericQ r
     go s x = foldl f r (gmapQ (go s') x)
       where (r, s') = q x s
+
+-- | Summarise all nodes in top-down, left-to-right order with monadic effects @m@, carrying some state
+-- down the tree during the computation, but not left-to-right to siblings.
+everythingWithContextM :: forall m s r. Monad m => s -> (r -> r -> r) -> GenericQ (m (s -> (r, s))) -> GenericQ (m r)
+everythingWithContextM s0 f q = go s0
+  where
+    go :: s -> GenericQ (m r)
+    go s x = do 
+          st <- q x
+          let (r, s') = st s
+          xs <- sequence $ gmapQ (go s') x
+          return $ foldl f r xs
+
+-- | Summarise all nodes in top-down, left-to-right order with monadic effects @m@, carrying some state
+-- down the tree during the computation, but not left-to-right to siblings. Meanwhile the binary operation
+-- is also monadic
+everythingMWithContextM :: forall m s r. Monad m => s -> (m r -> m r -> m r) -> GenericQ (m (s -> (r, s))) -> GenericQ (m r)
+everythingMWithContextM s0 f q = go s0
+  where
+    go :: s -> GenericQ (m r)
+    go s x = do 
+          st <- q x
+          let (r, s') = st s
+          let xs = gmapQ (go s') x
+          foldl f (return r) xs
 
 -- | Get a list of all entities that meet a predicate
 --
