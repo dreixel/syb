@@ -26,18 +26,20 @@ jobs:
           - "9.2"
           - "9.4"
           - "9.6"
+          - "9.8"
+          - "9.10"
         include:
         - os: macOS-latest
-          ghc: "9.6"
+          ghc: "9.10"
         - os: windows-latest
-          ghc: "9.6"
+          ghc: "9.10"
     steps:
-    - uses: actions/checkout@v3
-    - uses: haskell/actions/setup@v2
+    - uses: actions/checkout@v4
+    - uses: haskell-actions/setup@v2
       id: setup-haskell-cabal
       with:
         ghc-version: ${{ matrix.ghc }}
-    - uses: actions/cache@v2
+    - uses: actions/cache@v4
       name: Cache cabal stuff
       with:
         path: |
