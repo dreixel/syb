@@ -54,7 +54,7 @@ gshows :: Data a => a -> ShowS
 -- where we recurse into subterms with gmapQ.
 gshows = gshowsF gshows
 
---  This allows for users to extend gshowsF with custom implementation for certain datatypes
+--  | Generic 'shows' but allowing the user to change cases.
 gshowsF :: Data b => (forall a. Data a => a -> ShowS) -> b -> ShowS 
 gshowsF fun = ( \t ->
                 showChar '('
