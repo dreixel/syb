@@ -52,13 +52,16 @@ gshows :: Data a => a -> ShowS
 
 -- This is a prefix-show using surrounding "(" and ")",
 -- where we recurse into subterms with gmapQ.
-gshows = ( \t ->
+gshows = gshowsF gshows
+
+--  This allows for users to extend gshowsF with custom implementation for certain datatypes
+gshowsF :: Data b => (forall a. Data a => a -> ShowS) -> b -> ShowS 
+gshowsF fun = ( \t ->
                 showChar '('
               . (showString . showConstr . toConstr $ t)
-              . (foldr (.) id . gmapQ ((showChar ' ' .) . gshows) $ t)
+              . (foldr (.) id . gmapQ ((showChar ' ' .) . fun) $ t)
               . showChar ')'
          ) `extQ` (shows :: String -> ShowS)
-
 
 -- | Generic 'reads' (not 'read'): an alternative to @deriving@ 'Read'.
 --
