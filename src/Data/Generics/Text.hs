@@ -1,4 +1,5 @@
 {-# LANGUAGE CPP #-}
+{-# LANGUAGE RankNTypes #-}
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Data.Generics.Text
@@ -18,7 +19,7 @@
 module Data.Generics.Text (
 
     -- * Generic show
-    gshow, gshows,
+    gshow, gshows, gshowsF,  
 
     -- * Generic read
     gread
