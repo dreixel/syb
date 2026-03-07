@@ -5,12 +5,12 @@
 -- Module      :  Data.Generics.Text
 -- Copyright   :  (c) The University of Glasgow, CWI 2001--2003
 -- License     :  BSD-style (see the LICENSE file)
--- 
+--
 -- Maintainer  :  generics@haskell.org
 -- Stability   :  experimental
 -- Portability :  non-portable (uses Data.Generics.Basics)
 --
--- \"Scrap your boilerplate\" --- Generic programming in Haskell 
+-- \"Scrap your boilerplate\" --- Generic programming in Haskell
 -- See <http://www.cs.uu.nl/wiki/GenericProgramming/SYB>. The present module
 -- provides generic operations for text serialisation of terms.
 --
@@ -19,7 +19,7 @@
 module Data.Generics.Text (
 
     -- * Generic show
-    gshow, gshows, gshowsF,  
+    gshow, gshows, gshowsF,
 
     -- * Generic read
     gread
@@ -56,7 +56,7 @@ gshows :: Data a => a -> ShowS
 gshows = gshowsF gshows
 
 --  | Generic 'shows' but allowing the user to change cases.
-gshowsF :: Data b => (forall a. Data a => a -> ShowS) -> b -> ShowS 
+gshowsF :: Data b => (forall a. Data a => a -> ShowS) -> b -> ShowS
 gshowsF fun = ( \t ->
                 showChar '('
               . (showString . showConstr . toConstr $ t)
