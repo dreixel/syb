@@ -26,9 +26,8 @@ Features
 Requirements
 ------------
 
-* GHC 6.10.1 or later
-* Cabal 1.6 or later
-
+* GHC 8.0 or later
+* Cabal 3.0 or later
 
 Bugs & Support
 --------------
