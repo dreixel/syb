@@ -1,5 +1,5 @@
 name:                 syb
-version:              0.7.3
+version:              0.7.4
 license:              BSD3
 license-file:         LICENSE
 author:               Ralf Lammel, Simon Peyton Jones, Jose Pedro Magalhaes
@@ -20,6 +20,7 @@ stability:              provisional
 build-type:             Simple
 cabal-version:          >= 1.10
 tested-with:
+  GHC == 9.14
   GHC == 9.12
   GHC == 9.10
   GHC == 9.8

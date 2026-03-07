@@ -1,3 +1,8 @@
+# 0.7.4
+
+- Export new function `gshowsF` that allows more flexibility than `gshows`.
+  It allows users to override how some children types should be printed. (https://github.com/dreixel/syb/pull/55)
+
 # 0.7.3
 
 - Fix `gread` to recognize negative numbers (https://github.com/dreixel/syb/issues/13)
