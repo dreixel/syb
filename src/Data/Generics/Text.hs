@@ -1,4 +1,5 @@
 {-# LANGUAGE CPP #-}
+{-# LANGUAGE RankNTypes #-}
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Data.Generics.Text
@@ -18,7 +19,7 @@
 module Data.Generics.Text (
 
     -- * Generic show
-    gshow, gshows,
+    gshow, gshows, gshowsF,  
 
     -- * Generic read
     gread
@@ -52,13 +53,16 @@ gshows :: Data a => a -> ShowS
 
 -- This is a prefix-show using surrounding "(" and ")",
 -- where we recurse into subterms with gmapQ.
-gshows = ( \t ->
+gshows = gshowsF gshows
+
+--  | Generic 'shows' but allowing the user to change cases.
+gshowsF :: Data b => (forall a. Data a => a -> ShowS) -> b -> ShowS 
+gshowsF fun = ( \t ->
                 showChar '('
               . (showString . showConstr . toConstr $ t)
-              . (foldr (.) id . gmapQ ((showChar ' ' .) . gshows) $ t)
+              . (foldr (.) id . gmapQ ((showChar ' ' .) . fun) $ t)
               . showChar ')'
          ) `extQ` (shows :: String -> ShowS)
-
 
 -- | Generic 'reads' (not 'read'): an alternative to @deriving@ 'Read'.
 --
